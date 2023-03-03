@@ -65,7 +65,7 @@ static void lcm_memq_destroy(lcm_memq_t *self)
     free(self);
 }
 
-static lcm_provider_t *lcm_memq_create(lcm_t *parent, const char *target, const GHashTable *args)
+static lcm_provider_t *lcm_memq_create(lcm_t *parent, const char *, const GHashTable *)
 {
     lcm_memq_t *self = (lcm_memq_t *) calloc(1, sizeof(lcm_memq_t));
     self->lcm = parent;
