@@ -29,41 +29,47 @@
  */
 
 #include <stdlib.h>
+#include "stdint.h"
 
 int utf8_check(const char *s, size_t length)
 {
     size_t i = 0;
     while (i < length) {
-        if (s[i] < 0x80) /* 0xxxxxxx */
+        const uint8_t byte0 = s[i];
+        const uint8_t byte1 = s[i + 1];
+        if (byte0 < 0x80) /* 0xxxxxxx */
             i++;
-        else if ((s[i] & 0xe0) == 0xc0) {
+        else if ((byte0 & 0xe0) == 0xc0) {
             /* 110XXXXx 10xxxxxx */
             if (i + 1 >= length)
                 return 0;
-            if ((s[i + 1] & 0xc0) != 0x80 || (s[i] & 0xfe) == 0xc0) /* overlong? */
+            if ((byte1 & 0xc0) != 0x80 || (byte0 & 0xfe) == 0xc0) /* overlong? */
                 return 0;
             else
                 i += 2;
-        } else if ((s[i] & 0xf0) == 0xe0) {
+        } else if ((byte0 & 0xf0) == 0xe0) {
             /* 1110XXXX 10Xxxxxx 10xxxxxx */
             if (i + 2 >= length)
                 return 0;
-            if ((s[i + 1] & 0xc0) != 0x80 || (s[i + 2] & 0xc0) != 0x80 ||
-                (s[i] == 0xe0 && (s[i + 1] & 0xe0) == 0x80) || /* overlong? */
-                (s[i] == 0xed && (s[i + 1] & 0xe0) == 0xa0) || /* surrogate? */
-                (s[i] == 0xef && s[i + 1] == 0xbf &&
-                 (s[i + 2] & 0xfe) == 0xbe)) /* U+FFFE or U+FFFF? */
+            const uint8_t byte2 = s[i + 2];
+            if ((byte1 & 0xc0) != 0x80 || (byte2 & 0xc0) != 0x80 ||
+                (byte0 == 0xe0 && (byte1 & 0xe0) == 0x80) || /* overlong? */
+                (byte0 == 0xed && (byte1 & 0xe0) == 0xa0) || /* surrogate? */
+                (byte0 == 0xef && byte1 == 0xbf &&
+                 (byte2 & 0xfe) == 0xbe)) /* U+FFFE or U+FFFF? */
                 return 0;
             else
                 i += 3;
-        } else if ((s[i] & 0xf8) == 0xf0) {
+        } else if ((byte0 & 0xf8) == 0xf0) {
             /* 11110XXX 10XXxxxx 10xxxxxx 10xxxxxx */
             if (i + 3 >= length)
                 return 0;
-            if ((s[i + 1] & 0xc0) != 0x80 || (s[i + 2] & 0xc0) != 0x80 ||
-                (s[i + 3] & 0xc0) != 0x80 ||
-                (s[i] == 0xf0 && (s[i + 1] & 0xf0) == 0x80) ||    /* overlong? */
-                (s[i] == 0xf4 && s[i + 1] > 0x8f) || s[i] > 0xf4) /* > U+10FFFF? */
+            const uint8_t byte2 = s[i + 2];
+            const uint8_t byte3 = s[i + 3];
+            if ((byte1 & 0xc0) != 0x80 || (byte2 & 0xc0) != 0x80 ||
+                (byte3 & 0xc0) != 0x80 ||
+                (byte0 == 0xf0 && (byte1 & 0xf0) == 0x80) ||    /* overlong? */
+                (byte0 == 0xf4 && byte1 > 0x8f) || byte0 > 0xf4) /* > U+10FFFF? */
                 return 0;
             else
                 i += 4;
