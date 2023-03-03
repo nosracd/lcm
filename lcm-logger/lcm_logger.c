@@ -52,7 +52,7 @@ struct logger {
 
     char input_fname[PATH_MAX];
     char fname[PATH_MAX];
-    char fname_prefix[PATH_MAX];
+    char fname_prefix[PATH_MAX - 10]; // A bit less than PATH_MAX so we can append to it.
     lcm_t *lcm;
 
     int64_t max_write_queue_size;
