@@ -694,7 +694,7 @@ emit_package (lcmgen_t *lcm, _package_contents_t *pc)
     char **dirs = g_strsplit (pc->name, ".", 0);
     char *pdname = build_filenamev (dirs);
     char package_dir[PATH_MAX - 10]; // Must be less than PATH_MAX to be appended to.
-    char package_dir_prefix[PATH_MAX - 10]; // Must be less than PATH_MAX to be appended to.
+    char package_dir_prefix[PATH_MAX - 20]; // Must be less than package_dir to be appended to.
     int have_package = dirs[0] != NULL;
     int write_init_py = !getopt_get_bool(lcm->gopt, "python-no-init");
 
