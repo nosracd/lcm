@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-#include "../lcm/lcm_version.h"
+#include <lcm/lcm_version.h>
 #include "lcmgen.h"
 
 // lua uses just 2 spaces per indent
