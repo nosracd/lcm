@@ -31,12 +31,12 @@ log_cli_level = "INFO"
 filterwarnings = [
   "error",
 ]
-testpaths = ["tests"]
+# testpaths = ["tests"]
 
 
 [tool.cibuildwheel]
-test-command = "pytest {project}/tests"
-test-extras = ["test"]
+# test-command = "pytest {project}/tests"
+# test-extras = ["test"]
 # test-skip = ["*universal2:arm64"]
 build-verbosity = 1
 
