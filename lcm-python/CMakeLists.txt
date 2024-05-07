@@ -31,7 +31,7 @@ endif ()
 find_package(Python3 COMPONENTS Interpreter Development.Module)
 
 target_include_directories(lcm-python PRIVATE
-  ${Python_INCLUDE_DIRS}
+  ${Python3_INCLUDE_DIRS}
 )
 
 target_link_libraries(lcm-python PRIVATE
