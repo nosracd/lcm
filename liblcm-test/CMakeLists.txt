@@ -5,7 +5,8 @@ add_executable(lcm-source lcm-source.c)
 target_link_libraries(lcm-source lcm-static)
 
 add_executable(lcm-tester lcm-tester.c)
-target_link_libraries(lcm-tester lcm-static GLib2::glib)
+target_include_directories(lcm-tester PRIVATE ${GLIB_INCLUDE_DIRS})
+target_link_libraries(lcm-tester lcm-static ${GLIB_LDFLAGS})
 if(WIN32)
   target_link_libraries(lcm-tester wsock32 ws2_32)
 endif()
@@ -17,13 +18,16 @@ if(WIN32)
 endif()
 
 add_executable(lcm-logfilter lcm-logfilter.c)
-target_link_libraries(lcm-logfilter lcm-static GLib2::glib)
+target_include_directories(lcm-logfilter PRIVATE ${GLIB_INCLUDE_DIRS})
+target_link_libraries(lcm-logfilter lcm-static ${GLIB_LDFLAGS})
 
 add_executable(lcm-buftest-receiver buftest-receiver.c)
-target_link_libraries(lcm-buftest-receiver lcm-static GLib2::glib)
+target_include_directories(lcm-buftest-receiver  PRIVATE ${GLIB_INCLUDE_DIRS})
+target_link_libraries(lcm-buftest-receiver lcm-static ${GLIB_LDFLAGS})
 
 add_executable(lcm-buftest-sender buftest-sender.c)
-target_link_libraries(lcm-buftest-sender lcm-static GLib2::glib)
+target_include_directories(lcm-buftest-sender PRIVATE ${GLIB_INCLUDE_DIRS})
+target_link_libraries(lcm-buftest-sender lcm-static ${GLIB_LDFLAGS})
 
 install(TARGETS
   lcm-sink

@@ -1,8 +1,9 @@
 add_executable(lcm-logger lcm_logger.c glib_util.c)
-target_link_libraries(lcm-logger lcm-static GLib2::glib)
+target_include_directories(lcm-logger PRIVATE ${GLIB_INCLUDE_DIRS})
+target_link_libraries(lcm-logger lcm-static ${GLIB_LDFLAGS})
 
 add_executable(lcm-logplayer lcm_logplayer.c)
-target_link_libraries(lcm-logplayer lcm-static GLib2::glib)
+target_link_libraries(lcm-logplayer lcm-static ${GLIB_LDFLAGS})
 
 install(TARGETS
   lcm-logger
