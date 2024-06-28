@@ -21,6 +21,7 @@ test = ["pytest"]
 
 [tool.scikit-build]
 wheel.expand-macos-universal-tags = true
+build.tool-args = ["-j4"]
 
 
 [tool.pytest.ini_options]
