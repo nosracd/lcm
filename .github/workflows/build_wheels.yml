@@ -35,7 +35,6 @@ jobs:
         uses: pypa/cibuildwheel@v2.19.1
         env:
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.macos_deployment_target }}
-          CIBW_REPAIR_WHEEL_COMMAND_MACOS: ""
           CIBW_ARCHS: ${{ matrix.arch }}
 
       - uses: actions/upload-artifact@v4
