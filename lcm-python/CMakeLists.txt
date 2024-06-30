@@ -1,14 +1,6 @@
 # FindPython added in 3.12
 cmake_minimum_required(VERSION 3.12)
 
-execute_process(
-  COMMAND "${Python_EXECUTABLE}" -c "if True:
-    from sysconfig import get_path
-    from os.path import sep
-    print(get_path('platlib').replace(get_path('data') + sep, ''))"
-  OUTPUT_VARIABLE PYTHON_SITE
-  OUTPUT_STRIP_TRAILING_WHITESPACE)
-
 set(lcm_python_sources
   module.c
   pyeventlog.c
@@ -55,8 +47,8 @@ else()
 endif()
 
 install(TARGETS lcm-python
-  RUNTIME DESTINATION ${PYTHON_SITE}/lcm
-  LIBRARY DESTINATION ${PYTHON_SITE}/lcm
+  RUNTIME DESTINATION lcm
+  LIBRARY DESTINATION lcm
 )
 
 lcm_copy_file_target(lcm-python-init
@@ -64,4 +56,4 @@ lcm_copy_file_target(lcm-python-init
   ${CMAKE_BINARY_DIR}/python/lcm/__init__.py
 )
 
-install(FILES lcm/__init__.py DESTINATION ${PYTHON_SITE}/lcm)
+install(FILES lcm/__init__.py DESTINATION lcm)
