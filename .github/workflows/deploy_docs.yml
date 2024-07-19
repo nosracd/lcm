@@ -1,19 +1,9 @@
 name: deploy_docs
 
-on:
-  push:
-    branches: [ "master" ]
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+on: [push, pull_request]
 
 jobs:
   docs:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,9 +21,6 @@ jobs:
           make doc
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           path: '${{github.workspace}}/build/docs/_build'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
