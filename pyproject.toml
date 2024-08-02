@@ -3,7 +3,7 @@ requires = ["scikit-build-core"]
 build-backend = "scikit_build_core.build"
 
 [project]
-name = "lcm"
+name = "lcm_test"
 version = "1.5.0"
 description = "Lightweight Communication and Marshalling"
 readme = "README.md"
