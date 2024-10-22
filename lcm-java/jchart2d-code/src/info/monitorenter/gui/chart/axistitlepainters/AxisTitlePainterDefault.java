@@ -1,7 +1,7 @@
 /*
- *  AxisTitlePainterDafault.java of project jchart2d, an IAxisTitlePainter 
- *  that will render titles in a default way while adapting to x or y 
- *  axis use. 
+ *  AxisTitlePainterDafault.java of project jchart2d, an IAxisTitlePainter
+ *  that will render titles in a default way while adapting to x or y
+ *  axis use.
  *  Copyright 2007 - 2011 (C) Achim Westermann, created on 04.08.2007 19:40:52.
  *
  *  This library is free software; you can redistribute it and/or
@@ -36,18 +36,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 
 /**
- * An <code>{@link IAxisTitlePainter}</code> implementation that will render
- * titles in a default way while adapting to x or y axis use.
+ * An <code>{@link IAxisTitlePainter}</code> implementation that will render titles in a default way
+ * while adapting to x or y axis use.
+ *
+ * <p>For x axis the title will be displayed centered below the axis. For y axis the title will be
+ * displayed rotated by 90 degrees centered left of the axis.
+ *
+ * <p>The y axis rotation will only be performed when the given <code>{@link Graphics}</code> Object
+ * is of type <code>{@link Graphics2D}</code>.
+ *
  * <p>
- * For x axis the title will be displayed centered below the axis. For y axis
- * the title will be displayed rotated by 90 degrees centered left of the axis.
- * <p>
- * 
- * The y axis rotation will only be performed when the given
- * <code>{@link Graphics}</code> Object is of type
- * <code>{@link Graphics2D}</code>.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  * @version $Revision: 1.14 $
  */
@@ -58,6 +57,7 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public AxisTitlePainterDefault() {
@@ -66,7 +66,7 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
 
   /**
    * @see info.monitorenter.gui.chart.IAxisTitlePainter#getHeight(info.monitorenter.gui.chart.IAxis,
-   *      java.awt.Graphics)
+   *     java.awt.Graphics)
    */
   public int getHeight(final IAxis<?> axis, final Graphics g2d) {
     int result = 0;
@@ -98,7 +98,7 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
 
   /**
    * @see info.monitorenter.gui.chart.IAxisTitlePainter#getWidth(info.monitorenter.gui.chart.IAxis,
-   *      java.awt.Graphics)
+   *     java.awt.Graphics)
    */
   public int getWidth(final IAxis<?> axis, final Graphics g2d) {
     int result = 0;
@@ -140,11 +140,12 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
   }
 
   /**
-   * TODO: This will not work for multiple axis in the same dimension and
-   * position (overwriting titles)!
-   * 
-   * @see info.monitorenter.gui.chart.IAxisTitlePainter#paintTitle(info.monitorenter.gui.chart.IAxis,
-   *      java.awt.Graphics)
+   * TODO: This will not work for multiple axis in the same dimension and position (overwriting
+   * titles)!
+   *
+   * @see
+   *     info.monitorenter.gui.chart.IAxisTitlePainter#paintTitle(info.monitorenter.gui.chart.IAxis,
+   *     java.awt.Graphics)
    */
   public void paintTitle(final IAxis<?> axis, final Graphics g) {
 
@@ -173,108 +174,113 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
     switch (dimension) {
       case Chart2D.X:
         switch (position) {
-          case Chart2D.CHART_POSITION_BOTTOM: {
-
-            int startX = chart.getXChartStart();
-            int endX = chart.getXChartEnd();
-            double xspace = bounds.getWidth();
-            int titleStartX = (int) ((endX - startX) / 2.0 - xspace / 2.0);
-            g.drawString(title, titleStartX, axis.getPixelYBottom() - 4);
-            break;
-          }
-          case Chart2D.CHART_POSITION_TOP: {
-            int startX = chart.getXChartStart();
-            int endX = chart.getXChartEnd();
-            double xspace = bounds.getWidth();
-            int titleStartX = (int) ((endX - startX) / 2.0 - xspace / 2.0);
-            g.drawString(title, titleStartX, axis.getPixelYTop()
-                + chart.getFontMetrics(chart.getFont()).getHeight());
-            break;
-          }
-          default: {
-            // nop
-          }
+          case Chart2D.CHART_POSITION_BOTTOM:
+            {
+              int startX = chart.getXChartStart();
+              int endX = chart.getXChartEnd();
+              double xspace = bounds.getWidth();
+              int titleStartX = (int) ((endX - startX) / 2.0 - xspace / 2.0);
+              g.drawString(title, titleStartX, axis.getPixelYBottom() - 4);
+              break;
+            }
+          case Chart2D.CHART_POSITION_TOP:
+            {
+              int startX = chart.getXChartStart();
+              int endX = chart.getXChartEnd();
+              double xspace = bounds.getWidth();
+              int titleStartX = (int) ((endX - startX) / 2.0 - xspace / 2.0);
+              g.drawString(
+                  title,
+                  titleStartX,
+                  axis.getPixelYTop() + chart.getFontMetrics(chart.getFont()).getHeight());
+              break;
+            }
+          default:
+            {
+              // nop
+            }
         }
         break;
       case Chart2D.Y:
         switch (position) {
-          case (Chart2D.CHART_POSITION_LEFT): {
-            // check if rotation is available: this is the case for normal
-            // screen painting, but for printing it is not available!
-            boolean supportsRotation = g instanceof Graphics2D;
-            if (supportsRotation) {
-              Graphics2D g2d = (Graphics2D) g;
-              int startY = chart.getYChartStart();
-              int endY = chart.getYChartEnd();
-              double yspace = bounds.getWidth();
-              int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
-              if(titleStartY <= 0){
-                System.err.println("titleStartY below or equal to zero: "+titleStartY);
-              } 
-              int titleStartX = axis.getPixelXLeft() + chart.getFontMetrics(chart.getFont()).getHeight();
-              if(titleStartX <= 0){
-                System.err.println("titleStartX below or equal to zero: "+titleStartX);
-              } 
-              
-              // store former transform for later restore:
-              AffineTransform tr = g2d.getTransform();
-              AffineTransform at = g2d.getDeviceConfiguration().getDefaultTransform();
-              at.translate(
-                  titleStartX,
-                  titleStartY);
-              at.rotate(-Math.PI / 2);
-              g2d.setTransform(at);
-              g2d.drawString(title, 0, 0);
-              g2d.setTransform(tr);
-            } else {
-              // no rotation: display in vertical middle:
-              int startY = chart.getYChartStart();
-              int endY = chart.getYChartEnd();
-              double yspace = bounds.getWidth();
-              int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
-              int titleStartX = axis.getPixelXLeft()
-                  + chart.getFontMetrics(chart.getFont()).getHeight();
-              g.drawString(title, titleStartX, titleStartY);
+          case (Chart2D.CHART_POSITION_LEFT):
+            {
+              // check if rotation is available: this is the case for normal
+              // screen painting, but for printing it is not available!
+              boolean supportsRotation = g instanceof Graphics2D;
+              if (supportsRotation) {
+                Graphics2D g2d = (Graphics2D) g;
+                int startY = chart.getYChartStart();
+                int endY = chart.getYChartEnd();
+                double yspace = bounds.getWidth();
+                int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
+                if (titleStartY <= 0) {
+                  System.err.println("titleStartY below or equal to zero: " + titleStartY);
+                }
+                int titleStartX =
+                    axis.getPixelXLeft() + chart.getFontMetrics(chart.getFont()).getHeight();
+                if (titleStartX <= 0) {
+                  System.err.println("titleStartX below or equal to zero: " + titleStartX);
+                }
 
+                // store former transform for later restore:
+                AffineTransform tr = g2d.getTransform();
+                AffineTransform at = g2d.getDeviceConfiguration().getDefaultTransform();
+                at.translate(titleStartX, titleStartY);
+                at.rotate(-Math.PI / 2);
+                g2d.setTransform(at);
+                g2d.drawString(title, 0, 0);
+                g2d.setTransform(tr);
+              } else {
+                // no rotation: display in vertical middle:
+                int startY = chart.getYChartStart();
+                int endY = chart.getYChartEnd();
+                double yspace = bounds.getWidth();
+                int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
+                int titleStartX =
+                    axis.getPixelXLeft() + chart.getFontMetrics(chart.getFont()).getHeight();
+                g.drawString(title, titleStartX, titleStartY);
+              }
+              break;
             }
-            break;
-          }
-          case (Chart2D.CHART_POSITION_RIGHT): {
-            boolean supportsRotation = g instanceof Graphics2D;
-            if (supportsRotation) {
-              Graphics2D g2d = (Graphics2D) g;
-              int startY = chart.getYChartStart();
-              int endY = chart.getYChartEnd();
-              double yspace = bounds.getWidth();
-              int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
+          case (Chart2D.CHART_POSITION_RIGHT):
+            {
+              boolean supportsRotation = g instanceof Graphics2D;
+              if (supportsRotation) {
+                Graphics2D g2d = (Graphics2D) g;
+                int startY = chart.getYChartStart();
+                int endY = chart.getYChartEnd();
+                double yspace = bounds.getWidth();
+                int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
 
-              int chartLabelFontWidth = chart.getFontMetrics(chart.getFont()).charWidth('0');
-              int xShiftPosition = chart.getAxisTickPainter().getMajorTickLength();
-              xShiftPosition += axis.getFormatter().getMaxAmountChars() * chartLabelFontWidth;
+                int chartLabelFontWidth = chart.getFontMetrics(chart.getFont()).charWidth('0');
+                int xShiftPosition = chart.getAxisTickPainter().getMajorTickLength();
+                xShiftPosition += axis.getFormatter().getMaxAmountChars() * chartLabelFontWidth;
 
-              AffineTransform tr = g2d.getTransform();
-              AffineTransform at = g2d.getDeviceConfiguration().getDefaultTransform();
-              at.translate(chart.getXChartEnd() + xShiftPosition, titleStartY);
-              at.rotate(-Math.PI / 2);
-              g2d.setTransform(at);
-              g2d.drawString(title, 0, 0);
-              g2d.setTransform(tr);
-            } else {
-              int startY = chart.getYChartStart();
-              int endY = chart.getYChartEnd();
-              double yspace = bounds.getWidth();
-              int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
-              int chartLabelFontWidth = chart.getFontMetrics(chart.getFont()).charWidth('0');
-              int xShiftPosition = chart.getAxisTickPainter().getMajorTickLength();
-              xShiftPosition += axis.getFormatter().getMaxAmountChars() * chartLabelFontWidth;
-              int titleStartX = xShiftPosition + chart.getXChartEnd();
-              g.drawString(title, titleStartX, titleStartY);
+                AffineTransform tr = g2d.getTransform();
+                AffineTransform at = g2d.getDeviceConfiguration().getDefaultTransform();
+                at.translate(chart.getXChartEnd() + xShiftPosition, titleStartY);
+                at.rotate(-Math.PI / 2);
+                g2d.setTransform(at);
+                g2d.drawString(title, 0, 0);
+                g2d.setTransform(tr);
+              } else {
+                int startY = chart.getYChartStart();
+                int endY = chart.getYChartEnd();
+                double yspace = bounds.getWidth();
+                int titleStartY = (int) ((startY - endY) / 2.0 + yspace / 2.0);
+                int chartLabelFontWidth = chart.getFontMetrics(chart.getFont()).charWidth('0');
+                int xShiftPosition = chart.getAxisTickPainter().getMajorTickLength();
+                xShiftPosition += axis.getFormatter().getMaxAmountChars() * chartLabelFontWidth;
+                int titleStartX = xShiftPosition + chart.getXChartEnd();
+                g.drawString(title, titleStartX, titleStartY);
+              }
+              break;
             }
-            break;
-          }
-          default: {
-            // nop
-          }
+          default:
+            {
+              // nop
+            }
         }
         break;
       default:
@@ -289,6 +295,5 @@ public class AxisTitlePainterDefault implements IAxisTitlePainter {
     if (titleColor != backUpColor && titleColor != null) {
       g.setColor(backUpColor);
     }
-
   }
 }

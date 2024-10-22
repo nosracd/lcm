@@ -1,19 +1,19 @@
 /*
- *  OneStringChooserPanel.java of project jchart2d, a panel that allows 
- *  to input a <code>String</code> via 
- *  a normal javax.swing.JTextField instance. 
+ *  OneStringChooserPanel.java of project jchart2d, a panel that allows
+ *  to input a <code>String</code> via
+ *  a normal javax.swing.JTextField instance.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 09:50:20.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -33,34 +33,30 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * A panel that allows to input a <code>String</code> via 
- * a normal 
- * <code>{@link javax.swing.JTextField}</code>.
+ * A panel that allows to input a <code>String</code> via a normal <code>
+ * {@link javax.swing.JTextField}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  * @version $Revision: 1.4 $
  */
 public class OneStringChooserPanel extends JPanel {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 208040286473528841L;
 
   /** Input text field for the first value to configure. */
   private JTextField m_value;
 
   /**
-   * Creates an instance with the given label and corresponding 
-   * text field with the given initial value.
+   * Creates an instance with the given label and corresponding text field with the given initial
+   * value.
+   *
    * <p>
-   * 
-   * @param label
-   *          the label in front of the input text field.
-   *          
-   * @param presetValue
-   *          the preset value for the text field.
+   *
+   * @param label the label in front of the input text field.
+   * @param presetValue the preset value for the text field.
    */
   public OneStringChooserPanel(final String label, final String presetValue) {
 
@@ -84,8 +80,9 @@ public class OneStringChooserPanel extends JPanel {
 
   /**
    * Returns the current selected string value.
+   *
    * <p>
-   * 
+   *
    * @return the current selected string value.
    */
   public String getValue() {

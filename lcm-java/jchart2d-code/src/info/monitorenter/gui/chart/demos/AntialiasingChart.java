@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -42,23 +42,24 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 
 /**
- * A test for the <code>Chart2D</code> that constantly adds new tracepoints to a
- * <code> Trace2DLtd</code>. Mainly the runtime- scaling is interesting.
+ * A test for the <code>Chart2D</code> that constantly adds new tracepoints to a <code> Trace2DLtd
+ * </code>. Mainly the runtime- scaling is interesting.
+ *
+ * <p>Furthermore this is an example on how to connect other components to the <code>Chart2D</code>
+ * using an adaptor- class. If interested have a look on {@link
+ * info.monitorenter.reflection.ObjRecorder2Trace2DAdapter}.
+ *
  * <p>
- * Furthermore this is an example on how to connect other components to the
- * <code>Chart2D</code> using an adaptor- class. If interested have a look on
- * {@link info.monitorenter.reflection.ObjRecorder2Trace2DAdapter}.
- * <p>
- * 
- * @author <a href='mailto:Achim.Westermann@gmx.de'> Achim Westermann </a>
+ *
+ * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
  * @version $Revision: 1.5 $
  */
 public class AntialiasingChart extends JFrame {
   /**
-   * Helper class that holds an internal number that is randomly modified by a
-   * Thread.
+   * Helper class that holds an internal number that is randomly modified by a Thread.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
    * @version $Revision: 1.5 $
    */
@@ -77,18 +78,18 @@ public class AntialiasingChart extends JFrame {
 
     /**
      * Creates an instance.
+     *
      * <p>
-     * 
-     * @param plusminus
-     *          probability to increase or decrease the number each step.
-     * @param factor
-     *          affects the amplitude of the number (severity of jumps).
+     *
+     * @param plusminus probability to increase or decrease the number each step.
+     * @param factor affects the amplitude of the number (severity of jumps).
      */
     public RandomBumper(final double plusminus, final int factor) {
 
       if (plusminus < 0 || plusminus > 1) {
-        System.out.println(this.getClass().getName()
-            + " ignores constructor-passed value. Must be between 0.0 and 1.0!");
+        System.out.println(
+            this.getClass().getName()
+                + " ignores constructor-passed value. Must be between 0.0 and 1.0!");
       } else {
         this.m_plusminus = plusminus;
       }
@@ -116,22 +117,19 @@ public class AntialiasingChart extends JFrame {
         } catch (InterruptedException e) {
           // nop
         }
-
       }
     }
   }
 
-  /**
-   * Generated for <code>serialVersionUID</code>.
-   */
+  /** Generated for <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3545231432038627123L;
 
   /**
    * Main entry.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
 
@@ -170,32 +168,30 @@ public class AntialiasingChart extends JFrame {
   protected Chart2D m_chart = null;
 
   /**
-   * Creates an instance that will dynamically paint on the chart to a trace
-   * with the given label.
+   * Creates an instance that will dynamically paint on the chart to a trace with the given label.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the chart to use.
-   * @param label
-   *          the name of the trace too display.
+   *
+   * @param chart the chart to use.
+   * @param label the name of the trace too display.
    */
   public AntialiasingChart(final Chart2D chart, final String label) {
 
     super(label);
     this.m_chart = chart;
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
 
-        AntialiasingChart.this.setVisible(false);
-        AntialiasingChart.this.dispose();
-        System.exit(0);
-
-      }
-    });
+            AntialiasingChart.this.setVisible(false);
+            AntialiasingChart.this.dispose();
+            System.exit(0);
+          }
+        });
     Container contentPane = this.getContentPane();
     contentPane.setLayout(new BorderLayout());
     contentPane.add(new ChartPanel(this.m_chart), BorderLayout.CENTER);

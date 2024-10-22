@@ -1,5 +1,5 @@
 /*
- *  UnitFactory.java, Singleton that caches instances of whole unit- systems 
+ *  UnitFactory.java, Singleton that caches instances of whole unit- systems
  *  and provides you with the matching unit for a maximum value.
  *  Copyright (C) 2004 - 2011 Achim Westermann.
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,26 +30,23 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Singleton that caches instances of whole unit- systems and provides you with
- * the matching unit for a maximum value.
+ * Singleton that caches instances of whole unit- systems and provides you with the matching unit
+ * for a maximum value.
+ *
  * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.10 $
- * 
  * @see info.monitorenter.util.units.IUnitSystem
- * 
  */
-public final class UnitFactory
-    extends Object {
+public final class UnitFactory extends Object {
 
   /** Singleton instance. */
   private static UnitFactory instance;
 
   /**
-   * Marker unit that represents a "non-unit" that does not modify anything in
-   * {@link AUnit#getValue(double)}.
+   * Marker unit that represents a "non-unit" that does not modify anything in {@link
+   * AUnit#getValue(double)}.
    */
   public static final AUnit UNCHANGED = new UnitUnchanged();
 
@@ -58,8 +55,9 @@ public final class UnitFactory
 
   /**
    * Singleton retrieval method.
+   *
    * <p>
-   * 
+   *
    * @return the unique instance within the current VM.
    */
   public static UnitFactory getInstance() {
@@ -71,8 +69,8 @@ public final class UnitFactory
 
   /**
    * Singleton constructor.
+   *
    * <p>
-   * 
    */
   private UnitFactory() {
     // nop
@@ -80,16 +78,12 @@ public final class UnitFactory
 
   /**
    * Returns the unit for the given argument absolute max.
-   * <p>
-   * 
-   * The unit is chosen in a way that
-   * 
-   * 
-   * @param absoluteMax
-   *            the absolute maximum value that has to be put into relation to
-   *            the unit to retrieve.
-   * @param units
-   *            the UnitSystem to use.
+   *
+   * <p>The unit is chosen in a way that
+   *
+   * @param absoluteMax the absolute maximum value that has to be put into relation to the unit to
+   *     retrieve.
+   * @param units the UnitSystem to use.
    * @return the unit for the given argument absolute max.
    */
   public AUnit getUnit(final double absoluteMax, final IUnitSystem units) {
@@ -117,15 +111,12 @@ public final class UnitFactory
   }
 
   /**
-   * Returns a list of all different {@link AUnit} instances available in the
-   * given unit system.
+   * Returns a list of all different {@link AUnit} instances available in the given unit system.
+   *
    * <p>
-   * 
-   * @param unitsystem
-   *            the unit system of interest.
-   * 
-   * @return a list of all different {@link AUnit} instances available in the
-   *         given unit system.
+   *
+   * @param unitsystem the unit system of interest.
+   * @return a list of all different {@link AUnit} instances available in the given unit system.
    */
   public List<AUnit> getUnits(final IUnitSystem unitsystem) {
     List<AUnit> choice = UnitFactory.UNITSYSTEMS.get(unitsystem.getClass().getName());
@@ -134,16 +125,14 @@ public final class UnitFactory
       choice = this.initUnitSystem(unitsystem);
     }
     return choice;
-
   }
 
   /**
    * Internally loads and caches the unit system.
+   *
    * <p>
-   * 
-   * @param units
-   *            the unit system to initialize.
-   * 
+   *
+   * @param units the unit system to initialize.
    * @return the list of {@link AUnit} instances of the given unit system.
    */
   private List<AUnit> initUnitSystem(final IUnitSystem units) {
@@ -153,8 +142,11 @@ public final class UnitFactory
     AUnit previous = null;
     for (int i = 0; i < clazzs.length; i++) {
       if (!AUnit.class.isAssignableFrom(clazzs[i])) {
-        System.err.println("UnitFactory: wrong class " + clazzs[i].getName() + " delivered by "
-            + units.getClass().getName());
+        System.err.println(
+            "UnitFactory: wrong class "
+                + clazzs[i].getName()
+                + " delivered by "
+                + units.getClass().getName());
         continue;
       } else {
         try {
@@ -166,8 +158,8 @@ public final class UnitFactory
           }
           previous = unit;
         } catch (InstantiationException e) {
-          System.err.println("UnitFactory encountered problems by instantiation of "
-              + clazzs[i].getName());
+          System.err.println(
+              "UnitFactory encountered problems by instantiation of " + clazzs[i].getName());
         } catch (IllegalAccessException f) {
           System.err.println("UnitFactory has no access to " + clazzs[i].getName());
         }

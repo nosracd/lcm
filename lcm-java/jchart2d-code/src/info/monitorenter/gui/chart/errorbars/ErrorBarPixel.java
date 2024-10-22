@@ -1,5 +1,5 @@
 /*
- *  ErrorBarPixel.java of project jchart2d, a plain data container implementation. 
+ *  ErrorBarPixel.java of project jchart2d, a plain data container implementation.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 02.10.2006 08:21:35.
  *
  *  This library is free software; you can redistribute it and/or
@@ -26,11 +26,10 @@ import info.monitorenter.gui.chart.ITrace2D;
 
 /**
  * Straight forward dumb data container implementation.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.11 $
  */
 public class ErrorBarPixel implements IErrorBarPixel {
@@ -51,31 +50,29 @@ public class ErrorBarPixel implements IErrorBarPixel {
   private int m_positiveYErrorPixel = IErrorBarPixel.ERROR_PIXEL_NONE;
 
   /**
-   * The trace the corresponding
-   * {@link info.monitorenter.gui.chart.IErrorBarPolicy} is assigned to. This is
-   * needed for the transformation. Although for the transformation the
-   * underlying chart instance is needed the trace has to be stored as
-   * reassigning the trace to another chart would break the chain and transform
-   * values based upon the wrong chart.
+   * The trace the corresponding {@link info.monitorenter.gui.chart.IErrorBarPolicy} is assigned to.
+   * This is needed for the transformation. Although for the transformation the underlying chart
+   * instance is needed the trace has to be stored as reassigning the trace to another chart would
+   * break the chain and transform values based upon the wrong chart.
    */
   private ITrace2D m_trace;
 
   /**
    * Creates an instance backed by the given trace.
+   *
    * <p>
-   * 
-   * @param trace
-   *          required for transformation.
+   *
+   * @param trace required for transformation.
    */
   public ErrorBarPixel(final ITrace2D trace) {
     this.m_trace = trace;
   }
 
   /**
-   * Convenience method for clearing this error bar making it available for new
-   * configuration.
-   * <p>
-   * All errors are set to {@link #ERROR_PIXEL_NONE} afterwards.
+   * Convenience method for clearing this error bar making it available for new configuration.
+   *
+   * <p>All errors are set to {@link #ERROR_PIXEL_NONE} afterwards.
+   *
    * <p>
    */
   public void clear() {
@@ -166,10 +163,10 @@ public class ErrorBarPixel implements IErrorBarPixel {
 
   /**
    * Intended for {@link AErrorBarPolicyConfigurable} only.
+   *
    * <p>
-   * 
-   * @param negativeXError
-   *          The negativeXError in pixel to set.
+   *
+   * @param negativeXError The negativeXError in pixel to set.
    */
   protected final void setNegativeXErrorPixel(final int negativeXError) {
     this.m_negativeXErrorPixel = negativeXError;
@@ -177,10 +174,10 @@ public class ErrorBarPixel implements IErrorBarPixel {
 
   /**
    * Intended for {@link AErrorBarPolicyConfigurable} only.
+   *
    * <p>
-   * 
-   * @param negativeYError
-   *          The negativeYError in pixel to set.
+   *
+   * @param negativeYError The negativeYError in pixel to set.
    */
   protected final void setNegativeYErrorPixel(final int negativeYError) {
     this.m_negativeYErrorPixel = negativeYError;
@@ -188,10 +185,10 @@ public class ErrorBarPixel implements IErrorBarPixel {
 
   /**
    * Intended for {@link AErrorBarPolicyConfigurable} only.
+   *
    * <p>
-   * 
-   * @param positiveXError
-   *          The positiveXError in pixel to set.
+   *
+   * @param positiveXError The positiveXError in pixel to set.
    */
   protected final void setPositiveXErrorPixel(final int positiveXError) {
     this.m_positiveXErrorPixel = positiveXError;
@@ -199,10 +196,10 @@ public class ErrorBarPixel implements IErrorBarPixel {
 
   /**
    * Intended for {@link AErrorBarPolicyConfigurable} only.
+   *
    * <p>
-   * 
-   * @param positiveYError
-   *          The positiveYError in pixel to set.
+   *
+   * @param positiveYError The positiveYError in pixel to set.
    */
   protected final void setPositiveYErrorPixel(final int positiveYError) {
     this.m_positiveYErrorPixel = positiveYError;
@@ -210,13 +207,12 @@ public class ErrorBarPixel implements IErrorBarPixel {
 
   /**
    * Sets the trace to use.
+   *
    * <p>
-   * 
-   * @param trace
-   *          The trace to set.
+   *
+   * @param trace The trace to set.
    */
   protected final void setTrace(final ITrace2D trace) {
     this.m_trace = trace;
   }
-
 }

@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -35,29 +35,26 @@ import java.util.Iterator;
  * saved (no change of x and y). <br>
  * Tracepoints with x- values not contained before will be appended to the end of the internal data-
  * structure. <br>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westerman </a>
  * @version $Revision: 1.16 $
  */
-public class Trace2DLtdReplacing
-    extends Trace2DLtd {
+public class Trace2DLtdReplacing extends Trace2DLtd {
 
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -6048361222161598032L;
 
-  /**
-   * Constructs a <code>Trace2DLtdReplacing</code> with a default buffer size of 100.
-   */
+  /** Constructs a <code>Trace2DLtdReplacing</code> with a default buffer size of 100. */
   public Trace2DLtdReplacing() {
     this(100);
   }
 
   /**
    * Constructs an instance with a buffer size of bufsize.
+   *
    * <p>
-   * 
-   * @param bufsize
-   *            the maximum amount of points that will be displayed.
+   *
+   * @param bufsize the maximum amount of points that will be displayed.
    */
   public Trace2DLtdReplacing(final int bufsize) {
     super(bufsize);
@@ -75,7 +72,7 @@ public class Trace2DLtdReplacing
     double tmpy;
     Iterator<ITracePoint2D> it = this.m_buffer.iteratorF2L();
     while (it.hasNext()) {
-      
+
       tmp = it.next();
       tmpx = tmp.getX();
       if (tmpx == p.getX()) {

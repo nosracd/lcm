@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -48,61 +48,55 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**
- * A decoration for {@link Chart2D} that adds various controls for a
- * {@link Chart2D} and it's {@link ITrace2D} instances in form of popup menues.
+ * A decoration for {@link Chart2D} that adds various controls for a {@link Chart2D} and it's {@link
+ * ITrace2D} instances in form of popup menues.
+ *
  * <p>
+ *
  * <h2>Performance note</h2>
- * The context menu items register themselves with the chart to adapt their
- * basic UI properties (font, foreground color, background color) via weak
- * referenced instances of
- * {@link info.monitorenter.gui.chart.controls.LayoutFactory.BasicPropertyAdaptSupport}
- * . This ensures that dropping a complete menu tree from the UI makes them
- * garbage collectable without introduction of highly unstable and
- * unmaintainable active memory management code. A side effect is that these
- * listeners remain in the property change listener list of the chart unless
- * they are finalized.
+ *
+ * The context menu items register themselves with the chart to adapt their basic UI properties
+ * (font, foreground color, background color) via weak referenced instances of {@link
+ * info.monitorenter.gui.chart.controls.LayoutFactory.BasicPropertyAdaptSupport} . This ensures that
+ * dropping a complete menu tree from the UI makes them garbage collectable without introduction of
+ * highly unstable and unmaintainable active memory management code. A side effect is that these
+ * listeners remain in the property change listener list of the chart unless they are finalized.
+ *
+ * <p>Adding and removing many traces to / from charts that are wrapped in {@link ChartPanel}
+ * without {@link java.lang.System#gc()} followed by {@link java.lang.System#runFinalization()} in
+ * your code will leave a huge amount of listeners for non-visible uncleaned menu items in the chart
+ * which causes a high cpu throttle for increasing the listener list.
+ *
+ * <p>The reason seems to be the implementation of ( {@link javax.swing.event.EventListenerList}
+ * that is used by {@link javax.swing.event.SwingPropertyChangeSupport}). It is based upon an array
+ * an grows only for the space of an additional listener by using {@link
+ * java.lang.System#arraycopy(java.lang.Object, int, java.lang.Object, int, int)} (ouch, this should
+ * be changed).
+ *
+ * <p>Profiling a day with showed that up to 2000 dead listeners remained in the list. The cpu load
+ * increased after about 200 add / remove trace operations. Good news is that no memory leak could
+ * be detected.
+ *
+ * <p>If those add and remove trace operations on {@link ChartPanel} - connected charts are
+ * performed with intermediate UI action property change events on dead listeners will let them
+ * remove themselves from the listener list thus avoiding the cpu overhead. So UI / user -
+ * controlled applications will unlikely suffer from this problem.
+ *
  * <p>
- * Adding and removing many traces to / from charts that are wrapped in
- * {@link ChartPanel} without {@link java.lang.System#gc()} followed by
- * {@link java.lang.System#runFinalization()} in your code will leave a huge
- * amount of listeners for non-visible uncleaned menu items in the chart which
- * causes a high cpu throttle for increasing the listener list.
- * <p>
- * The reason seems to be the implementation of (
- * {@link javax.swing.event.EventListenerList} that is used by
- * {@link javax.swing.event.SwingPropertyChangeSupport}). It is based upon an
- * array an grows only for the space of an additional listener by using
- * {@link java.lang.System#arraycopy(java.lang.Object, int, java.lang.Object, int, int)}
- * (ouch, this should be changed).
- * <p>
- * 
- * Profiling a day with showed that up to 2000 dead listeners remained in the
- * list. The cpu load increased after about 200 add / remove trace operations.
- * Good news is that no memory leak could be detected.
- * <p>
- * If those add and remove trace operations on {@link ChartPanel} - connected
- * charts are performed with intermediate UI action property change events on
- * dead listeners will let them remove themselves from the listener list thus
- * avoiding the cpu overhead. So UI / user - controlled applications will
- * unlikely suffer from this problem.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
 public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3905801963714197560L;
 
   /**
    * Main enbtry for demo app.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
     // some data:
@@ -134,16 +128,16 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
     final ChartPanel cPanel = new ChartPanel(chart);
     frame.getContentPane().add(cPanel);
     frame.setSize(new Dimension(400, 600));
-    frame.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent w) {
-        System.exit(0);
-      }
-
-    });
+    frame.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent w) {
+            System.exit(0);
+          }
+        });
     frame.setJMenuBar(LayoutFactory.getInstance().createChartMenuBar(cPanel, false));
     frame.setVisible(true);
   }
@@ -154,39 +148,28 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
   /** The decorated chart. */
   private final Chart2D m_chart;
 
-  /**
-   * <p>
-   * An internal panel for the labels of the traces that uses a
-   * {@link FlowLayout}.
-   * </p>
-   * 
-   */
+  /** An internal panel for the labels of the traces that uses a {@link FlowLayout}. */
   protected JPanel m_labelPanel;
 
   /**
-   * Creates an instance that decorates the given chart with controls in form of
-   * popup menus.
+   * Creates an instance that decorates the given chart with controls in form of popup menus.
+   *
    * <p>
-   * 
-   * @param chart
-   *          A configured Chart2D instance that will be displayed and
-   *          controlled by this panel.
+   *
+   * @param chart A configured Chart2D instance that will be displayed and controlled by this panel.
    */
   public ChartPanel(final Chart2D chart) {
-    this(chart,true);
+    this(chart, true);
   }
+
   /**
-   * Creates an instance that decorates the given chart with controls in form of
-   * popup menus.
+   * Creates an instance that decorates the given chart with controls in form of popup menus.
+   *
    * <p>
-   * 
-   * @param chart
-   *          A configured Chart2D instance that will be displayed and
-   *          controlled by this panel.
-   *          
-   * @param adaptUI2Chart
-   *          if true the menu will adapt it's basic UI properties (font,
-   *          foreground and background color) to the given chart.
+   *
+   * @param chart A configured Chart2D instance that will be displayed and controlled by this panel.
+   * @param adaptUI2Chart if true the menu will adapt it's basic UI properties (font, foreground and
+   *     background color) to the given chart.
    */
   public ChartPanel(final Chart2D chart, final boolean adaptUI2Chart) {
     super();
@@ -223,25 +206,20 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
     chart.addPropertyChangeListener("background", this);
     // listen to new traces and deleted ones:
     chart.addPropertyChangeListener(Chart2D.PROPERTY_ADD_REMOVE_TRACE, this);
-
   }
-  
+
   /**
-   * Internal helper that returns whether a label for the given trace is already
-   * contained in the internal label panel.
+   * Internal helper that returns whether a label for the given trace is already contained in the
+   * internal label panel.
+   *
+   * <p>This is needed because an addTrace(ITrace2D) call on the Chart2D is delegated to two axes
+   * thus resulting in two events per added trace: We have to avoid adding duplicate labels!
+   *
    * <p>
-   * 
-   * This is needed because an addTrace(ITrace2D) call on the Chart2D is
-   * delegated to two axes thus resulting in two events per added trace: We have
-   * to avoid adding duplicate labels!
-   * <p>
-   * 
-   * @param tracetoAdd
-   *          the trace to check whether a label for it is already contained in
-   *          the internal label panel.
-   * 
-   * @return true if a label for the given trace is already contained in the
-   *         internal label panel.
+   *
+   * @param tracetoAdd the trace to check whether a label for it is already contained in the
+   *     internal label panel.
+   * @return true if a label for the given trace is already contained in the internal label panel.
    */
   private boolean containsTraceLabel(final ITrace2D tracetoAdd) {
     boolean result = false;
@@ -299,8 +277,9 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
 
   /**
    * Returns the annotationCreator.
+   *
    * <p>
-   * 
+   *
    * @return the annotationCreator
    */
   public final IAnnotationCreator getAnnotationCreator() {
@@ -309,8 +288,9 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
 
   /**
    * Returns the chart.
+   *
    * <p>
-   * 
+   *
    * @return the chart
    */
   public final Chart2D getChart() {
@@ -324,18 +304,20 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result
-        + ((this.m_annotationCreator == null) ? 0 : this.m_annotationCreator.hashCode());
+    result =
+        prime * result
+            + ((this.m_annotationCreator == null) ? 0 : this.m_annotationCreator.hashCode());
     result = prime * result + ((this.m_chart == null) ? 0 : this.m_chart.hashCode());
     result = prime * result + ((this.m_labelPanel == null) ? 0 : this.m_labelPanel.hashCode());
     return result;
   }
 
   /**
-   * Listens for property "background" of the <code>Chart2D</code> instance that
-   * is contained in this component and sets the background color.
+   * Listens for property "background" of the <code>Chart2D</code> instance that is contained in
+   * this component and sets the background color.
+   *
    * <p>
-   * 
+   *
    * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
    */
   public void propertyChange(final PropertyChangeEvent evt) {
@@ -350,8 +332,8 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
       JLabel label;
       if ((oldTrace == null) && (newTrace != null)) {
         if (!this.containsTraceLabel(newTrace)) {
-          label = LayoutFactory.getInstance().createTraceContextMenuLabel(this.m_chart, newTrace,
-              true);
+          label =
+              LayoutFactory.getInstance().createTraceContextMenuLabel(this.m_chart, newTrace, true);
           if (label != null) {
             this.m_labelPanel.add(label);
             this.invalidate();
@@ -390,8 +372,8 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
         }
       } else if ((StringUtil.isEmpty(oldLabel)) && (!StringUtil.isEmpty(newLabel))) {
         if (!this.containsTraceLabel(trace)) {
-          label = LayoutFactory.getInstance()
-              .createTraceContextMenuLabel(this.m_chart, trace, true);
+          label =
+              LayoutFactory.getInstance().createTraceContextMenuLabel(this.m_chart, trace, true);
           if (label != null) {
             this.m_labelPanel.add(label);
             this.invalidate();
@@ -405,18 +387,14 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
   }
 
   /**
-   * Makes the given trace label garbage collectable and removes all menu
-   * entries of the menu of the popup menu attachted to it as listeners on the
-   * chart object graph.
+   * Makes the given trace label garbage collectable and removes all menu entries of the menu of the
+   * popup menu attachted to it as listeners on the chart object graph.
+   *
    * <p>
-   * 
+   *
    * @see LayoutFactory#createTraceContextMenuLabel(Chart2D, ITrace2D, boolean)
-   * 
-   * @param owner
-   *          the owner of the label.
-   * 
-   * @param label
-   *          the label to wipe out.
+   * @param owner the owner of the label.
+   * @param label the label to wipe out.
    */
   private void disposeTraceLabel(final JLabel label, final ITrace2D owner) {
     /*
@@ -426,7 +404,7 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
      * cleared to make the whole menu for the old label disposable (see
      * <code>{@link LayoutFactory#createTraceContextMenuLabel(Chart2D, ITrace2D,
      * boolean)}</code>):
-     * 
+     *
      * Referred as listener on the chart for font. Referred as listener on the
      * trace for foreground,name and physicalunits. The JLabel itself has a
      * popup menu with many items that are registered on the chart for
@@ -440,8 +418,8 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
       this.removeMouseListener(mouseListener2);
     }
     /*
-     * Omitting this should not hinder the label from being garbage-collectable as I assume 
-     * the traces removed will not be stored in the application for later use. But it's clean to do this: 
+     * Omitting this should not hinder the label from being garbage-collectable as I assume
+     * the traces removed will not be stored in the application for later use. But it's clean to do this:
      */
     owner.removePropertyChangeListener(ITrace2D.PROPERTY_COLOR, listenerLabel);
     owner.removePropertyChangeListener(ITrace2D.PROPERTY_NAME, listenerLabel);
@@ -453,10 +431,10 @@ public class ChartPanel extends JLayeredPane implements PropertyChangeListener {
 
   /**
    * Sets the annotationCreator.
+   *
    * <p>
-   * 
-   * @param annotationCreator
-   *          the annotationCreator to set
+   *
+   * @param annotationCreator the annotationCreator to set
    */
   public final void setAnnotationCreator(final IAnnotationCreator annotationCreator) {
     this.m_annotationCreator = annotationCreator;

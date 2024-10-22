@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -44,22 +44,20 @@ import javax.swing.event.ChangeListener;
 import com.jidesoft.swing.RangeSlider;
 
 /**
- * A panel that allows to choose a range from a special
- * {@link javax.swing.JSlider} with two sliders (dual Slider).
+ * A panel that allows to choose a range from a special {@link javax.swing.JSlider} with two sliders
+ * (dual Slider).
+ *
+ * <p>Credits go to the infovis project of Jean Daniel Fekete for the dual slider comopenent: <a
+ * href="http://ivtk.sourceforge.net/" target="_blank">http://ivtk.sourceforge.net/</a>.
+ *
  * <p>
- * Credits go to the infovis project of Jean Daniel Fekete for the dual slider
- * comopenent: <a href="http://ivtk.sourceforge.net/"
- * target="_blank">http://ivtk.sourceforge.net/</a>.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  * @version $Revision: 1.15 $
  */
 public class RangeChooserPanel extends JPanel {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3258413911148410931L;
 
   /** The range slider to choose a range. */
@@ -70,11 +68,11 @@ public class RangeChooserPanel extends JPanel {
 
   /**
    * Creates an instance that works on the given range.
+   *
    * <p>
-   * 
-   * @param range
-   *          defines the bounds of the current selection and the extension of
-   *          these that is chooseable.
+   *
+   * @param range defines the bounds of the current selection and the extension of these that is
+   *     chooseable.
    */
   public RangeChooserPanel(final Range range) {
 
@@ -82,8 +80,8 @@ public class RangeChooserPanel extends JPanel {
     this.m_nf.setMinimumFractionDigits(2);
     this.m_nf.setMaximumFractionDigits(2);
 
-    int min = (int)range.getMin();
-    int max = (int)range.getMax();
+    int min = (int) range.getMin();
+    int max = (int) range.getMax();
     int minBound;
     int maxBound;
     if ((!MathUtil.isDouble(min)) || (min == -Double.MAX_VALUE)) {
@@ -104,7 +102,7 @@ public class RangeChooserPanel extends JPanel {
     this.m_rangeSlider.setMaximum(maxBound);
     this.m_rangeSlider.setHighValue(max);
     this.m_rangeSlider.setLowValue(min);
-    
+
     /*
      * Dead project, deleted from dev.java.net, latest binaries from:
      * http://vernier.frederic.free.fr/
@@ -157,25 +155,27 @@ public class RangeChooserPanel extends JPanel {
     rangeMinView.setText(this.m_nf.format(Double.valueOf(this.m_rangeSlider.getLowValue())));
     rangeMinView.setEditable(true);
     rangeMinView.setPreferredSize(new Dimension(120, 20));
-    rangeMinView.addActionListener(new ActionListener() {
-      public void actionPerformed(final ActionEvent ae) {
-        JTextField textField = (JTextField) ae.getSource();
-        try {
-          Number entered = RangeChooserPanel.this.m_nf.parse(textField.getText());
-          int low = entered.intValue();
-          int high = RangeChooserPanel.this.m_rangeSlider.getHighValue();
-          int minSlider = low - (high - low) / 2;
-          RangeChooserPanel.this.m_rangeSlider.setMinimum(minSlider);
-          RangeChooserPanel.this.m_rangeSlider.setLowValue(low);
-          
-        } catch (ParseException e) {
-          // TODO: maybe inform user of invalid input.
-          textField.setText(RangeChooserPanel.this.m_nf.format(RangeChooserPanel.this.m_rangeSlider
-              .getMinimum()));
-          e.printStackTrace();
-        }
-      }
-    });
+    rangeMinView.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(final ActionEvent ae) {
+            JTextField textField = (JTextField) ae.getSource();
+            try {
+              Number entered = RangeChooserPanel.this.m_nf.parse(textField.getText());
+              int low = entered.intValue();
+              int high = RangeChooserPanel.this.m_rangeSlider.getHighValue();
+              int minSlider = low - (high - low) / 2;
+              RangeChooserPanel.this.m_rangeSlider.setMinimum(minSlider);
+              RangeChooserPanel.this.m_rangeSlider.setLowValue(low);
+
+            } catch (ParseException e) {
+              // TODO: maybe inform user of invalid input.
+              textField.setText(
+                  RangeChooserPanel.this.m_nf.format(
+                      RangeChooserPanel.this.m_rangeSlider.getMinimum()));
+              e.printStackTrace();
+            }
+          }
+        });
     rangeMinView.setToolTipText("Enter a number and hit Return.");
 
     // maximum value view:
@@ -184,42 +184,45 @@ public class RangeChooserPanel extends JPanel {
     rangeMaxView.setEditable(true);
 
     rangeMaxView.setPreferredSize(new Dimension(120, 20));
-    rangeMaxView.addActionListener(new ActionListener() {
-      public void actionPerformed(final ActionEvent ae) {
-        JTextField textField = (JTextField) ae.getSource();
-        try {
-          Number entered = RangeChooserPanel.this.m_nf.parse(textField.getText());
-          int high = entered.intValue();
-          int low = RangeChooserPanel.this.m_rangeSlider.getLowValue();
-          int maxSlider =  + (high - low) / 2;
-          RangeChooserPanel.this.m_rangeSlider.setMaximum(maxSlider);
-          RangeChooserPanel.this.m_rangeSlider.setHighValue(high);
+    rangeMaxView.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(final ActionEvent ae) {
+            JTextField textField = (JTextField) ae.getSource();
+            try {
+              Number entered = RangeChooserPanel.this.m_nf.parse(textField.getText());
+              int high = entered.intValue();
+              int low = RangeChooserPanel.this.m_rangeSlider.getLowValue();
+              int maxSlider = +(high - low) / 2;
+              RangeChooserPanel.this.m_rangeSlider.setMaximum(maxSlider);
+              RangeChooserPanel.this.m_rangeSlider.setHighValue(high);
 
-        } catch (ParseException e) {
-          // TODO: maybe inform user of invalid input.
-          textField.setText(RangeChooserPanel.this.m_nf.format(RangeChooserPanel.this.m_rangeSlider
-              .getMaximum()));
-          e.printStackTrace();
-        }
-      }
-    });
+            } catch (ParseException e) {
+              // TODO: maybe inform user of invalid input.
+              textField.setText(
+                  RangeChooserPanel.this.m_nf.format(
+                      RangeChooserPanel.this.m_rangeSlider.getMaximum()));
+              e.printStackTrace();
+            }
+          }
+        });
     rangeMaxView.setToolTipText("Enter a number and hit Return.");
 
-    this.m_rangeSlider.addChangeListener(new ChangeListener() {
+    this.m_rangeSlider.addChangeListener(
+        new ChangeListener() {
 
-      /**
-       * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
-       */
-      public void stateChanged(ChangeEvent e) {
-        RangeSlider slider = (RangeSlider)e.getSource();
-        int value = slider.getLowValue();
-        String text = RangeChooserPanel.this.m_nf.format(value);
-        rangeMinView.setText(text);
-        value = slider.getHighValue();
-        text = RangeChooserPanel.this.m_nf.format(value);
-        rangeMaxView.setText(text);
-      }
-    });
+          /**
+           * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+           */
+          public void stateChanged(ChangeEvent e) {
+            RangeSlider slider = (RangeSlider) e.getSource();
+            int value = slider.getLowValue();
+            String text = RangeChooserPanel.this.m_nf.format(value);
+            rangeMinView.setText(text);
+            value = slider.getHighValue();
+            text = RangeChooserPanel.this.m_nf.format(value);
+            rangeMaxView.setText(text);
+          }
+        });
 
     // add range views to panel:
     JPanel rangeViewPanel = new JPanel();
@@ -237,8 +240,9 @@ public class RangeChooserPanel extends JPanel {
 
   /**
    * Returns the current selected range.
+   *
    * <p>
-   * 
+   *
    * @return the current selected range.
    */
   public Range getRange() {

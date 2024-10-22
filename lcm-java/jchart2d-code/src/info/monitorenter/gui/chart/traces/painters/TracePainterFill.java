@@ -1,5 +1,5 @@
 /*
- *  TracePainterFill.java of project jchart2d. A trace painter implementation 
+ *  TracePainterFill.java of project jchart2d. A trace painter implementation
  *  that fills the area between trace an y=0,x=0.
  *  Copyright (c) 2004 - 2011  Achim Westermann, Achim.Westermann@gmx.de
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,25 +30,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A trace painter that fills the area between trace to render and the x axis
- * baseline with it's color.
+ * A trace painter that fills the area between trace to render and the x axis baseline with it's
+ * color.
+ *
+ * <p>Additionally it increases performance by summing up all points to render for a paint iteration
+ * (submitted by {@link #paintPoint(int, int, int, int, Graphics, ITracePoint2D)} between {@link
+ * #startPaintIteration(Graphics)} and {@link #endPaintIteration(Graphics)}) and only invoking only
+ * one polygon paint for a paint call of the corresponding {@link
+ * info.monitorenter.gui.chart.Chart2D}.
+ *
  * <p>
- * 
- * Additionally it increases performance by summing up all points to render for
- * a paint iteration (submitted by
- * {@link #paintPoint(int, int, int, int, Graphics, ITracePoint2D)} between
- * {@link #startPaintIteration(Graphics)} and
- * {@link #endPaintIteration(Graphics)}) and only invoking only one polygon
- * paint for a paint call of the corresponding
- * {@link info.monitorenter.gui.chart.Chart2D}.
- * <p>
- * 
- * 
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.21 $
- * 
  */
 public class TracePainterFill extends ATracePainter {
 
@@ -56,8 +50,7 @@ public class TracePainterFill extends ATracePainter {
   private static final long serialVersionUID = -7194158082574997539L;
 
   /**
-   * Stores the corresponding chart to know the coordinate roots for closing the
-   * polygon to fill.
+   * Stores the corresponding chart to know the coordinate roots for closing the polygon to fill.
    */
   private final Chart2D m_chart;
 
@@ -69,10 +62,10 @@ public class TracePainterFill extends ATracePainter {
 
   /**
    * Constructor with the corresponding chart.
+   *
    * <p>
-   * 
-   * @param chart
-   *          needed to get the start pixel coordinates of traces.
+   *
+   * @param chart needed to get the start pixel coordinates of traces.
    */
   public TracePainterFill(final Chart2D chart) {
     this.m_chart = chart;
@@ -177,13 +170,17 @@ public class TracePainterFill extends ATracePainter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.traces.painters.ATracePainter#paintPoint(int,
-   *      int, int, int, java.awt.Graphics,
-   *      info.monitorenter.gui.chart.ITracePoint2D)
+   * @see info.monitorenter.gui.chart.traces.painters.ATracePainter#paintPoint(int, int, int, int,
+   *     java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  public void paintPoint(final int absoluteX, final int absoluteY, final int nextX,
-      final int nextY, final Graphics g, final ITracePoint2D original) {
+  public void paintPoint(
+      final int absoluteX,
+      final int absoluteY,
+      final int nextX,
+      final int nextY,
+      final Graphics g,
+      final ITracePoint2D original) {
 
     this.m_xPoints.add(Integer.valueOf(absoluteX));
     this.m_yPoints.add(Integer.valueOf(absoluteY));
@@ -198,5 +195,4 @@ public class TracePainterFill extends ATracePainter {
     this.m_xPoints = new LinkedList<Integer>();
     this.m_yPoints = new LinkedList<Integer>();
   }
-
 }

@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,47 +30,40 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 /**
- * The base class that connects triggered actions with an
- * {@link info.monitorenter.gui.chart.axis.AAxis} instance.
+ * The base class that connects triggered actions with an {@link
+ * info.monitorenter.gui.chart.axis.AAxis} instance.
+ *
+ * <p>Every subclass may access it's constructor-given <code>Axis</code> instance as protected
+ * member <code>m_axis</code>.
+ *
+ * <p>Note that this action only works for the first bottom x axis / first left y axis: Additional
+ * axes cannot be handled by now.
+ *
  * <p>
- * Every subclass may access it's constructor-given <code>Axis</code> instance
- * as protected member <code>m_axis</code>.
- * <p>
- * Note that this action only works for the first bottom x axis / first left y
- * axis: Additional axes cannot be handled by now.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.11 $
- * 
  */
 public abstract class AAxisAction extends AChart2DAction implements PropertyChangeListener {
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = 2602716712958711393L;
 
   /** The target of this action. */
   private int m_axis;
 
   /**
-   * Create an <code>Action</code> that accesses the chart's axis by argument
-   * <code>axis</code> and identifies itself with the given action String.
+   * Create an <code>Action</code> that accesses the chart's axis by argument <code>axis</code> and
+   * identifies itself with the given action String.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the owner of the axis to trigger actions upon.
-   * 
-   * @param axis
-   *          needed to identify the axis of the chart: one of {@link Chart2D#X}
-   *          , {@link Chart2D#Y}.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
+   *
+   * @param chart the owner of the axis to trigger actions upon.
+   * @param axis needed to identify the axis of the chart: one of {@link Chart2D#X} , {@link
+   *     Chart2D#Y}.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
   public AAxisAction(final Chart2D chart, final String description, final int axis) {
 
@@ -86,15 +79,16 @@ public abstract class AAxisAction extends AChart2DAction implements PropertyChan
 
   /**
    * Returns the axis that is controlled.
+   *
+   * <p>Note that several calls may return different instances ( <code>a.getAxis() == a.getAxis()
+   * </code> may be false) in case the corresponding chart of the former axis gets a new axis
+   * assigned.
+   *
+   * <p>Note that this action only works for the first x axis / first y axis: Additional axes cannot
+   * be handled by now.
+   *
    * <p>
-   * Note that several calls may return different instances (
-   * <code>a.getAxis() == a.getAxis()</code> may be false) in case the
-   * corresponding chart of the former axis gets a new axis assigned.
-   * <p>
-   * Note that this action only works for the first x axis / first y axis:
-   * Additional axes cannot be handled by now.
-   * <p>
-   * 
+   *
    * @return the axis that is controlled.
    */
   protected IAxis<?> getAxis() {

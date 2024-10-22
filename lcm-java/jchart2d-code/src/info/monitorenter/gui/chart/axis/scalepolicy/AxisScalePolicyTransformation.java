@@ -1,5 +1,5 @@
 /*
- *  AxisScalePolicyAutomaticBestFit.java of project jchart2d, <enterpurposehere>. 
+ *  AxisScalePolicyAutomaticBestFit.java of project jchart2d, <enterpurposehere>.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on Apr 22, 2011
  *
  *  This library is free software; you can redistribute it and/or
@@ -10,7 +10,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -37,28 +37,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Very basic implementation that has to be used with implementation of
- * {@link AAxisTransformation} to have the scale transformed.
+ * Very basic implementation that has to be used with implementation of {@link AAxisTransformation}
+ * to have the scale transformed.
+ *
  * <p>
- * 
+ *
  * @author Bill Schoolfield (contributor)
- * 
  * @author Achim Westermann (modification)
- * 
  */
-
 public class AxisScalePolicyTransformation implements IAxisScalePolicy {
 
   /**
-   * Uses the transformation function callbacks ({@link AAxisTransformation#transform(double)}, {@link AAxisTransformation#untransform(double)}) 
-   * of the {@link AAxisTransformation} this instance may be used with to have the scale transformed accordingly. 
+   * Uses the transformation function callbacks ({@link AAxisTransformation#transform(double)},
+   * {@link AAxisTransformation#untransform(double)}) of the {@link AAxisTransformation} this
+   * instance may be used with to have the scale transformed accordingly.
+   *
    * <p>
    */
   @SuppressWarnings("unchecked")
   public List<LabeledValue> getScaleValues(final Graphics g2d, final IAxis<?> axis) {
 
-    // Might give a class cast exception in case this was not called from the AAxisTranfsormation itself:
-    AAxisTransformation<AxisScalePolicyTransformation> axisTransformation = (AAxisTransformation<AxisScalePolicyTransformation>) axis;
+    // Might give a class cast exception in case this was not called from the AAxisTranfsormation
+    // itself:
+    AAxisTransformation<AxisScalePolicyTransformation> axisTransformation =
+        (AAxisTransformation<AxisScalePolicyTransformation>) axis;
     final List<LabeledValue> collect = new LinkedList<LabeledValue>();
     LabeledValue label;
 
@@ -73,7 +75,7 @@ public class AxisScalePolicyTransformation implements IAxisScalePolicy {
     double range = max - min;
 
     double exp = 0.;
-    double val =  axisTransformation.untransform(0);
+    double val = axisTransformation.untransform(0);
 
     while (val <= axis.getMax()) {
       if (val >= axis.getMin()) {
@@ -96,5 +98,4 @@ public class AxisScalePolicyTransformation implements IAxisScalePolicy {
   public void initPaintIteration(IAxis<?> axis) {
     // nop
   }
-
 }

@@ -1,17 +1,17 @@
 /*
  * Entry.java, base data container for mapping two elements.
  * Copyright (C) 2003 - 2011 Achim Westermann.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -22,40 +22,32 @@
 package info.monitorenter.util.collections;
 
 /**
- * <p>
  * I have written implementations of <tt>java.util.Map.Entry</tt> in form of
+ *
  * <ul>
- * <li>Static inner classes.</li>
- * <li>Non-static inner classes.</li>
- * <li>Non-public classes.</li>
- * <li>Anonymous classes.</li>
+ *   <li>Static inner classes.
+ *   <li>Non-static inner classes.
+ *   <li>Non-public classes.
+ *   <li>Anonymous classes.
  * </ul>
- * </p>
- * <p>
- * Almost all implementations were plainforward and not hiding any complexity.
- * One could not downcast them to get more methods, and they were replaceable. <br>
+ *
+ * <p>Almost all implementations were plainforward and not hiding any complexity. One could not
+ * downcast them to get more methods, and they were replaceable. <br>
  * That's it! Finally i decided to hardcode it here... .
- * </p>
- * <p>
- * But don't you start writing methods like:
- * 
+ *
+ * <p>But don't you start writing methods like:
+ *
  * <pre>
  * public Entry getEntry(String name);
- * 
+ *
  * public void setEntry(Entry entry);
  * </pre>
- * 
+ *
  * Try sticking to the interface <tt>java.util.Map.Entry</tt>.
- * </p>
- * 
+ *
  * @see java.util.Map.Entry
- * 
- * @param <V>
- *          the key type.
- * 
- * @param <K>
- *          the value type.
- * 
+ * @param <V> the key type.
+ * @param <K> the value type.
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann</a>
  */
 public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
@@ -68,13 +60,11 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 
   /**
    * Creates an instance with the given key and value.
+   *
    * <p>
-   * 
-   * @param key
-   *          the key instance to use.
-   * 
-   * @param value
-   *          the value instance to use.
+   *
+   * @param key the key instance to use.
+   * @param value the value instance to use.
    */
   public Entry(final V key, final K value) {
     this.m_key = key;
@@ -96,7 +86,7 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
     if (this.getClass() != obj.getClass()) {
       return false;
     }
-    final Entry<V,K> other = (Entry<V,K>) obj;
+    final Entry<V, K> other = (Entry<V, K>) obj;
     if (this.m_key == null) {
       if (other.m_key != null) {
         return false;
@@ -116,7 +106,7 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 
   /**
    * Maybe null!
-   * 
+   *
    * @see java.util.Map.Entry#getKey()
    */
   public V getKey() {
@@ -125,7 +115,7 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 
   /**
    * Maybe null!
-   * 
+   *
    * @see java.util.Map.Entry#getValue()
    */
   public K getValue() {
@@ -146,13 +136,12 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
 
   /**
    * Sets a new value instance overwriting the old value which is returned.
+   *
+   * <p>You may use null. But you will get it back next call!
+   *
    * <p>
-   * 
-   * You may use null. But you will get it back next call!
-   * <p>
-   * 
+   *
    * @see java.util.Map.Entry#setValue(java.lang.Object)
-   * 
    * @return the previous value instance.
    */
   public K setValue(final K value) {
@@ -160,5 +149,4 @@ public final class Entry<V, K> implements java.util.Map.Entry<V, K> {
     this.m_value = value;
     return ret;
   }
-
 }

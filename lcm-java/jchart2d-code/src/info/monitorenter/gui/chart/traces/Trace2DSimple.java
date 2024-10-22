@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -29,37 +29,35 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A basic <code>{@link info.monitorenter.gui.chart.ITrace2D}</code>
- * implementation that stores the internal
- * <code>{@link info.monitorenter.gui.chart.TracePoint2D}</code> instances in
- * a <code>{@link java.util.List}</code>.
- * <p>
- * This class has the following behavior: <br>
+ * A basic <code>{@link info.monitorenter.gui.chart.ITrace2D}</code> implementation that stores the
+ * internal <code>{@link info.monitorenter.gui.chart.TracePoint2D}</code> instances in a <code>
+ * {@link java.util.List}</code>.
+ *
+ * <p>This class has the following behavior: <br>
+ *
  * <ul>
- * <li>All tracepoints that are added are stored unchanged in a LinkedList.
- * </li>
- * <li>All traceoints that are added are added to the end.</li>
- * <li>If a tracepoint is inserted whose x - value already exists in the List,
- * it is ok - the old point may remain. (no bijective assigement of X and Y)
- * </li>
+ *   <li>All tracepoints that are added are stored unchanged in a LinkedList.
+ *   <li>All traceoints that are added are added to the end.
+ *   <li>If a tracepoint is inserted whose x - value already exists in the List, it is ok - the old
+ *       point may remain. (no bijective assigement of X and Y)
  * </ul>
+ *
  * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.16 $
  */
-public class Trace2DSimple
-    extends ATrace2D implements ITrace2D {
+public class Trace2DSimple extends ATrace2D implements ITrace2D {
 
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -132333501493433766L;
-  
+
   /** Internal List &lt;ITracePoint2D&gt;. */
   protected List<ITracePoint2D> m_points = new LinkedList<ITracePoint2D>();
 
   /**
    * Creates an empty trace.
+   *
    * <p>
    */
   public Trace2DSimple() {
@@ -68,10 +66,10 @@ public class Trace2DSimple
 
   /**
    * Creates an emtpy trace with the given name.
+   *
    * <p>
-   * 
-   * @param name
-   *          the name that will be displayed below the chart.
+   *
+   * @param name the name that will be displayed below the chart.
    */
   public Trace2DSimple(final String name) {
     this.setName(name);
@@ -133,5 +131,4 @@ public class Trace2DSimple
     }
     return result;
   }
-
 }

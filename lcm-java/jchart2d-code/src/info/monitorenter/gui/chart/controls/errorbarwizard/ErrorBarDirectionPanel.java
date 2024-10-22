@@ -1,18 +1,18 @@
 /*
- *  ErrorBarDirectionPanel.java of project jchart2d, a panel 
- *  for selection of the directions of error bars. 
+ *  ErrorBarDirectionPanel.java of project jchart2d, a panel
+ *  for selection of the directions of error bars.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 09:50:20.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -39,30 +39,27 @@ import javax.swing.JPanel;
 
 /**
  * A panel for selection of the directions of error bars.
+ *
+ * <p>See <code>{@link info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable}</code> for
+ * more information on the configurable directions of error bars.
+ *
  * <p>
- * See
- * <code>{@link info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable}</code>
- * for more information on the configurable directions of error bars.
- * <p>
- * 
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.8 $
  */
-public class ErrorBarDirectionPanel
-    extends JPanel {
+public class ErrorBarDirectionPanel extends JPanel {
 
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 7474825906798331943L;
 
   /**
-   * Creates an instance that hooks as a control (view & controller) to the
-   * error bar policy model instance.
+   * Creates an instance that hooks as a control (view & controller) to the error bar policy model
+   * instance.
+   *
    * <p>
-   * 
-   * @param errorBarPolicy
-   *          the error bar policy to control directions of display of.
+   *
+   * @param errorBarPolicy the error bar policy to control directions of display of.
    */
   public ErrorBarDirectionPanel(final IErrorBarPolicy<?> errorBarPolicy) {
 
@@ -83,26 +80,27 @@ public class ErrorBarDirectionPanel
     // Negative x error
     JLabel label = new JLabel("Negative X");
     label.setToolTipText("Show error bars in negative x direction.");
-   
+
     this.add(label, gbc);
 
     JCheckBox box = new JCheckBox();
     if (errorBarPolicy.isShowNegativeXErrors()) {
       box.setSelected(true);
     }
-    box.addActionListener(new ActionListener() {
-      /**
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent e) {
-        JCheckBox checkbox = (JCheckBox) e.getSource();
-        boolean boxState = checkbox.isSelected();
-        boolean change = boxState != errorBarPolicy.isShowNegativeXErrors();
-        if (change) {
-          errorBarPolicy.setShowNegativeXErrors(boxState);
-        }
-      }
-    });
+    box.addActionListener(
+        new ActionListener() {
+          /**
+           * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+           */
+          public void actionPerformed(final ActionEvent e) {
+            JCheckBox checkbox = (JCheckBox) e.getSource();
+            boolean boxState = checkbox.isSelected();
+            boolean change = boxState != errorBarPolicy.isShowNegativeXErrors();
+            if (change) {
+              errorBarPolicy.setShowNegativeXErrors(boxState);
+            }
+          }
+        });
 
     gbc.gridx = 1;
     this.add(box, gbc);
@@ -116,19 +114,20 @@ public class ErrorBarDirectionPanel
     if (errorBarPolicy.isShowNegativeYErrors()) {
       box.setSelected(true);
     }
-    box.addActionListener(new ActionListener() {
-      /**
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent e) {
-        JCheckBox checkbox = (JCheckBox) e.getSource();
-        boolean boxState = checkbox.isSelected();
-        boolean change = boxState != errorBarPolicy.isShowNegativeYErrors();
-        if (change) {
-          errorBarPolicy.setShowNegativeYErrors(boxState);
-        }
-      }
-    });
+    box.addActionListener(
+        new ActionListener() {
+          /**
+           * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+           */
+          public void actionPerformed(final ActionEvent e) {
+            JCheckBox checkbox = (JCheckBox) e.getSource();
+            boolean boxState = checkbox.isSelected();
+            boolean change = boxState != errorBarPolicy.isShowNegativeYErrors();
+            if (change) {
+              errorBarPolicy.setShowNegativeYErrors(boxState);
+            }
+          }
+        });
 
     gbc.gridx = 3;
     this.add(box, gbc);
@@ -152,19 +151,20 @@ public class ErrorBarDirectionPanel
     if (errorBarPolicy.isShowPositiveXErrors()) {
       box.setSelected(true);
     }
-    box.addActionListener(new ActionListener() {
-      /**
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent e) {
-        JCheckBox checkbox = (JCheckBox) e.getSource();
-        boolean boxState = checkbox.isSelected();
-        boolean change = boxState != errorBarPolicy.isShowPositiveXErrors();
-        if (change) {
-          errorBarPolicy.setShowPositiveXErrors(boxState);
-        }
-      }
-    });
+    box.addActionListener(
+        new ActionListener() {
+          /**
+           * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+           */
+          public void actionPerformed(final ActionEvent e) {
+            JCheckBox checkbox = (JCheckBox) e.getSource();
+            boolean boxState = checkbox.isSelected();
+            boolean change = boxState != errorBarPolicy.isShowPositiveXErrors();
+            if (change) {
+              errorBarPolicy.setShowPositiveXErrors(boxState);
+            }
+          }
+        });
 
     gbc.gridx = 1;
     this.add(box, gbc);
@@ -178,22 +178,22 @@ public class ErrorBarDirectionPanel
     if (errorBarPolicy.isShowPositiveYErrors()) {
       box.setSelected(true);
     }
-    box.addActionListener(new ActionListener() {
-      /**
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent e) {
-        JCheckBox checkbox = (JCheckBox) e.getSource();
-        boolean boxState = checkbox.isSelected();
-        boolean change = boxState != errorBarPolicy.isShowPositiveYErrors();
-        if (change) {
-          errorBarPolicy.setShowPositiveYErrors(boxState);
-        }
-      }
-    });
+    box.addActionListener(
+        new ActionListener() {
+          /**
+           * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+           */
+          public void actionPerformed(final ActionEvent e) {
+            JCheckBox checkbox = (JCheckBox) e.getSource();
+            boolean boxState = checkbox.isSelected();
+            boolean change = boxState != errorBarPolicy.isShowPositiveYErrors();
+            if (change) {
+              errorBarPolicy.setShowPositiveYErrors(boxState);
+            }
+          }
+        });
 
     gbc.gridx = 3;
     this.add(box, gbc);
   }
-
 }

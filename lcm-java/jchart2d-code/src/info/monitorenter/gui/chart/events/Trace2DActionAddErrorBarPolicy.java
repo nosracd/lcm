@@ -1,5 +1,5 @@
 /*
- *  Trace2DActionAddErrorBarPolicy, action to add an IErrorBarPolicy 
+ *  Trace2DActionAddErrorBarPolicy, action to add an IErrorBarPolicy
  *  to an ITrace2D.
  *  Copyright (C) 2007 - 2011 Achim Westermann
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,41 +30,32 @@ import info.monitorenter.gui.chart.IErrorBarPolicy;
 import info.monitorenter.gui.chart.ITrace2D;
 
 /**
- * <code>Action</code> to set an IErrorBarPolicy on an
- * <code>{@link ITrace2D}</code>.
+ * <code>Action</code> to set an IErrorBarPolicy on an <code>{@link ITrace2D}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.5 $
  */
 public final class Trace2DActionAddErrorBarPolicy extends ATrace2DActionErrorBarPolicy {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -6819371146517378618L;
 
   /**
-   * Create an <code>Action</code> that accesses the trace and identifies itself
-   * with the given action String.
+   * Create an <code>Action</code> that accesses the trace and identifies itself with the given
+   * action String.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
-   * @param errorBarPolicy
-   *          the error bar policy to use by this action.
-   * 
+   *
+   * @param trace the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * @param errorBarPolicy the error bar policy to use by this action.
    */
-  public Trace2DActionAddErrorBarPolicy(final ITrace2D trace, final String description,
-      final IErrorBarPolicy< ? > errorBarPolicy) {
+  public Trace2DActionAddErrorBarPolicy(
+      final ITrace2D trace, final String description, final IErrorBarPolicy<?> errorBarPolicy) {
     super(trace, description, errorBarPolicy);
   }
 

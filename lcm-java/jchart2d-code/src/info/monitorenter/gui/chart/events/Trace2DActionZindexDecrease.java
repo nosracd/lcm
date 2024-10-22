@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -28,46 +28,36 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * <code>Action</code> that decreases the <code>zIndex</code> of the
- * constructor-given <code>ITrace2D</code> by a constructor-given integer.
+ * <code>Action</code> that decreases the <code>zIndex</code> of the constructor-given <code>
+ * ITrace2D</code> by a constructor-given integer.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.4 $
  */
 public final class Trace2DActionZindexDecrease extends ATrace2DAction {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3978986583057707570L;
 
-  /**
-   * The decrement to the trace's zIndex.
-   */
+  /** The decrement to the trace's zIndex. */
   private int m_decrease;
 
   /**
-   * Create an <code>Action</code> that accesses the trace and identifies
-   * itself with the given action String.
+   * Create an <code>Action</code> that accesses the trace and identifies itself with the given
+   * action String.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
-   * @param decrease
-   *          the increment to the trace's zIndex (see
-   *          {@link ITrace2D#setZIndex(Integer)}).
+   *
+   * @param trace the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * @param decrease the increment to the trace's zIndex (see {@link ITrace2D#setZIndex(Integer)}).
    */
-  public Trace2DActionZindexDecrease(final ITrace2D trace, final String description,
-      final int decrease) {
+  public Trace2DActionZindexDecrease(
+      final ITrace2D trace, final String description, final int decrease) {
     super(trace, description);
     this.m_decrease = decrease;
   }

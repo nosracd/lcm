@@ -1,18 +1,18 @@
 /*
- *  LabelFormatterNumber.java of jchart2d, a label formatter that 
- *  formats the labels with a number format. 
+ *  LabelFormatterNumber.java of jchart2d, a label formatter that
+ *  formats the labels with a number format.
  *  Copyright (C) 2005 - 2011 Achim Westermann, created on 20.04.2005, 22:34:16
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,21 +31,19 @@ import java.text.ParseException;
 
 /**
  * An ILabelFormatter that is based on a {@link java.text.NumberFormat}
- * <p>
- * To avoid loss of precision please choose a sufficient resolution for your
- * constructor given NumberFormat. Example: If you add new
- * {@link info.monitorenter.gui.chart.TracePoint2D} instances to the
- * {@link info.monitorenter.gui.chart.Chart2D} every second, prefer using a
- * NumberFormat that at least formats the seconds like (e.g.):
- * 
+ *
+ * <p>To avoid loss of precision please choose a sufficient resolution for your constructor given
+ * NumberFormat. Example: If you add new {@link info.monitorenter.gui.chart.TracePoint2D} instances
+ * to the {@link info.monitorenter.gui.chart.Chart2D} every second, prefer using a NumberFormat that
+ * at least formats the seconds like (e.g.):
+ *
  * <pre>
  * NumberFormat format = new java.text.SimpleDateFormat(&quot;HH:mm:ss&quot;);
  * </pre>
- * 
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.18 $
  */
 public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelFormatter {
@@ -54,9 +52,9 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
   private static final long serialVersionUID = 7659252726783423615L;
 
   /**
-   * The internal cached minimum shift of value required to get to distinct
-   * Strings from method <code>{@link #format(double)}</code>. This value is
-   * computed once and cached because it's computation is expensive.
+   * The internal cached minimum shift of value required to get to distinct Strings from method
+   * <code>{@link #format(double)}</code>. This value is computed once and cached because it's
+   * computation is expensive.
    */
   private double m_cachedMinValueShift = Double.MAX_VALUE;
 
@@ -64,10 +62,9 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
   protected NumberFormat m_numberFormat;
 
   /**
-   * Default constructor that uses the defalut constructor of
-   * <code>{@link DecimalFormat}</code>.
+   * Default constructor that uses the defalut constructor of <code>{@link DecimalFormat}</code>.
+   *
    * <p>
-   * 
    */
   public LabelFormatterNumber() {
     this.m_numberFormat = new DecimalFormat();
@@ -75,10 +72,10 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
 
   /**
    * Creates a label formatter that uses the given number format.
+   *
    * <p>
-   * 
-   * @param numberFormat
-   *          the number format to use.
+   *
+   * @param numberFormat the number format to use.
    */
   public LabelFormatterNumber(final NumberFormat numberFormat) {
     super();
@@ -103,8 +100,8 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
       return false;
     }
     final LabelFormatterNumber other = (LabelFormatterNumber) obj;
-    if (Double.doubleToLongBits(this.m_cachedMinValueShift) != Double
-        .doubleToLongBits(other.m_cachedMinValueShift)) {
+    if (Double.doubleToLongBits(this.m_cachedMinValueShift)
+        != Double.doubleToLongBits(other.m_cachedMinValueShift)) {
       return false;
     }
     if (this.m_numberFormat == null) {
@@ -230,8 +227,7 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#getNextEvenValue(double,
-   *      boolean)
+   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#getNextEvenValue(double, boolean)
    */
   public double getNextEvenValue(final double value, final boolean ceiling) {
     double result;
@@ -246,10 +242,10 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
 
   /**
    * Returns the internal <code>NumberFormat</code>.
+   *
    * <p>
-   * 
+   *
    * @return the internal <code>NumberFormat</code>.
-   * 
    */
   public NumberFormat getNumberFormat() {
     return this.m_numberFormat;
@@ -282,21 +278,19 @@ public class LabelFormatterNumber extends ALabelFormatter implements IAxisLabelF
 
   /**
    * Sets the number formatter to use.
+   *
+   * <p>Fires a <code>{@link java.beans.PropertyChangeEvent}</code> to the listeners added via
+   * <code>{@link #addPropertyChangeListener(String, java.beans.PropertyChangeListener)}</code> with
+   * the property key <code>{@link #PROPERTY_FORMATCHANGE}</code>.
+   *
    * <p>
-   * 
-   * Fires a <code>{@link java.beans.PropertyChangeEvent}</code> to the
-   * listeners added via
-   * <code>{@link #addPropertyChangeListener(String, java.beans.PropertyChangeListener)}</code>
-   * with the property key <code>{@link #PROPERTY_FORMATCHANGE}</code>.
-   * <p>
-   * 
-   * @param numberFormat
-   *          the number formatter to use.
+   *
+   * @param numberFormat the number formatter to use.
    */
   public final void setNumberFormat(final NumberFormat numberFormat) {
     final NumberFormat old = this.m_numberFormat;
     this.m_numberFormat = numberFormat;
-    this.m_propertyChangeSupport.firePropertyChange(IAxisLabelFormatter.PROPERTY_FORMATCHANGE, old,
-        this.m_numberFormat);
+    this.m_propertyChangeSupport.firePropertyChange(
+        IAxisLabelFormatter.PROPERTY_FORMATCHANGE, old, this.m_numberFormat);
   }
 }

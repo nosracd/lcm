@@ -1,6 +1,6 @@
 /*
- * CoordinateViewChart.java of project jchart2d, a demo that uses  
- * a ChartCoordinateView to display the position of the mouse over the chart. 
+ * CoordinateViewChart.java of project jchart2d, a demo that uses
+ * a ChartCoordinateView to display the position of the mouse over the chart.
  *
  * Copyright (c) 2007 - 2011  Achim Westermann, Achim.Westermann@gmx.de
  *
@@ -8,12 +8,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -44,11 +44,11 @@ import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
- * A demo that uses a
- * {@link info.monitorenter.gui.chart.views.ChartCoordinateView} to display the
+ * A demo that uses a {@link info.monitorenter.gui.chart.views.ChartCoordinateView} to display the
  * position of the mouse over the chart.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  * @version $Revision: 1.8 $
  */
@@ -56,18 +56,18 @@ public class CoordinateViewChart extends JFrame {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = 1195707820931595997L;
 
   /**
    * Demo application startup method.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
-   * @throws IOException
-   *           if loading data for the demo chart fails.
+   *
+   * @param args ignored.
+   * @throws IOException if loading data for the demo chart fails.
    */
   public static void main(final String[] args) throws IOException {
     Chart2D chart = new Chart2D();
@@ -75,27 +75,25 @@ public class CoordinateViewChart extends JFrame {
     chart.setToolTipType(Chart2D.ToolTipType.VALUE_SNAP_TO_TRACEPOINTS);
     ITrace2D trace = new Trace2DLtd(400);
 
-    AStaticDataCollector collector = new PropertyFileStaticDataCollector(trace,
-        CoordinateViewChart.class.getResourceAsStream("data.properties"));
+    AStaticDataCollector collector =
+        new PropertyFileStaticDataCollector(
+            trace, CoordinateViewChart.class.getResourceAsStream("data.properties"));
     chart.addTrace(trace);
     trace.setPointHighlighter(new PointPainterDisc(10));
     collector.collectData();
     new CoordinateViewChart(chart);
-
   }
 
   /** The chart to display and query for coordinates. */
   private Chart2D m_chart;
 
   /**
-   * Creates an instance that displays the given chart and a
-   * {@link ChartCoordinateView} to show the coordinates of the mouse cursor
-   * over the chart.
+   * Creates an instance that displays the given chart and a {@link ChartCoordinateView} to show the
+   * coordinates of the mouse cursor over the chart.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the chart to display and sshow the coordinates of the mouse cursor
-   *          over it.
+   *
+   * @param chart the chart to display and sshow the coordinates of the mouse cursor over it.
    */
   public CoordinateViewChart(final Chart2D chart) {
     super("View coordinates");
@@ -103,11 +101,17 @@ public class CoordinateViewChart extends JFrame {
 
     ChartCoordinateView viewChartValue = new ChartCoordinateView(this.m_chart);
     // listen for basic propery changes of the chart:
-    new LayoutFactory.BasicPropertyAdaptSupport(viewChartValue, this.m_chart,LayoutFactory.BasicPropertyAdaptSupport.RemoveAsListenerFromComponentNever.getInstance());
+    new LayoutFactory.BasicPropertyAdaptSupport(
+        viewChartValue,
+        this.m_chart,
+        LayoutFactory.BasicPropertyAdaptSupport.RemoveAsListenerFromComponentNever.getInstance());
 
     Container contentPane = this.getContentPane();
     contentPane.setLayout(new GridBagLayout());
-    new LayoutFactory.BasicPropertyAdaptSupport(contentPane, this.m_chart,LayoutFactory.BasicPropertyAdaptSupport.RemoveAsListenerFromComponentNever.getInstance());
+    new LayoutFactory.BasicPropertyAdaptSupport(
+        contentPane,
+        this.m_chart,
+        LayoutFactory.BasicPropertyAdaptSupport.RemoveAsListenerFromComponentNever.getInstance());
 
     // chart: use space
     GridBagConstraints gbc = new GridBagConstraints();
@@ -130,19 +134,18 @@ public class CoordinateViewChart extends JFrame {
     gbc.fill = GridBagConstraints.NONE;
     contentPane.add(viewChartValue, gbc);
 
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
 
     this.setSize(new Dimension(400, 300));
     this.setVisible(true);
-
   }
-
 }

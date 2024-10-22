@@ -25,21 +25,20 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Main test suite for the package
- * <code>{@link info.monitorenter.gui.chart.labelformatters}</code>.
+ * Main test suite for the package <code>{@link info.monitorenter.gui.chart.labelformatters}</code>.
+ *
  * <p>
- * 
+ *
  * @author Achim westermann
  * @version $Revision: 1.2 $
- * 
  * @since 3.1.14
  */
-
 public final class AllTests {
   /**
    * Returns the JUnit test suite for this package.
+   *
    * <p>
-   * 
+   *
    * @return the JUnit test suite for this package
    */
   public static Test suite() {
@@ -52,11 +51,11 @@ public final class AllTests {
 
   /**
    * Hide constructor to prevent generation of class instances.
+   *
    * <p>
    */
   private AllTests() {
 
     // empty
   }
-
 }

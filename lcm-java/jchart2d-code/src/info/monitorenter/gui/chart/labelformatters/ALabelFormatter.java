@@ -1,18 +1,18 @@
 /*
- * AbstractLabelFormatter.java, base class for ILabelFormatter 
- * implementations.  
- * Copyright (c) 2004 - 2011 Achim Westermann, Achim.Westermann@gmx.de 
- * 
+ * AbstractLabelFormatter.java, base class for ILabelFormatter
+ * implementations.
+ * Copyright (c) 2004 - 2011 Achim Westermann, Achim.Westermann@gmx.de
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -34,26 +34,22 @@ import java.beans.PropertyChangeSupport;
 import javax.swing.event.SwingPropertyChangeSupport;
 
 /**
- * A label formatter that is aware of the
- * {@link info.monitorenter.gui.chart.axis.AAxis} it formats label for.
+ * A label formatter that is aware of the {@link info.monitorenter.gui.chart.axis.AAxis} it formats
+ * label for.
+ *
+ * <p>This allows to compute the amount of fraction digits needed from the range to display.
+ *
  * <p>
- * This allows to compute the amount of fraction digits needed from the range to
- * display.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.10 $
  */
 public abstract class ALabelFormatter implements IAxisLabelFormatter {
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = 5211073371003781159L;
 
-  /**
-   * The default unit with the factor 1 that is returned as the default for
-   * {@link #getUnit()}.
-   */
+  /** The default unit with the factor 1 that is returned as the default for {@link #getUnit()}. */
   public static final AUnit UNIT_UNCHANGED = new UnitUnchanged();
 
   /** The corresponding axis to format for. */
@@ -64,6 +60,7 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
 
   /**
    * Default constructor.
+   *
    * <p>
    */
   protected ALabelFormatter() {
@@ -71,11 +68,12 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#addPropertyChangeListener(java.lang.String,
-   *      java.beans.PropertyChangeListener)
+   * @see
+   *     info.monitorenter.gui.chart.IAxisLabelFormatter#addPropertyChangeListener(java.lang.String,
+   *     java.beans.PropertyChangeListener)
    */
-  public void addPropertyChangeListener(final String propertyName,
-      final PropertyChangeListener listener) {
+  public void addPropertyChangeListener(
+      final String propertyName, final PropertyChangeListener listener) {
     this.m_propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
   }
 
@@ -113,8 +111,9 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
 
   /**
    * Intended for {@link info.monitorenter.gui.chart.axis.AAxis} only.
+   *
    * <p>
-   * 
+   *
    * @return Returns the axis.
    */
   public IAxis<?> getAxis() {
@@ -122,12 +121,11 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
   }
 
   /**
-   * Returns the maximum amount of characters that will be returned from
-   * {@link #format(double)}.
+   * Returns the maximum amount of characters that will be returned from {@link #format(double)}.
+   *
    * <p>
-   * 
-   * @return the maximum amount of characters that will be returned from
-   *         {@link #format(double)}.
+   *
+   * @return the maximum amount of characters that will be returned from {@link #format(double)}.
    */
   public int getMaxAmountChars() {
     // find the fractions by using range information:
@@ -181,10 +179,10 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
 
   /**
    * Returns {@link #UNIT_UNCHANGED}.
+   *
    * <p>
-   * 
+   *
    * @return {@link #UNIT_UNCHANGED}
-   * 
    * @see info.monitorenter.gui.chart.IAxisLabelFormatter#getUnit()
    */
   public AUnit getUnit() {
@@ -199,15 +197,19 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
   public int hashCode() {
     final int prime = 31;
     int result = 1;
-    result = prime * result
-        + ((this.m_propertyChangeSupport == null) ? 0 : this.m_propertyChangeSupport.hashCode());
+    result =
+        prime * result
+            + ((this.m_propertyChangeSupport == null)
+                ? 0
+                : this.m_propertyChangeSupport.hashCode());
     return result;
   }
 
   /**
    * Void adapter method implementation - optional to override.
+   *
    * <p>
-   * 
+   *
    * @see info.monitorenter.gui.chart.IAxisLabelFormatter#initPaintIteration()
    */
   public void initPaintIteration() {
@@ -215,26 +217,25 @@ public abstract class ALabelFormatter implements IAxisLabelFormatter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#removePropertyChangeListener(java.lang.String,
-   *      java.beans.PropertyChangeListener)
+   * @see
+   *     info.monitorenter.gui.chart.IAxisLabelFormatter#removePropertyChangeListener(java.lang.String,
+   *     java.beans.PropertyChangeListener)
    */
-  public void removePropertyChangeListener(final String property,
-      final PropertyChangeListener listener) {
+  public void removePropertyChangeListener(
+      final String property, final PropertyChangeListener listener) {
     this.m_propertyChangeSupport.removePropertyChangeListener(listener);
   }
 
   /**
    * Intended for {@link info.monitorenter.gui.chart.axis.AAxis} only.
+   *
+   * <p>Do never invoke this! This is only public for package sorting reasons.
+   *
    * <p>
-   * 
-   * Do never invoke this! This is only public for package sorting reasons.
-   * <p>
-   * 
-   * @param axis
-   *          The m_axis to set.
+   *
+   * @param axis The m_axis to set.
    */
   public void setAxis(final IAxis<?> axis) {
     this.m_axis = axis;
   }
-
 }

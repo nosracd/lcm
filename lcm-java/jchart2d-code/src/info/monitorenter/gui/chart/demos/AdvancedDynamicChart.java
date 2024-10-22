@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -49,35 +49,31 @@ import java.text.SimpleDateFormat;
 import javax.swing.JFrame;
 
 /**
- * <p>
  * An example that introduces some more advanced features of jchart2d.
- * </p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.11 $
- * 
  */
 public final class AdvancedDynamicChart {
 
   /**
    * Creates a new JFrame and adds a chart that uses advanced features.
+   *
    * <p>
-   * 
-   * @param args
-   *          command line arguments, unused.
+   *
+   * @param args command line arguments, unused.
    */
   public static void main(final String[] args) {
     // Create a chart:
     Chart2D chart = new Chart2D();
-    
+
     // We want to use a date format for the y axis.
     // Currently works only this way:
     AAxis<IAxisScalePolicy> yAxis = new AxisLinear<IAxisScalePolicy>();
 
     // Number formatter does not work for AxisAutoUnit.
     AAxis<IAxisScalePolicy> xAxis = new AxisLinear<IAxisScalePolicy>();
-    
+
     // Set a date formatter:
     yAxis.setFormatter(new LabelFormatterDate(new SimpleDateFormat("HH:mm:ss")));
     chart.setAxisYLeft(yAxis, 0);
@@ -105,9 +101,15 @@ public final class AdvancedDynamicChart {
     trace.setColor(Color.RED);
 
     // set a stroke (pattern to render the trace)
-    Stroke stroke = new BasicStroke(1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f,
-    // dash pattern, dash limit
-        new float[] {15f, 10f }, 5f);
+    Stroke stroke =
+        new BasicStroke(
+            1f,
+            BasicStroke.CAP_BUTT,
+            BasicStroke.JOIN_ROUND,
+            10.0f,
+            // dash pattern, dash limit
+            new float[] {15f, 10f},
+            5f);
     trace.setStroke(stroke);
 
     // Add the trace to the chart:
@@ -120,15 +122,16 @@ public final class AdvancedDynamicChart {
     frame.getContentPane().add(new ChartPanel(chart));
     frame.setSize(400, 300);
     // Enable the termination button [cross on the upper right edge]:
-    frame.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
+    frame.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
     frame.setVisible(true);
     // Every 500 milliseconds a new value is collected.
     // The AxisSwap changes x and y data. Just a proof of concept.

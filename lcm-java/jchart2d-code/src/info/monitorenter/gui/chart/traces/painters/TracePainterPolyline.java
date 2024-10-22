@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -28,15 +28,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A trace painter that increases performance by summing up all points to render
- * for a paint iteration (submitted by
- * {@link #paintPoint(int, int, int, int, Graphics, ITracePoint2D)} invocations
- * between {@link #startPaintIteration(Graphics)} and
- * {@link #endPaintIteration(Graphics)}) and only invoking only one polyline
- * paint for a paint call of the corresponding
- * {@link info.monitorenter.gui.chart.Chart2D}.
+ * A trace painter that increases performance by summing up all points to render for a paint
+ * iteration (submitted by {@link #paintPoint(int, int, int, int, Graphics, ITracePoint2D)}
+ * invocations between {@link #startPaintIteration(Graphics)} and {@link
+ * #endPaintIteration(Graphics)}) and only invoking only one polyline paint for a paint call of the
+ * corresponding {@link info.monitorenter.gui.chart.Chart2D}.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  * @version $Revision: 1.22 $
  */
@@ -53,6 +52,7 @@ public class TracePainterPolyline extends ATracePainter {
 
   /**
    * Default Constructor.
+   *
    * <p>
    */
   public TracePainterPolyline() {
@@ -131,17 +131,20 @@ public class TracePainterPolyline extends ATracePainter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.traces.painters.ATracePainter#paintPoint(int,
-   *      int, int, int, java.awt.Graphics,
-   *      info.monitorenter.gui.chart.ITracePoint2D)
+   * @see info.monitorenter.gui.chart.traces.painters.ATracePainter#paintPoint(int, int, int, int,
+   *     java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  public void paintPoint(final int absoluteX, final int absoluteY, final int nextX,
-      final int nextY, final Graphics g, final ITracePoint2D original) {
+  public void paintPoint(
+      final int absoluteX,
+      final int absoluteY,
+      final int nextX,
+      final int nextY,
+      final Graphics g,
+      final ITracePoint2D original) {
     super.paintPoint(absoluteX, absoluteY, nextX, nextY, g, original);
     this.m_xPoints.add(Integer.valueOf(absoluteX));
     this.m_yPoints.add(Integer.valueOf(absoluteY));
-
   }
 
   /**
@@ -161,5 +164,4 @@ public class TracePainterPolyline extends ATracePainter {
       this.m_yPoints.clear();
     }
   }
-
 }

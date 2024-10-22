@@ -1,18 +1,18 @@
 /*
- *  ErrorBarWizard.java of project jchart2d, a wizard for 
- *  configuring error bars for a trace. 
+ *  ErrorBarWizard.java of project jchart2d, a wizard for
+ *  configuring error bars for a trace.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 09:50:20.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -49,27 +49,24 @@ import javax.swing.JTabbedPane;
 
 /**
  * A wizard to manage error bars for a trace.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  * @version $Revision: 1.11 $
  */
-public class ErrorBarWizard
-    extends JPanel {
+public class ErrorBarWizard extends JPanel {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 6973894101328190445L;
 
   /**
    * Main method for testing.
+   *
    * <p>
-   * 
-   * @param args
-   *            ignored.
+   *
+   * @param args ignored.
    */
-
   public static void main(final String[] args) {
     Chart2D chart = new Chart2D();
 
@@ -108,26 +105,25 @@ public class ErrorBarWizard
     // Show it:
     JFrame frame = new JFrame(ErrorBarWizard.class.getName());
     frame.getContentPane().add(wizard);
-    frame.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
+    frame.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
     // frame.setSize(600, 600);
-//    frame.pack();
+    //    frame.pack();
     frame.setVisible(true);
-
   }
 
   /**
    * Creates a wizard for controlling the error bars of the given trace.
-   * 
-   * @param trace
-   *            the trace to control the error bars of.
+   *
+   * @param trace the trace to control the error bars of.
    */
   public ErrorBarWizard(final ITrace2D trace) {
 
@@ -156,5 +152,4 @@ public class ErrorBarWizard
     this.setLayout(new BorderLayout());
     this.add(tabPolicies);
   }
-
 }

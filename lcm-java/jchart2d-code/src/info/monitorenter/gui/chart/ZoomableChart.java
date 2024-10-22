@@ -1,6 +1,6 @@
 /*
- *  ZoomableChart.java of project jchart2d, a chart enriched 
- *  by zoom functionality in x dimension. 
+ *  ZoomableChart.java of project jchart2d, a chart enriched
+ *  by zoom functionality in x dimension.
  *  Copyright (C) 2004 - 2011 Achim Westermann.
  *
  *  This library is free software; you can redistribute it and/or
@@ -38,38 +38,34 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <code>{@link info.monitorenter.gui.chart.Chart2D}</code> enriched by a
- * zoom-functionality in the x and y dimension.
+ * <code>{@link info.monitorenter.gui.chart.Chart2D}</code> enriched by a zoom-functionality in the
+ * x and y dimension.
+ *
  * <p>
- * 
+ *
  * @author Alessio Sambarino (Contributor)
- * @author Klaus Pesendorfer (Bugfix contributor) 
- * @author Anadi Mishra (Bugfix contributor) 
- * 
+ * @author Klaus Pesendorfer (Bugfix contributor)
+ * @author Anadi Mishra (Bugfix contributor)
  * @version $Revision: 1.19 $
- * 
  */
 public class ZoomableChart extends Chart2D implements MouseListener, MouseMotionListener {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = 8799808716942023907L;
 
   /**
-   * Store the last mouse click and test in the mouseDragged-method which
-   * mouse-button was clicked.
+   * Store the last mouse click and test in the mouseDragged-method which mouse-button was clicked.
    */
   private int m_lastPressedButton;
 
   /** The starting point of the mouse drag operation (click, then move). */
   private Point2D m_startPoint;
 
-  /**
-   * Range policy used to zoom out to the minimum bounds that show every data
-   * point.
-   */
+  /** Range policy used to zoom out to the minimum bounds that show every data point. */
   private IRangePolicy m_zoomAllRangePolicy = new RangePolicyUnbounded();
 
   /** The area to zoom. */
@@ -77,6 +73,7 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public ZoomableChart() {
@@ -103,7 +100,9 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
       return;
     }
 
-    if ((e.getY() < 20) || (e.getY() > this.getYChartStart()) || (e.getX() < 20)
+    if ((e.getY() < 20)
+        || (e.getY() > this.getYChartStart())
+        || (e.getX() < 20)
         || (e.getX() > this.getXChartEnd())) {
       // nop
 
@@ -221,16 +220,16 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
       }
 
       List<IAxis<?>> axisList = this.getAxes();
-      for (Iterator<IAxis<?>> i = axisList.iterator(); i.hasNext();) {
+      for (Iterator<IAxis<?>> i = axisList.iterator(); i.hasNext(); ) {
         IAxis<?> iAxis = i.next();
         if ((Chart2D.CHART_POSITION_BOTTOM == iAxis.getAxisPosition())
-            || (Chart2D.CHART_POSITION_TOP == iAxis.getAxisPosition())) {// its
+            || (Chart2D.CHART_POSITION_TOP == iAxis.getAxisPosition())) { // its
           // x
           // axis
           this.zoom(iAxis, startPx, endPx);
         }
         if ((Chart2D.CHART_POSITION_LEFT == iAxis.getAxisPosition())
-            || (Chart2D.CHART_POSITION_RIGHT == iAxis.getAxisPosition())) {// its
+            || (Chart2D.CHART_POSITION_RIGHT == iAxis.getAxisPosition())) { // its
           // x
           // axis
           this.zoom(iAxis, startPy, endPy);
@@ -260,13 +259,11 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
 
   /**
    * Zooms to the selected bounds in x-axis.
+   *
    * <p>
-   * 
-   * @param xmin
-   *          the lower x bound.
-   * 
-   * @param xmax
-   *          the upper x bound.
+   *
+   * @param xmin the lower x bound.
+   * @param xmax the upper x bound.
    */
   public void zoom(final double xmin, final double xmax) {
 
@@ -279,21 +276,13 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
 
   /**
    * Zooms the axis to the pixel value of start and end points.
-   * <p>
-   * Does not check for the position of axis so the caller must take care to
-   * provide start x and end x for horizontal and start y and end y for vertical
-   * axes.
-   * 
-   * @param axis
-   *          the axis to zoom.
-   * 
-   * @param startP
-   *          the start coordinate in the dimension of the given axis in pixel
-   *          coords.
-   * 
-   * @param endP
-   *          the end coordinate in the dimension of the given axis in pixel
-   *          coords.
+   *
+   * <p>Does not check for the position of axis so the caller must take care to provide start x and
+   * end x for horizontal and start y and end y for vertical axes.
+   *
+   * @param axis the axis to zoom.
+   * @param startP the start coordinate in the dimension of the given axis in pixel coords.
+   * @param endP the end coordinate in the dimension of the given axis in pixel coords.
    */
   public void zoom(IAxis<?> axis, final double startP, final double endP) {
 
@@ -308,19 +297,13 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
 
   /**
    * Zooms to the selected bounds in both directions.
+   *
    * <p>
-   * 
-   * @param xmin
-   *          the lower x bound (value of chart (vs. pixel of screen)).
-   * 
-   * @param xmax
-   *          the upper x bound (value of chart (vs. pixel of screen)).
-   * 
-   * @param ymin
-   *          the lower y bound (value of chart (vs. pixel of screen)).
-   * 
-   * @param ymax
-   *          the upper y bound (value of chart (vs. pixel of screen)).
+   *
+   * @param xmin the lower x bound (value of chart (vs. pixel of screen)).
+   * @param xmax the upper x bound (value of chart (vs. pixel of screen)).
+   * @param ymin the lower y bound (value of chart (vs. pixel of screen)).
+   * @param ymax the upper y bound (value of chart (vs. pixel of screen)).
    */
   public void zoom(final double xmin, final double xmax, final double ymin, final double ymax) {
 
@@ -337,12 +320,13 @@ public class ZoomableChart extends Chart2D implements MouseListener, MouseMotion
 
   /**
    * Resets the zooming area to a range that displays all data.
+   *
    * <p>
    */
   public void zoomAll() {
     List<IAxis<?>> axisList = this.getAxes();
-    for (Iterator<IAxis<?>> i = axisList.iterator(); i.hasNext();) {
-      IAxis<?> iAxis =  i.next();
+    for (Iterator<IAxis<?>> i = axisList.iterator(); i.hasNext(); ) {
+      IAxis<?> iAxis = i.next();
       iAxis.setRangePolicy(this.m_zoomAllRangePolicy);
     }
   }

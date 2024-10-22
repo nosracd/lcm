@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,53 +31,45 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JCheckBoxMenuItem;
 
 /**
- * <code>Action</code> that invokes
- * {@link info.monitorenter.gui.chart.Chart2D#setPaintLabels(boolean)} on a
- * constructor given {@link info.monitorenter.gui.chart.Chart2D}.
+ * <code>Action</code> that invokes {@link
+ * info.monitorenter.gui.chart.Chart2D#setPaintLabels(boolean)} on a constructor given {@link
+ * info.monitorenter.gui.chart.Chart2D}.
+ *
+ * <p>This action is not used by the context menu labels of {@link
+ * info.monitorenter.gui.chart.views.ChartPanel} because that instance deactivates this feature in
+ * order to use a custom {@link javax.swing.JLabel} that triggers a popup menu for trace controls.
+ *
  * <p>
- * 
- * This action is not used by the context menu labels of
- * {@link info.monitorenter.gui.chart.views.ChartPanel} because that instance
- * deactivates this feature in order to use a custom {@link javax.swing.JLabel}
- * that triggers a popup menu for trace controls.
- * <p>
- * 
+ *
  * <h2>Caution</h2>
- * This implementation only works if assigned to a
- * {@link javax.swing.JCheckBoxMenuItem}: It assumes that the source instance
- * given to {@link #actionPerformed(ActionEvent)} within the action event is of
- * that type as the state information (turn paint labels on or off) is needed.
+ *
+ * This implementation only works if assigned to a {@link javax.swing.JCheckBoxMenuItem}: It assumes
+ * that the source instance given to {@link #actionPerformed(ActionEvent)} within the action event
+ * is of that type as the state information (turn paint labels on or off) is needed.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.8 $
  */
-public class Chart2DActionSetPaintLabels
-    extends AChart2DAction {
+public class Chart2DActionSetPaintLabels extends AChart2DAction {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = 2032168563789294815L;
 
   /**
-   * Create an <code>Action</code> that accesses the axis, identifies itself
-   * with the given action String and invokes
-   * {@link info.monitorenter.gui.chart.Chart2D#setPaintLabels(boolean)} on the
+   * Create an <code>Action</code> that accesses the axis, identifies itself with the given action
+   * String and invokes {@link info.monitorenter.gui.chart.Chart2D#setPaintLabels(boolean)} on the
    * chart upon selection.
-   * 
-   * @param chart
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
+   *
+   * @param chart the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
   public Chart2DActionSetPaintLabels(final Chart2D chart, final String description) {
     super(chart, description);
@@ -99,8 +91,8 @@ public class Chart2DActionSetPaintLabels
   public void propertyChange(final PropertyChangeEvent evt) {
     String property = evt.getPropertyName();
     if (property.equals(Chart2D.PROPERTY_PAINTLABELS)) {
-      this.firePropertyChange(PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED, evt.getOldValue(),
-          evt.getNewValue());
+      this.firePropertyChange(
+          PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED, evt.getOldValue(), evt.getNewValue());
     }
   }
 }

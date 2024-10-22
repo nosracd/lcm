@@ -1,6 +1,6 @@
 /*
- *  ErrorBarPolicyRelative.java of project jchart2d, configurable 
- *  info.monitorenter.gui.chart.IErrorBarPolicy that adds a 
+ *  ErrorBarPolicyRelative.java of project jchart2d, configurable
+ *  info.monitorenter.gui.chart.IErrorBarPolicy that adds a
  *  relative error to the points to render.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 10.08.2006 19:37:54.
  *
@@ -42,19 +42,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Configurable <code>{@link info.monitorenter.gui.chart.IErrorBarPolicy}</code>
- * that adds a relative error (relative to the absolute values) to the points to
- * render.
+ * Configurable <code>{@link info.monitorenter.gui.chart.IErrorBarPolicy}</code> that adds a
+ * relative error (relative to the absolute values) to the points to render.
+ *
+ * <p>You should not use this if you have a small value range but very high values: The relative
+ * value will cause exteremely long lines (be much higher than the value range to display) and fold
+ * the trace to a minimum line.
+ *
  * <p>
- * 
- * You should not use this if you have a small value range but very high values:
- * The relative value will cause exteremely long lines (be much higher than the
- * value range to display) and fold the trace to a minimum line.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.23 $
  */
 public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
@@ -70,19 +67,14 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
   /**
    * Creates an instance with the given relative errors.
+   *
+   * <p>The relative error is related to the absolut x and y values to render. It has to be between
+   * 0.0 and 1.0.
+   *
    * <p>
-   * 
-   * The relative error is related to the absolut x and y values to render. It
-   * has to be between 0.0 and 1.0.
-   * <p>
-   * 
-   * @param relativeError
-   *          the relative error value between 0.0 and 1.0 for x and y
-   *          dimension.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is not between 0.0 and 1.0.
-   * 
+   *
+   * @param relativeError the relative error value between 0.0 and 1.0 for x and y dimension.
+   * @throws IllegalArgumentException if the argument is not between 0.0 and 1.0.
    * @see #ErrorBarPolicyRelative(double, double)
    */
   public ErrorBarPolicyRelative(final double relativeError) throws IllegalArgumentException {
@@ -91,20 +83,15 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
   /**
    * Creates an instance with the given relative errors.
+   *
+   * <p>The relative error is related to the absolut x and y values to render. It has to be between
+   * 0.0 and 1.0.
+   *
    * <p>
-   * 
-   * The relative error is related to the absolut x and y values to render. It
-   * has to be between 0.0 and 1.0.
-   * <p>
-   * 
-   * @param relativeXError
-   *          the relative x error value between 0.0 and 1.0.
-   * 
-   * @param relativeYError
-   *          the relative y error value between 0.0 and 1.0.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is not between 0.0 and 1.0.
+   *
+   * @param relativeXError the relative x error value between 0.0 and 1.0.
+   * @param relativeYError the relative y error value between 0.0 and 1.0.
+   * @throws IllegalArgumentException if the argument is not between 0.0 and 1.0.
    */
   public ErrorBarPolicyRelative(final double relativeXError, final double relativeYError)
       throws IllegalArgumentException {
@@ -127,12 +114,12 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
       return false;
     }
     final ErrorBarPolicyRelative other = (ErrorBarPolicyRelative) obj;
-    if (Double.doubleToLongBits(this.m_relativeXError) != Double
-        .doubleToLongBits(other.m_relativeXError)) {
+    if (Double.doubleToLongBits(this.m_relativeXError)
+        != Double.doubleToLongBits(other.m_relativeXError)) {
       return false;
     }
-    if (Double.doubleToLongBits(this.m_relativeYError) != Double
-        .doubleToLongBits(other.m_relativeYError)) {
+    if (Double.doubleToLongBits(this.m_relativeYError)
+        != Double.doubleToLongBits(other.m_relativeYError)) {
       return false;
     }
     return true;
@@ -161,8 +148,8 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
     panel.add(xErrorLable, gbc);
 
-    final SpinnerModel numberXModel = new SpinnerNumberModel(ErrorBarPolicyRelative.this
-        .getRelativeXError() * 100, 0, 100, 1);
+    final SpinnerModel numberXModel =
+        new SpinnerNumberModel(ErrorBarPolicyRelative.this.getRelativeXError() * 100, 0, 100, 1);
     final JSpinner xErrorSelector = new JSpinner(numberXModel);
 
     gbc.gridx = 1;
@@ -187,8 +174,8 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
     panel.add(yErrorLable, gbc);
 
-    final SpinnerModel numberYModel = new SpinnerNumberModel(ErrorBarPolicyRelative.this
-        .getRelativeYError() * 100, 0, 100, 1);
+    final SpinnerModel numberYModel =
+        new SpinnerNumberModel(ErrorBarPolicyRelative.this.getRelativeYError() * 100, 0, 100, 1);
     final JSpinner yErrorSelector = new JSpinner(numberYModel);
 
     gbc.gridx = 1;
@@ -197,31 +184,34 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
     panel.add(yErrorSelector, gbc);
 
     // actions:
-    xErrorSelector.addChangeListener(new ChangeListener() {
-      public void stateChanged(final ChangeEvent e) {
-        final JSpinner spinner = (JSpinner) e.getSource();
-        final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
-        final Number number = model.getNumber();
-        ErrorBarPolicyRelative.this.setRelativeXError(number.doubleValue() / 100);
-      }
-    });
+    xErrorSelector.addChangeListener(
+        new ChangeListener() {
+          public void stateChanged(final ChangeEvent e) {
+            final JSpinner spinner = (JSpinner) e.getSource();
+            final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
+            final Number number = model.getNumber();
+            ErrorBarPolicyRelative.this.setRelativeXError(number.doubleValue() / 100);
+          }
+        });
 
-    yErrorSelector.addChangeListener(new ChangeListener() {
-      public void stateChanged(final ChangeEvent e) {
-        final JSpinner spinner = (JSpinner) e.getSource();
-        final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
-        final Number number = model.getNumber();
-        ErrorBarPolicyRelative.this.setRelativeYError(number.doubleValue() / 100);
-      }
-    });
+    yErrorSelector.addChangeListener(
+        new ChangeListener() {
+          public void stateChanged(final ChangeEvent e) {
+            final JSpinner spinner = (JSpinner) e.getSource();
+            final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
+            final Number number = model.getNumber();
+            ErrorBarPolicyRelative.this.setRelativeYError(number.doubleValue() / 100);
+          }
+        });
 
     return panel;
   }
 
   /**
    * Returns the relative x error between 0 and 1.
+   *
    * <p>
-   * 
+   *
    * @return the relative x error.
    */
   public final double getRelativeXError() {
@@ -230,8 +220,9 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
   /**
    * Returns the relative y error between 0 and 1.
+   *
    * <p>
-   * 
+   *
    * @return the relative y Error.
    */
   public final double getRelativeYError() {
@@ -268,76 +259,80 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeXError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeXError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetNegativeXError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
-    final double error = (xPixel - this.getTrace().getRenderer().getXChartStart())
-        * this.m_relativeXError;
+  protected int internalGetNegativeXError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
+    final double error =
+        (xPixel - this.getTrace().getRenderer().getXChartStart()) * this.m_relativeXError;
     final int result = (int) Math.round(xPixel - error);
     return result;
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeYError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeYError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetNegativeYError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
-    final int error = (int) Math.round((this.getTrace().getRenderer().getYChartStart() - yPixel)
-        * this.m_relativeYError);
+  protected int internalGetNegativeYError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
+    final int error =
+        (int)
+            Math.round(
+                (this.getTrace().getRenderer().getYChartStart() - yPixel) * this.m_relativeYError);
     return yPixel + error;
-
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveXError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveXError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetPositiveXError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
-    final double error = (xPixel - this.getTrace().getRenderer().getXChartStart())
-        * this.m_relativeXError;
+  protected int internalGetPositiveXError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
+    final double error =
+        (xPixel - this.getTrace().getRenderer().getXChartStart()) * this.m_relativeXError;
     final int result = (int) Math.round(xPixel + error);
     return result;
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveYError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveYError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetPositiveYError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
+  protected int internalGetPositiveYError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
     // y pixel are bigger the lower the value is, so inversion
     // is needed here:
-    final int error = (int) Math.round((this.getTrace().getRenderer().getYChartStart() - yPixel)
-        * this.m_relativeYError);
+    final int error =
+        (int)
+            Math.round(
+                (this.getTrace().getRenderer().getYChartStart() - yPixel) * this.m_relativeYError);
     return yPixel - error;
   }
 
   /**
    * Sets the relative X error to add to each error bar.
+   *
+   * <p>The relative error is related to the absolute x values to render. It has to be between 0.0
+   * and 1.0.
+   *
    * <p>
-   * 
-   * The relative error is related to the absolute x values to render. It has to
-   * be between 0.0 and 1.0.
-   * <p>
-   * 
-   * @param relativeXError
-   *          a value between 0.0 and 1.0.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is not between 0.0 and 1.0.
+   *
+   * @param relativeXError a value between 0.0 and 1.0.
+   * @throws IllegalArgumentException if the argument is not between 0.0 and 1.0.
    */
   public final void setRelativeXError(final double relativeXError) throws IllegalArgumentException {
     if ((relativeXError <= 0.0) || (relativeXError >= 1.0)) {
-      throw new IllegalArgumentException("Given relative error (" + relativeXError
-          + ")has to be between 0.0 and 1.0.");
+      throw new IllegalArgumentException(
+          "Given relative error (" + relativeXError + ")has to be between 0.0 and 1.0.");
     }
     final boolean change = this.m_relativeXError != relativeXError;
     if (change) {
@@ -348,22 +343,19 @@ public class ErrorBarPolicyRelative extends AErrorBarPolicyConfigurable {
 
   /**
    * Sets the relative Y error to add to each error bar.
+   *
+   * <p>The relative error is related to the absolut y values to render. It has to be between 0.0
+   * and 1.0.
+   *
    * <p>
-   * 
-   * The relative error is related to the absolut y values to render. It has to
-   * be between 0.0 and 1.0.
-   * <p>
-   * 
-   * @param relativeYError
-   *          a value between 0.0 and 1.0.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is not between 0.0 and 1.0.
+   *
+   * @param relativeYError a value between 0.0 and 1.0.
+   * @throws IllegalArgumentException if the argument is not between 0.0 and 1.0.
    */
   public final void setRelativeYError(final double relativeYError) throws IllegalArgumentException {
     if ((relativeYError <= 0.0) || (relativeYError >= 1.0)) {
-      throw new IllegalArgumentException("Given relative error (" + relativeYError
-          + ")has to be between 0.0 and 1.0.");
+      throw new IllegalArgumentException(
+          "Given relative error (" + relativeYError + ")has to be between 0.0 and 1.0.");
     }
     final boolean change = this.m_relativeYError != relativeYError;
     if (change) {

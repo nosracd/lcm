@@ -1,5 +1,5 @@
 /*
- *  IAxisTitlePainter.java of project jchart2d, interface for an painter of the 
+ *  IAxisTitlePainter.java of project jchart2d, interface for an painter of the
  *  title of an axis of the Chart2D.
  *  Copyright 2004 - 2011 (C) Achim Westermann.
  *
@@ -27,66 +27,49 @@ import java.io.Serializable;
 
 /**
  * Interface for an painter of the title of an axis of the Chart2D.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  * @version $Revision: 1.11 $
- * 
  * @since 2.2.1
- * 
  */
 public interface IAxisTitlePainter extends Serializable {
 
- 
-
   /**
-   * Returns the height of this axis title in px with respect to the current
-   * title of the given axis title.
+   * Returns the height of this axis title in px with respect to the current title of the given axis
+   * title.
+   *
    * <p>
-   * 
-   * @param axis
-   *          the instance this title painter is working for.
-   *          
-   * @param g2d
-   *          needed for size informations (e.g. font widths).
-   * 
-   * @return the height of this axis title in px with respect to the current
-   *         title of the given axis.
+   *
+   * @param axis the instance this title painter is working for.
+   * @param g2d needed for size informations (e.g. font widths).
+   * @return the height of this axis title in px with respect to the current title of the given
+   *     axis.
    */
   public int getHeight(final IAxis<?> axis, final Graphics g2d);
 
-
   /**
-   * Returns the width of this axis title in px with respect to the current
-   * title of the given axis.
+   * Returns the width of this axis title in px with respect to the current title of the given axis.
+   *
    * <p>
-   * 
-   * @param axis
-   *          the instance this title painter is working for.
-   * 
-   * @param g2d
-   *          needed for size informations (e.g. font widths).
-   * 
-   * @return the width of this axis title in px with respect to the current
-   *         title of the given axis.
+   *
+   * @param axis the instance this title painter is working for.
+   * @param g2d needed for size informations (e.g. font widths).
+   * @return the width of this axis title in px with respect to the current title of the given axis.
    */
   public int getWidth(final IAxis<?> axis, final Graphics g2d);
 
   /**
    * Invoked to let implementations paint the given title of the given axis.
+   *
+   * <p>Implementations should make use of the information about the axis coordinates (start
+   * pixel,end pixel) and the graphics context (for font dimensions) to do it right.
+   *
    * <p>
-   * 
-   * Implementations should make use of the information about the axis
-   * coordinates (start pixel,end pixel) and the graphics context (for font
-   * dimensions) to do it right.
-   * <p>
-   * 
-   * @param axis
-   *          the axis to paint the title of.
-   * @param g
-   *          needed for size informations.
+   *
+   * @param axis the axis to paint the title of.
+   * @param g needed for size informations.
    */
   public void paintTitle(final IAxis<?> axis, final Graphics g);
-
 }

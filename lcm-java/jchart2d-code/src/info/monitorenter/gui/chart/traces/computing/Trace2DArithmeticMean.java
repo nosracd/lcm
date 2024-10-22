@@ -1,7 +1,7 @@
 /*
- *  Trace2DArithmeticMean.java of project jchart2d, a trace 
- *  that accumulates the latest n points added to a single point with the arithmetic 
- *  mean value. 
+ *  Trace2DArithmeticMean.java of project jchart2d, a trace
+ *  that accumulates the latest n points added to a single point with the arithmetic
+ *  mean value.
  *  Copyright 2004 - 2011 (C) Achim Westermann.
  *
  *  This library is free software; you can redistribute it and/or
@@ -33,35 +33,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * A trace that accumulates the latest n points added to points with the
- * arithmetic mean value.
- * <p>
- * 
- * This trace will not reduce the amount of n points added to one carrying the arithmetic mean but 
- * always add a point that has the average of the recent added n points.
- * <p>
- * 
- * Please note that this trace scan be used in two modes:
+ * A trace that accumulates the latest n points added to points with the arithmetic mean value.
+ *
+ * <p>This trace will not reduce the amount of n points added to one carrying the arithmetic mean
+ * but always add a point that has the average of the recent added n points.
+ *
+ * <p>Please note that this trace scan be used in two modes:
+ *
  * <ol>
- * <li>Stand alone: <br/>
- * Add the <code>ITrace2D</code> implementation to a chart and add data points
- * to it as normal.</li>
- * <li>Computing trace: <br/>
- * Add the <code>ITrace2D</code> implementation as a computing trace to an
- * existing trace via
- * <code>{@link info.monitorenter.gui.chart.ITrace2D#addComputingTrace(info.monitorenter.gui.chart.ITrace2D)}</code>
- * and only add data points to the original trace. Add the computing trace to
- * the same chart and updates of the original trace will be reflected on the
- * computing trace as well.</li>
+ *   <li>Stand alone: <br>
+ *       Add the <code>ITrace2D</code> implementation to a chart and add data points to it as
+ *       normal.
+ *   <li>Computing trace: <br>
+ *       Add the <code>ITrace2D</code> implementation as a computing trace to an existing trace via
+ *       <code>
+ *       {@link info.monitorenter.gui.chart.ITrace2D#addComputingTrace(info.monitorenter.gui.chart.ITrace2D)}
+ *       </code> and only add data points to the original trace. Add the computing trace to the same
+ *       chart and updates of the original trace will be reflected on the computing trace as well.
  * </ol>
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  * @version $Revision: 1.15 $
- * 
  * @since 7.0.0
- * 
  */
 public class Trace2DArithmeticMean extends ATrace2D {
 
@@ -75,14 +70,13 @@ public class Trace2DArithmeticMean extends ATrace2D {
   private final List<ITracePoint2D> m_points = new LinkedList<ITracePoint2D>();
 
   /**
-   * The amount of n recent points to buffer. private int m_pointBufferSize; /**
-   * Constructor with the given amount of points to merge into one point with
-   * their arithmetic mean.
+   * The amount of n recent points to buffer. private int m_pointBufferSize; /** Constructor with
+   * the given amount of points to merge into one point with their arithmetic mean.
+   *
    * <p>
-   * 
-   * @param arithmenticMeanSpan
-   *          the amount of points to merge into one point with their arithmetic
-   *          mean.
+   *
+   * @param arithmenticMeanSpan the amount of points to merge into one point with their arithmetic
+   *     mean.
    */
   public Trace2DArithmeticMean(final int arithmenticMeanSpan) {
     super();
@@ -90,7 +84,8 @@ public class Trace2DArithmeticMean extends ATrace2D {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.traces.ATrace2D#addPointInternal(info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.traces.ATrace2D#addPointInternal(info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
   protected boolean addPointInternal(final ITracePoint2D p) {
@@ -134,12 +129,13 @@ public class Trace2DArithmeticMean extends ATrace2D {
   }
 
   /**
-   * Returns a point with the arithmetic mean values for x and y computed of the
-   * last n added points (n was constructor - given).
+   * Returns a point with the arithmetic mean values for x and y computed of the last n added points
+   * (n was constructor - given).
+   *
    * <p>
-   * 
-   * @return a point with the arithmetic mean values for x and y computed of the
-   *         last n added points (n was constructor - given).
+   *
+   * @return a point with the arithmetic mean values for x and y computed of the last n added points
+   *     (n was constructor - given).
    */
   private ITracePoint2D getArithmeticMean() {
     double x = 0;
@@ -158,7 +154,6 @@ public class Trace2DArithmeticMean extends ATrace2D {
     x /= divisor;
     result = this.getRenderer().getTracePointProvider().createTracePoint(x, y);
     return result;
-
   }
 
   /**
@@ -209,16 +204,15 @@ public class Trace2DArithmeticMean extends ATrace2D {
   protected void removeAllPointsInternal() {
     this.m_pointBuffer.clear();
     this.m_points.clear();
-
   }
 
   /**
-   * @see info.monitorenter.gui.chart.traces.ATrace2D#removePointInternal(info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.traces.ATrace2D#removePointInternal(info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
   protected ITracePoint2D removePointInternal(final ITracePoint2D point) {
     final ITracePoint2D result = this.m_points.remove(0);
     return result;
   }
-
 }

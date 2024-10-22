@@ -1,6 +1,6 @@
 /*
- *  ZoomTest.java of project jchart2d, demonstration of a zoom-enabled 
- *  chart with error bars and a logarithmic y axis. 
+ *  ZoomTest.java of project jchart2d, demonstration of a zoom-enabled
+ *  chart with error bars and a logarithmic y axis.
  *  Copyright 2007 - 2011 (C) Achim Westermann, created on 23:59:21.
  *
  *  This library is free software; you can redistribute it and/or
@@ -45,19 +45,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
- * Demonstration of a zoom - enabled chart (
- * {@link info.monitorenter.gui.chart.ZoomableChart}) with error bars and an
- * <code>{@link AxisLogE}</code> for the y axis.
+ * Demonstration of a zoom - enabled chart ( {@link info.monitorenter.gui.chart.ZoomableChart}) with
+ * error bars and an <code>{@link AxisLogE}</code> for the y axis.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  * @version $Revision: 1.14 $
  */
 public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
 
   /**
    * Action adapter for zoomAllButton.
+   *
    * <p>
    */
   class ZoomAllAdapter implements ActionListener {
@@ -65,12 +65,12 @@ public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
     private ZoomableChart m_zoomableChart;
 
     /**
-     * Creates an instance that will reset zooming on the given zoomable chart
-     * upon the triggered action.
+     * Creates an instance that will reset zooming on the given zoomable chart upon the triggered
+     * action.
+     *
      * <p>
-     * 
-     * @param chart
-     *          the target to reset zoomin on.
+     *
+     * @param chart the target to reset zoomin on.
      */
     public ZoomAllAdapter(final ZoomableChart chart) {
       this.m_zoomableChart = chart;
@@ -86,16 +86,17 @@ public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = 1497610918434714345L;
 
   /**
    * Main startup method.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
 
@@ -103,11 +104,11 @@ public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
     // Show the frame
     zoomTest.setSize(640, 480);
     zoomTest.setVisible(true);
-
   }
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public ZoomChartWithErrorBarsAndLogAxis() {
@@ -123,9 +124,9 @@ public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
     // Create ITrace
     ITrace2D trace = new Trace2DSimple("Trace");
     trace.setColor(Color.BLUE);
-    // Add the trace to the chart before adding any point / point highlighters / error bar policies! 
+    // Add the trace to the chart before adding any point / point highlighters / error bar policies!
     chart.addTrace(trace);
-    IErrorBarPolicy< ? > errorBarPolicy = new ErrorBarPolicyAbsoluteSummation(4, 4);
+    IErrorBarPolicy<?> errorBarPolicy = new ErrorBarPolicyAbsoluteSummation(4, 4);
     errorBarPolicy.setShowPositiveYErrors(true);
     IErrorBarPainter painter = new ErrorBarPainter();
     errorBarPolicy.addErrorBarPainter(painter);
@@ -149,15 +150,15 @@ public class ZoomChartWithErrorBarsAndLogAxis extends JFrame {
     c.add(zoomAllButton, BorderLayout.NORTH);
 
     // Enable the termination button:
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
-
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
   }
 }

@@ -8,12 +8,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -33,38 +33,30 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileSystemView;
 
 /**
- * <p>
- * Configureable implementation of {@link javax.swing.filechooser.FileFilter}
- * that filters files by their extension (e.g.: ".txt").
- * </p>
- * <p>
- * The extension Strings are provided to the constructor (no configuration of
- * initialized instance provided yet) and have to be the sole extension without
- * the dot.
- * </p>
- * <p>
- * This class is most often used to configure {@link javax.swing.JFileChooser}
- * dialogs. Therefore it accepts all directories to allow browsing.
- * </p>
+ * Configureable implementation of {@link javax.swing.filechooser.FileFilter} that filters files by
+ * their extension (e.g.: ".txt").
+ *
+ * <p>The extension Strings are provided to the constructor (no configuration of initialized
+ * instance provided yet) and have to be the sole extension without the dot.
+ *
+ * <p>This class is most often used to configure {@link javax.swing.JFileChooser} dialogs. Therefore
+ * it accepts all directories to allow browsing.
+ *
  * <h3>Example usage:</h3>
- * <p>
- * 
- * <code>
- *  
+ *
+ * <p><code>
+ *
  *    ...
  *    JFileChooser fileChooser = new JFileChooser();
  *    FileFilter soundFileFilter = new FileFilterExtensions(new String[]{&quot;wav&quot;,&quot;mp3&quot;});
  *    fileChooser.setFileFilter(soundFileFilter);
  *    ...
- *  
+ *
  * </code>
- * 
- * </p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de>Achim Westermann </a>
  */
-public final class FileFilterExtensions
-    extends FileFilter implements INameFilter {
+public final class FileFilterExtensions extends FileFilter implements INameFilter {
   /** Filename extensions to filter for. */
   private String[] m_extensions;
 
@@ -73,13 +65,12 @@ public final class FileFilterExtensions
 
   /**
    * Creates an instance that will accept files with the given extensions.
+   *
    * <p>
-   * 
-   * @param extensionsWithoutDot
-   *            A String[] containing extension strings without the dot like:
-   *            <nobr><code>new String[]{"bat","txt","dict"}</code> </nobr>.
-   * @throws IllegalArgumentException
-   *             if the given extensions are inivalid.
+   *
+   * @param extensionsWithoutDot A String[] containing extension strings without the dot like:
+   *     <nobr><code>new String[]{"bat","txt","dict"}</code> </nobr>.
+   * @throws IllegalArgumentException if the given extensions are inivalid.
    */
   public FileFilterExtensions(final String[] extensionsWithoutDot) throws IllegalArgumentException {
     this.verify(extensionsWithoutDot);
@@ -118,10 +109,10 @@ public final class FileFilterExtensions
 
   /**
    * Accept method used for files.
+   *
    * <p>
-   * 
-   * @param noDirFileNoURL
-   *            the path to the file.
+   *
+   * @param noDirFileNoURL the path to the file.
    * @return true if the file denoted by the given path is accepted.
    */
   private boolean acceptNoDirectory(final String noDirFileNoURL) {
@@ -162,10 +153,10 @@ public final class FileFilterExtensions
 
   /**
    * Returns true if the given String denotes a directory.
+   *
    * <p>
-   * 
-   * @param urlstring
-   *            the url format String pointing to a file.
+   *
+   * @param urlstring the url format String pointing to a file.
    * @return true if the given String denotes a directory.
    */
   private boolean isDirectory(final String urlstring) {
@@ -212,11 +203,12 @@ public final class FileFilterExtensions
   }
 
   /**
-   * Needed for {@link #isDirectory(String)}: We cannot use
-   * {@link System#getProperty(java.lang.String)} to determine file separators
-   * in applet context. That would possibly throw an SecurityAccessException.
+   * Needed for {@link #isDirectory(String)}: We cannot use {@link
+   * System#getProperty(java.lang.String)} to determine file separators in applet context. That
+   * would possibly throw an SecurityAccessException.
+   *
    * <p>
-   * 
+   *
    * @return true if current OS is windows.
    */
   private boolean isWindows() {
@@ -233,12 +225,11 @@ public final class FileFilterExtensions
 
   /**
    * Verifies the given extensions for valid format.
+   *
    * <p>
-   * 
-   * @param extensions
-   *            The array with the Strings of extensions.
-   * @throws IllegalArgumentException
-   *             If a String of the array is null or contains a dot ('.').
+   *
+   * @param extensions The array with the Strings of extensions.
+   * @throws IllegalArgumentException If a String of the array is null or contains a dot ('.').
    */
   private void verify(final String[] extensions) throws IllegalArgumentException {
     String current;

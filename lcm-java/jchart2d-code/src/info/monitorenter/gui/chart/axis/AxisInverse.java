@@ -1,7 +1,7 @@
 /*
- *  AAxisInverse.java of project jchart2d, 
- *  an IAxis implementations that inverts the values and shows 
- *  decreasing values (10, 9,... 1).  
+ *  AAxisInverse.java of project jchart2d,
+ *  an IAxis implementations that inverts the values and shows
+ *  decreasing values (10, 9,... 1).
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 20:33:13.
  *
  *  This library is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *  
+ *
  *  If you modify or optimize the code in a useful way please let me know.
  *  Achim.Westermann@gmx.de
  *
@@ -40,34 +40,25 @@ import java.util.List;
 
 /**
  * An {@link AAxis} with inverse display of values.
+ *
+ * <p>Labels and values are starting from the highest value and go down to the lowest one.
+ *
  * <p>
- * 
- * Labels and values are starting from the highest value and go down to the
- * lowest one.
- * <p>
- * 
- * @param <T>
- *          Subtypes may be more picky which scale policies the accept to
- *          disallow incorrect scales: This supports it (see
- *          {@link IAxis#setAxisScalePolicy(IAxisScalePolicy)}).  
- *           
+ *
+ * @param <T> Subtypes may be more picky which scale policies the accept to disallow incorrect
+ *     scales: This supports it (see {@link IAxis#setAxisScalePolicy(IAxisScalePolicy)}).
  * @author Andrea Plotegher (initial contribution)
- * 
- * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- *         (adaption for core)
- * 
+ * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a> (adaption for core)
  * @version $Revision: 1.20 $
  */
-
 public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
-   * 
    * An accessor for the x axis of a chart.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de>Achim Westermann </a>
-   * 
    * @see Chart2D#getAxisX()
    */
   protected class XDataInverseAccessor extends AAxis<T>.XDataAccessor {
@@ -77,10 +68,10 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
     /**
      * Creates an instance that accesses the given chart's x axis.
+     *
      * <p>
-     * 
-     * @param chart
-     *          the chart to access.
+     *
+     * @param chart the chart to access.
      */
     public XDataInverseAccessor(final Chart2D chart) {
 
@@ -88,8 +79,9 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
     }
 
     /**
-     * @see info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
-     *      info.monitorenter.util.Range)
+     * @see
+     *     info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
+     *     info.monitorenter.util.Range)
      */
     @Override
     protected void scaleTrace(final ITrace2D trace, final Range range) {
@@ -134,10 +126,10 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
    * Accesses the y axis of the {@link Chart2D}.
+   *
    * <p>
-   * 
+   *
    * @see AAxis#setAccessor(info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor)
-   * 
    * @see Chart2D#getAxisY()
    */
   protected class YDataInverseAccessor extends AAxis<T>.YDataAccessor {
@@ -147,10 +139,10 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
     /**
      * Creates an instance that accesses the y axis of the given chart.
+     *
      * <p>
-     * 
-     * @param chart
-     *          the chart to access.
+     *
+     * @param chart the chart to access.
      */
     public YDataInverseAccessor(final Chart2D chart) {
 
@@ -158,8 +150,9 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
     }
 
     /**
-     * @see info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
-     *      info.monitorenter.util.Range)
+     * @see
+     *     info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
+     *     info.monitorenter.util.Range)
      */
     @Override
     protected void scaleTrace(final ITrace2D trace, final Range range) {
@@ -205,6 +198,7 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public AxisInverse() {
@@ -213,14 +207,11 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
    * Constructor that uses the given label formatter for formatting labels.
+   *
    * <p>
-   * 
-   * @param formatter
-   *          needed for formatting labels of this axis.
-   * 
-   * @param scalePolicy
-   *          controls the ticks/labels and their distance.
-   * 
+   *
+   * @param formatter needed for formatting labels of this axis.
+   * @param scalePolicy controls the ticks/labels and their distance.
    */
   public AxisInverse(final IAxisLabelFormatter formatter, final T scalePolicy) {
     super(formatter, scalePolicy);
@@ -228,11 +219,11 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
    * @see info.monitorenter.gui.chart.axis.AAxis#createAccessor(info.monitorenter.gui.chart.Chart2D,
-   *      int, int)
+   *     int, int)
    */
   @Override
-  protected AChart2DDataAccessor createAccessor(final Chart2D chart, final int dimension,
-      final int position) {
+  protected AChart2DDataAccessor createAccessor(
+      final Chart2D chart, final int dimension, final int position) {
     AChart2DDataAccessor result;
     if (dimension == Chart2D.X) {
       // Don't allow a combination of dimension and position that is not usable:
@@ -255,7 +246,8 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.axis.AAxis#setAxisScalePolicy(info.monitorenter.gui.chart.IAxisScalePolicy)
+   * @see
+   *     info.monitorenter.gui.chart.axis.AAxis#setAxisScalePolicy(info.monitorenter.gui.chart.IAxisScalePolicy)
    */
   @SuppressWarnings("unchecked")
   @Override
@@ -263,22 +255,23 @@ public class AxisInverse<T extends IAxisScalePolicy> extends AAxis<T> {
     /*
      * I consider the necessary cast to T as a java bug (compare definition of T in class header):
      */
-    return super.setAxisScalePolicy((T)new IAxisScalePolicy() {
+    return super.setAxisScalePolicy(
+        (T)
+            new IAxisScalePolicy() {
 
-      public void initPaintIteration(IAxis axis) {
-        axisScalePolicy.initPaintIteration(axis);
+              public void initPaintIteration(IAxis axis) {
+                axisScalePolicy.initPaintIteration(axis);
+              }
 
-      }
+              public List<LabeledValue> getScaleValues(Graphics g2d, IAxis axis) {
 
-      public List<LabeledValue> getScaleValues(Graphics g2d, IAxis axis) {
-
-        List<LabeledValue> ret = axisScalePolicy.getScaleValues(g2d, axis);
-        for (LabeledValue label : ret) {
-          label.setValue(1.0 - label.getValue());
-        }
-        return ret;
-      }
-    });
+                List<LabeledValue> ret = axisScalePolicy.getScaleValues(g2d, axis);
+                for (LabeledValue label : ret) {
+                  label.setValue(1.0 - label.getValue());
+                }
+                return ret;
+              }
+            });
   }
 
   /**

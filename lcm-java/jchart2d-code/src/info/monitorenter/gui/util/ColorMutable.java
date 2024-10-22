@@ -1,5 +1,5 @@
 /*
- *  ColorMutable.java of project jchart2d, a mutable color. 
+ *  ColorMutable.java of project jchart2d, a mutable color.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on Jun 10, 2011
  *
  *  This library is free software; you can redistribute it and/or
@@ -10,7 +10,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,16 +31,13 @@ import java.awt.Graphics;
 
 /**
  * Mutable <code>{@link Color}</code> implementation.
+ *
+ * <p>The color is wrapped by the logic to fake mutability. As long as the color is not set setting
+ * of values will not have an effect but only be stored until color is set and then applied to it.
+ *
  * <p>
- * 
- * The color is wrapped by the logic to fake mutability. As long as the color is
- * not set setting of values will not have an effect but only be stored until
- * color is set and then applied to it.
- * <p>
- * 
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
 public class ColorMutable {
 
@@ -60,15 +57,13 @@ public class ColorMutable {
   private int m_red = -1;
 
   /**
-   * Sets the color to the graphics context if it is different and returns the
-   * previous one of the graphics context or null if there was no change.
+   * Sets the color to the graphics context if it is different and returns the previous one of the
+   * graphics context or null if there was no change.
+   *
    * <p>
-   * 
-   * @param g
-   *          the graphics context to use. 
-   * 
-   * @return the previously configured color of the graphics context or null if
-   *         nothing was done.
+   *
+   * @param g the graphics context to use.
+   * @return the previously configured color of the graphics context or null if nothing was done.
    */
   public synchronized Color applyColorIfChange(final Graphics g) {
     Color result = null;
@@ -81,16 +76,14 @@ public class ColorMutable {
     }
     return result;
   }
-  
+
   /**
    * Sets the color to the graphics context.
+   *
    * <p>
-   * 
-   * @param g
-   *          the graphics context to use. 
-   * 
-   * @return the previously configured color of the graphics context or null if
-   *         nothing was done.
+   *
+   * @param g the graphics context to use.
+   * @return the previously configured color of the graphics context or null if nothing was done.
    */
   public synchronized Color applyColorUnconditionally(final Graphics g) {
     Color result = null;
@@ -101,20 +94,18 @@ public class ColorMutable {
     }
     return result;
   }
-  
 
   /**
    * Asserts that the given value is between 0 and 255.
+   *
    * <p>
-   * 
-   * @param value
-   *          the value to check.
+   *
+   * @param value the value to check.
    */
   private void assertColorValue(final int value) {
     if (!((value >= 0) && (value <= 255))) {
       throw new RuntimeException("Argument has to be between 0 and 255. It is " + value);
     }
-
   }
 
   /**
@@ -156,19 +147,20 @@ public class ColorMutable {
 
   /**
    * Returns the alpha value of the wrapped color.
+   *
    * <p>
-   * 
+   *
    * @return the alpha value of the wrapped color.
    */
-
   public int getAlpha() {
     return this.m_alpha;
   }
 
   /**
    * Returns the blue value of the wrapped color.
+   *
    * <p>
-   * 
+   *
    * @return the blue value of the wrapped color.
    */
   public int getBlue() {
@@ -177,12 +169,12 @@ public class ColorMutable {
 
   /**
    * Returns the wrapped color.
+   *
+   * <p>This will be <code>null</code> if no color has been set before even if other values have
+   * been set before.
+   *
    * <p>
-   * 
-   * This will be <code>null</code> if no color has been set before even if
-   * other values have been set before.
-   * <p>
-   * 
+   *
    * @return the wrapped color.
    */
   public Color getColor() {
@@ -191,8 +183,9 @@ public class ColorMutable {
 
   /**
    * Returns the green value of the wrapped color.
+   *
    * <p>
-   * 
+   *
    * @return the green value of the wrapped color.
    */
   public int getGreen() {
@@ -201,8 +194,9 @@ public class ColorMutable {
 
   /**
    * Returns the red value of the wrapped color.
+   *
    * <p>
-   * 
+   *
    * @return the red value of the wrapped color.
    */
   public int getRed() {
@@ -226,16 +220,15 @@ public class ColorMutable {
 
   /**
    * Sets the transparency to use for painting.
+   *
+   * <p>This value will be fold into color. If color has not been configured before it will not have
+   * any effect (until a color is set).
+   *
+   * <p>Caution: using a value greater 0 may cost a multiple cpu load!
+   *
    * <p>
-   * This value will be fold into color. If color has not been configured before
-   * it will not have any effect (until a color is set).
-   * <p>
-   * Caution: using a value greater 0 may cost a multiple cpu load!
-   * <p>
-   * 
-   * @param alpha
-   *          a transparency value between 0 and 255.
-   * 
+   *
+   * @param alpha a transparency value between 0 and 255.
    * @return the previous transparency used.
    */
   public synchronized int setAlpha(final int alpha) {
@@ -248,8 +241,9 @@ public class ColorMutable {
       // also directly implant the transparency value to the color.
       final int orgTransparencyInt = this.m_color.getAlpha();
       if (alpha != orgTransparencyInt) {
-        final Color transparentColor = new Color(this.m_color.getRed(), this.m_color.getGreen(),
-            this.m_color.getBlue(), alpha);
+        final Color transparentColor =
+            new Color(
+                this.m_color.getRed(), this.m_color.getGreen(), this.m_color.getBlue(), alpha);
         this.setColor(transparentColor);
       }
     }
@@ -258,14 +252,13 @@ public class ColorMutable {
 
   /**
    * Sets the blue to use for painting.
+   *
+   * <p>This value will be fold into color. If color has not been configured before it will not have
+   * any effect (until a color is set).
+   *
    * <p>
-   * This value will be fold into color. If color has not been configured before
-   * it will not have any effect (until a color is set).
-   * <p>
-   * 
-   * @param blue
-   *          a blue value between 0 and 255.
-   * 
+   *
+   * @param blue a blue value between 0 and 255.
    * @return the previous blue used.
    */
   public synchronized int setBlue(final int blue) {
@@ -278,8 +271,9 @@ public class ColorMutable {
       // also directly implant the transparency value to the colour.
       final int orgvalue = this.m_color.getBlue();
       if (blue != orgvalue) {
-        final Color newColor = new Color(this.m_color.getRed(), this.m_color.getGreen(), blue,
-            this.m_color.getAlpha());
+        final Color newColor =
+            new Color(
+                this.m_color.getRed(), this.m_color.getGreen(), blue, this.m_color.getAlpha());
         this.setColor(newColor);
       }
     }
@@ -288,15 +282,14 @@ public class ColorMutable {
 
   /**
    * Sets the color to use.
+   *
+   * <p>If any other setters have been invoked before (e.g. <code>{@link #setAlpha(int)}</code>) and
+   * the internal color was null those values will be implanted to the new color before overtaking
+   * it.
+   *
    * <p>
-   * If any other setters have been invoked before (e.g.
-   * <code>{@link #setAlpha(int)}</code>) and the internal color was null those
-   * values will be implanted to the new color before overtaking it.
-   * <p>
-   * 
-   * @param color
-   *          the new color to use as base for modifications.
-   * 
+   *
+   * @param color the new color to use as base for modifications.
    * @return the previous color or null if none was set.
    */
   public synchronized Color setColor(final Color color) {
@@ -335,14 +328,13 @@ public class ColorMutable {
 
   /**
    * Sets the green to use for painting.
+   *
+   * <p>This value will be fold into color. If color has not been configured before it will not have
+   * any effect (until a color is set).
+   *
    * <p>
-   * This value will be fold into color. If color has not been configured before
-   * it will not have any effect (until a color is set).
-   * <p>
-   * 
-   * @param green
-   *          a green value between 0 and 255.
-   * 
+   *
+   * @param green a green value between 0 and 255.
    * @return the previous green used.
    */
   public synchronized int setGreen(final int green) {
@@ -355,8 +347,9 @@ public class ColorMutable {
       // also directly implant the transparency value to the colour.
       final int orgvalue = this.m_color.getGreen();
       if (green != orgvalue) {
-        final Color newColor = new Color(this.m_color.getRed(), green, this.m_color.getBlue(),
-            this.m_color.getAlpha());
+        final Color newColor =
+            new Color(
+                this.m_color.getRed(), green, this.m_color.getBlue(), this.m_color.getAlpha());
         this.setColor(newColor);
       }
     }
@@ -365,14 +358,13 @@ public class ColorMutable {
 
   /**
    * Sets the red to use for painting.
+   *
+   * <p>This value will be fold into color. If color has not been configured before it will not have
+   * any effect (until a color is set).
+   *
    * <p>
-   * This value will be fold into color. If color has not been configured before
-   * it will not have any effect (until a color is set).
-   * <p>
-   * 
-   * @param red
-   *          a red value between 0 and 255.
-   * 
+   *
+   * @param red a red value between 0 and 255.
    * @return the previous red used.
    */
   public synchronized int setRed(final int red) {
@@ -385,12 +377,15 @@ public class ColorMutable {
       // also directly implant the new value to the color.
       final int orgvalue = this.m_color.getRed();
       if (red != orgvalue) {
-        final Color newColor = new Color(this.m_red, this.m_color.getGreen(), this.m_color
-            .getBlue(), this.m_color.getAlpha());
+        final Color newColor =
+            new Color(
+                this.m_red,
+                this.m_color.getGreen(),
+                this.m_color.getBlue(),
+                this.m_color.getAlpha());
         this.setColor(newColor);
       }
     }
     return result;
   }
-
 }

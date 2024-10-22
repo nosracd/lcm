@@ -24,14 +24,12 @@ package info.monitorenter.gui.chart.errorbars;
 import info.monitorenter.gui.chart.pointpainters.PointPainterLine;
 
 /**
- * An error bar painter that renders no end point and start point and renders a
- * line as segment (
+ * An error bar painter that renders no end point and start point and renders a line as segment (
  * {@link info.monitorenter.gui.chart.pointpainters.PointPainterLine}).
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.9 $
  */
 public class ErrorBarPainterLine extends ErrorBarPainter {
@@ -41,6 +39,7 @@ public class ErrorBarPainterLine extends ErrorBarPainter {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public ErrorBarPainterLine() {

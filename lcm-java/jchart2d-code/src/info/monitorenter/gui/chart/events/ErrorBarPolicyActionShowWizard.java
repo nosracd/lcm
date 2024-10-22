@@ -1,6 +1,6 @@
 /*
- *  ErrorBarPolicyActionShowWizard.java of project jchart2d, an 
- *  action that shows a modal error bar wizard dialog. 
+ *  ErrorBarPolicyActionShowWizard.java of project jchart2d, an
+ *  action that shows a modal error bar wizard dialog.
  *  Copyright 2007 - 2011 (C) Achim Westermann, created on 08.06.2007 12:08:53.
  *
  *  This library is free software; you can redistribute it and/or
@@ -32,11 +32,10 @@ import java.beans.PropertyChangeEvent;
 
 /**
  * An action that shows a modal error bar wizard dialog.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.7 $
  */
 public class ErrorBarPolicyActionShowWizard extends AErrorBarPolicyAction {
@@ -45,22 +44,18 @@ public class ErrorBarPolicyActionShowWizard extends AErrorBarPolicyAction {
   private static final long serialVersionUID = 3413195708957445554L;
 
   /**
-   * Creates a trigger for showing the error bar policy wizard dialog for the
-   * given <code>{@link IErrorBarPolicy}</code> with the given name.
+   * Creates a trigger for showing the error bar policy wizard dialog for the given <code>
+   * {@link IErrorBarPolicy}</code> with the given name.
+   *
    * <p>
-   * 
-   * @param errorBarPolicy
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
+   *
+   * @param errorBarPolicy the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
-  public ErrorBarPolicyActionShowWizard(final IErrorBarPolicy< ? > errorBarPolicy,
-      final String description) {
+  public ErrorBarPolicyActionShowWizard(
+      final IErrorBarPolicy<?> errorBarPolicy, final String description) {
     super(errorBarPolicy, description);
   }
 
@@ -69,8 +64,8 @@ public class ErrorBarPolicyActionShowWizard extends AErrorBarPolicyAction {
    */
   public void actionPerformed(final ActionEvent e) {
     ErrorBarPolicyPanel panel = new ErrorBarPolicyPanel(this.m_errorBarPolicy);
-    ModalDialog dialog = new ModalDialog((Component) e.getSource(), "Configure Error Bar Policy",
-        panel);
+    ModalDialog dialog =
+        new ModalDialog((Component) e.getSource(), "Configure Error Bar Policy", panel);
     dialog.setVisible(true);
   }
 
@@ -81,5 +76,4 @@ public class ErrorBarPolicyActionShowWizard extends AErrorBarPolicyAction {
     // nop as this action is not used in Checkbox menu items
     // or anything that supports SelectionPropertyAdaptSupport.
   }
-
 }

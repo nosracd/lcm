@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -33,42 +33,32 @@ import javax.swing.Icon;
 import javax.swing.UIManager;
 
 /**
- * <code>Action</code> that removes the constructor given
- * <code>{@link info.monitorenter.gui.chart.ITrace2D}</code> from the
- * corresponding <code>{@link info.monitorenter.gui.chart.Chart2D}</code>.
+ * <code>Action</code> that removes the constructor given <code>
+ * {@link info.monitorenter.gui.chart.ITrace2D}</code> from the corresponding <code>
+ * {@link info.monitorenter.gui.chart.Chart2D}</code>.
+ *
+ * <p>This action is "destructive" - the trace will be lost. There exists no counterpart to add a
+ * trace yet (there is no fixed data format / source for creating a chart).
+ *
  * <p>
- * 
- * This action is "destructive" - the trace will be lost. There exists no
- * counterpart to add a trace yet (there is no fixed data format / source for
- * creating a chart).
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.7 $
  */
-public final class Trace2DActionRemove
-    extends ATrace2DAction {
+public final class Trace2DActionRemove extends ATrace2DAction {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -6161504244812708443L;
 
   /**
-   * Create an <code>Action</code> that removes the given the trace from it's
-   * chart upon action.
+   * Create an <code>Action</code> that removes the given the trace from it's chart upon action.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the target the action will work on.
-   * 
-   * @param name
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
+   *
+   * @param trace the target the action will work on.
+   * @param name the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
   public Trace2DActionRemove(final ITrace2D trace, final String name) {
     super(trace, name);

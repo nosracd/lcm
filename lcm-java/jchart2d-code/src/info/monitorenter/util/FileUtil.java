@@ -1,17 +1,17 @@
 /*
  * FileUtil.java, helpers for disk I/O.
  * Copyright (C) 2001 - 2011 Achim Westermann.
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- *  
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -41,34 +41,34 @@ import java.util.StringTokenizer;
 
 /**
  * Utility class for file operations.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  * @version 1.1
  */
 public final class FileUtil extends Object {
 
   /**
    * Cuts all path information of the String representation of the given URL.
+   *
    * <p>
-   * 
+   *
    * <pre>
-   * 
+   *
    *  &quot;file//c:/work/programming/anyfile.jar&quot; --&gt; &quot;anyfile.jar&quot;
    *  &quot;http://jamwg.de&quot;                       --&gt; &quot;&quot; // No file part.
    *  &quot;ftp://files.com/directory2/&quot;           --&gt; &quot;&quot; // File part of URL denotes a directory.
-   * 
+   *
    * </pre>
-   * 
+   *
    * Assuming, that '/' is the current file separator character.
+   *
    * <p>
-   * 
-   * @param path
-   *          the absolute file path you want the mere file name of.
-   * 
-   * @return the <code>{@link java.util.Map.Entry}</code> consisting of path
-   *         information and file name.
+   *
+   * @param path the absolute file path you want the mere file name of.
+   * @return the <code>{@link java.util.Map.Entry}</code> consisting of path information and file
+   *     name.
    */
   public static Map.Entry<String, String> cutDirectoryInformation(final java.net.URL path) {
     Map.Entry<String, String> ret = null;
@@ -99,35 +99,34 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Cuts the path information of the String that is interpreted as a filename
-   * into the directory part and the file part. The current operating system's
-   * path separator is used to cut all path information from the String.
+   * Cuts the path information of the String that is interpreted as a filename into the directory
+   * part and the file part. The current operating system's path separator is used to cut all path
+   * information from the String.
+   *
    * <p>
-   * 
+   *
    * <pre>
-   * 
+   *
    *  &quot;c:/work/programming/anyfile.jar&quot; --&gt; Map.Entry(&quot;c:/work/programming/&quot;,&quot;anyfile.jar&quot;);
    *  &quot;anyfile.jar&quot;                     --&gt; Map.Entry(new File(&quot;.&quot;).getAbsolutePath(),&quot;anyfile.jar&quot;);
    *  &quot;c:/directory1/directory2/&quot;       --&gt; Map.Entry(&quot;c:/directory1/directory2/&quot;,&quot;&quot;);
    *  &quot;c:/directory1/directory2&quot;        --&gt; Map.Entry(&quot;c:/directory1/directory2/&quot;,&quot;&quot;); // directory2 is a dir!
    *  &quot;c:/directory1/file2&quot;             --&gt; Map.Entry(&quot;c:/directory1/&quot;,&quot;file2&quot;);       // file2 is a file!
    *  &quot;c:/&quot;                             --&gt; Map.Entry(&quot;c:/&quot;,&quot;&quot;);
-   * 
+   *
    * </pre>
-   * 
+   *
    * Assuming, that '/' is the current file separator character.
+   *
+   * <p><b>If your string is retrieved from an <tt>URL</tt> instance, use
+   * <tt>cutDirectoryInformation(URL path)</tt> instead, because URL's do not depend on the
+   * operating systems file separator! </b>
+   *
    * <p>
-   * 
-   * <b>If your string is retrieved from an <tt>URL</tt> instance, use
-   * <tt>cutDirectoryInformation(URL path)</tt> instead, because URL's do not
-   * depend on the operating systems file separator! </b>
-   * <p>
-   * 
-   * @param path
-   *          the absolute file path you want the mere file name of.
-   * 
-   * @return the <code>{@link java.util.Map.Entry}</code> consisting of path
-   *         information and file name.
+   *
+   * @param path the absolute file path you want the mere file name of.
+   * @return the <code>{@link java.util.Map.Entry}</code> consisting of path information and file
+   *     name.
    */
   public static Map.Entry<String, String> cutDirectoryInformation(final String path) {
     final StringBuffer dir = new StringBuffer();
@@ -160,36 +159,32 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Cuts a String into the part before the last dot and after the last dot. If
-   * only one dot is contained on the first position, it will completely be used
-   * as prefix part.
+   * Cuts a String into the part before the last dot and after the last dot. If only one dot is
+   * contained on the first position, it will completely be used as prefix part.
+   *
    * <p>
-   * 
+   *
    * <pre>
    * Map.Entry entry = FileUtil.cutExtension(&quot;A.Very.Strange.Name.txt&quot;);
    * String prefix = (String) entry.getKey(); // prefix is &quot;A.Very.Strange.Name&quot;.
    * String suffix = (String) entry.getValue(); // suffix is &quot;txt&quot;;
-   * 
+   *
    * entry = FileUtil.cutExtension(&quot;.profile&quot;);
    * String prefix = (String) entry.getKey(); // prefix is &quot;.profile&quot;.
    * String suffix = (String) entry.getValue(); // suffix is &quot;&quot;;
-   * 
+   *
    * entry = FileUtil.cutExtension(&quot;bash&quot;);
    * String prefix = (String) entry.getKey(); // prefix is &quot;bash&quot;.
    * String suffix = (String) entry.getValue(); // suffix is &quot;&quot;;
-   * 
+   *
    * </pre>
-   * 
+   *
    * <p>
-   * 
-   * 
-   * @param filename
-   *          A String that is interpreted to be a file name: The last dot ('.')
-   *          is interpreted to be the extension delimiter.
-   * 
-   * @return A <tt> java.util.Map.Entry</tt> instance containing a String for
-   *         the filename at the key side and a String for the extension at the
-   *         value side.
+   *
+   * @param filename A String that is interpreted to be a file name: The last dot ('.') is
+   *     interpreted to be the extension delimiter.
+   * @return A <tt> java.util.Map.Entry</tt> instance containing a String for the filename at the
+   *     key side and a String for the extension at the value side.
    */
   public static java.util.Map.Entry<String, String> cutExtension(final String filename) {
     String prefix;
@@ -215,30 +210,25 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Finds a filename based on the given name. If a file with the given name
-   * does not exist, <tt>name</tt> will be returned.
-   * <p>
-   * 
-   * Else:
-   * 
+   * Finds a filename based on the given name. If a file with the given name does not exist,
+   * <tt>name</tt> will be returned.
+   *
+   * <p>Else:
+   *
    * <pre>
    *  &quot;myFile.out&quot;     --&gt; &quot;myFile_0.out&quot;
    *  &quot;myFile_0.out&quot;   --&gt; &quot;myFile_1.out&quot;
    *  &quot;myFile_1.out&quot;   --&gt; &quot;myFile_2.out&quot;
    *  ....
    * </pre>
-   * 
+   *
+   * <p>The potential extension is preserved, but a number is appended to the prefix name.
+   *
    * <p>
-   * 
-   * The potential extension is preserved, but a number is appended to the
-   * prefix name.
-   * <p>
-   * 
-   * @param name
-   *          A desired file name.
-   * 
-   * @return A String that sticks to the naming convention of the given String
-   *         but is unique in the directory scope of argument <tt>name</tt>.
+   *
+   * @param name A desired file name.
+   * @return A String that sticks to the naming convention of the given String but is unique in the
+   *     directory scope of argument <tt>name</tt>.
    */
   public static String getDefaultFileName(final String name) {
     String result;
@@ -260,37 +250,28 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Creates a new file by the contract of
-   * <code>{@link File#createTempFile(String, String, File)} </code>.
+   * Creates a new file by the contract of <code>{@link File#createTempFile(String, String, File)}
+   * </code>.
+   *
+   * <p>The resulting file will have the full path and file name without the extension concatenated
+   * with the given suffix (if preserveExtension is true also the suffix of the original file will
+   * be added to the end).
+   *
    * <p>
-   * 
-   * The resulting file will have the full path and file name without the
-   * extension concatenated with the given suffix (if preserveExtension is true
-   * also the suffix of the original file will be added to the end).
-   * <p>
-   * 
-   * 
-   * @param source
-   *          the source file to take the name of.
-   * 
-   * @param suffix
-   *          the suffix to append.
-   * 
-   * @param preserveExtension
-   *          if true the suffix of the source file will be appended to the
-   *          result file.
-   * 
+   *
+   * @param source the source file to take the name of.
+   * @param suffix the suffix to append.
+   * @param preserveExtension if true the suffix of the source file will be appended to the result
+   *     file.
    * @return A file derived from the original file name.
-   * 
-   * @throws IOException
-   *           if something goes wrong.
-   **/
-  public static File deriveFile(final File source, final String suffix,
-      final boolean preserveExtension) throws IOException {
+   * @throws IOException if something goes wrong.
+   */
+  public static File deriveFile(
+      final File source, final String suffix, final boolean preserveExtension) throws IOException {
     File result = null;
     Map.Entry<String, String> fileNextension = FileUtil.cutExtension(source.getName());
-    Map.Entry<String, String> pathNfile = FileUtil
-        .cutDirectoryInformation(source.getAbsolutePath());
+    Map.Entry<String, String> pathNfile =
+        FileUtil.cutDirectoryInformation(source.getAbsolutePath());
 
     String ending = suffix;
     if (preserveExtension) {
@@ -301,41 +282,34 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Tests whether the given file only contains ASCII characters if interpreted
-   * by reading bytes (16 bit).
+   * Tests whether the given file only contains ASCII characters if interpreted by reading bytes (16
+   * bit).
+   *
+   * <p>This does not mean that the file is really an ASCII text file. It just might be viewed with
+   * an editor showing only valid ASCII characters.
+   *
    * <p>
-   * This does not mean that the file is really an ASCII text file. It just
-   * might be viewed with an editor showing only valid ASCII characters.
-   * <p>
-   * 
-   * @param f
-   *          the file to test.
-   * 
+   *
+   * @param f the file to test.
    * @return true if all bytes in the file are in the ASCII range.
-   * 
-   * @throws IOException
-   *           on a bad day.
+   * @throws IOException on a bad day.
    */
   public static boolean isAllASCII(final File f) throws IOException {
     return FileUtil.isAllASCII(new FileInputStream(f));
   }
 
   /**
-   * Tests wether the given input stream only contains ASCII characters if
-   * interpreted by reading bytes (16 bit).
+   * Tests wether the given input stream only contains ASCII characters if interpreted by reading
+   * bytes (16 bit).
+   *
+   * <p>This does not mean that the underlying content is really an ASCII text file. It just might
+   * be viewed with an editor showing only valid ASCII characters.
+   *
    * <p>
-   * This does not mean that the underlying content is really an ASCII text
-   * file. It just might be viewed with an editor showing only valid ASCII
-   * characters.
-   * <p>
-   * 
-   * @param in
-   *          the stream to test.
-   * 
+   *
+   * @param in the stream to test.
    * @return true if all bytes in the given input stream are in the ASCII range.
-   * 
-   * @throws IOException
-   *           on a bad day.
+   * @throws IOException on a bad day.
    */
   public static boolean isAllASCII(final InputStream in) throws IOException {
     boolean ret = true;
@@ -352,30 +326,21 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Tests, whether the content of the given file is identical at character
-   * level, when it is opened with both different Charsets.
+   * Tests, whether the content of the given file is identical at character level, when it is opened
+   * with both different Charsets.
+   *
+   * <p>This is most often the case, if the given file only contains ASCII codes but may also occur,
+   * when both codepages cover common ranges and the document only contains values m_out of those
+   * ranges (like the EUC-CN charset contains all mappings from BIG5).
+   *
    * <p>
-   * This is most often the case, if the given file only contains ASCII codes
-   * but may also occur, when both codepages cover common ranges and the
-   * document only contains values m_out of those ranges (like the EUC-CN
-   * charset contains all mappings from BIG5).
-   * <p>
-   * 
-   * @param document
-   *          the file to test.
-   * 
-   * @param a
-   *          the first character set to interpret the document in.
-   * 
-   * @param b
-   *          the 2nd character set to interpret the document in.
-   * 
-   * @throws IOException
-   *           if something goes wrong.
-   * 
-   * @return true if both files have all equal contents if they are interpreted
-   *         as character data in both given encodings (they may differ at
-   *         binary level if both charsets are different).
+   *
+   * @param document the file to test.
+   * @param a the first character set to interpret the document in.
+   * @param b the 2nd character set to interpret the document in.
+   * @throws IOException if something goes wrong.
+   * @return true if both files have all equal contents if they are interpreted as character data in
+   *     both given encodings (they may differ at binary level if both charsets are different).
    */
   public static boolean isEqual(final File document, final Charset a, final Charset b)
       throws IOException {
@@ -412,21 +377,17 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Invokes {@link #readRAM(File)}, but decorates the result with a
-   * {@link java.io.ByteArrayInputStream}.
+   * Invokes {@link #readRAM(File)}, but decorates the result with a {@link
+   * java.io.ByteArrayInputStream}.
+   *
+   * <p>This means: The complete content of the given File has been loaded before using the returned
+   * InputStream. There are no IO-delays afterwards but OutOfMemoryErrors may occur.
+   *
    * <p>
-   * This means: The complete content of the given File has been loaded before
-   * using the returned InputStream. There are no IO-delays afterwards but
-   * OutOfMemoryErrors may occur.
-   * <p>
-   * 
-   * @param f
-   *          the file to cache.
-   * 
+   *
+   * @param f the file to cache.
    * @return an input stream backed by the file read into memory.
-   * 
-   * @throws IOException
-   *           if something goes wrong.
+   * @throws IOException if something goes wrong.
    */
   public static InputStream readCache(final File f) throws IOException {
     return new ByteArrayInputStream(FileUtil.readRAM(f));
@@ -434,21 +395,16 @@ public final class FileUtil extends Object {
 
   /**
    * Reads the content of the given File into an array.
+   *
+   * <p>This method currently does not check for maximum length and might cause a
+   * java.lang.OutOfMemoryError. It is only intended for performance-measurements of data-based
+   * algorithms that want to exclude I/O-usage.
+   *
    * <p>
-   * This method currently does not check for maximum length and might cause a
-   * java.lang.OutOfMemoryError. It is only intended for
-   * performance-measurements of data-based algorithms that want to exclude
-   * I/O-usage.
-   * <p>
-   * 
-   * @param f
-   *          the file to read.
-   * 
-   * @throws IOException
-   *           if something goes wrong.
-   * 
+   *
+   * @param f the file to read.
+   * @throws IOException if something goes wrong.
    * @return the contents of the given file.
-   * 
    */
   public static byte[] readRAM(final File f) throws IOException {
     final int total = (int) f.length();
@@ -471,25 +427,26 @@ public final class FileUtil extends Object {
 
   /**
    * Removes the duplicate line breaks in the given file.
+   *
+   * <p>Be careful with big files: In order to avoid having to write a tmpfile (cannot read and
+   * directly write to the same file) a StringBuffer is used for manipulation. Big files will cost
+   * all RAM and terminate VM hard.
+   *
    * <p>
-   * 
-   * Be careful with big files: In order to avoid having to write a tmpfile
-   * (cannot read and directly write to the same file) a StringBuffer is used
-   * for manipulation. Big files will cost all RAM and terminate VM hard.
-   * <p>
-   * 
-   * @param f
-   *          the file to remove duplicate line breaks in.
+   *
+   * @param f the file to remove duplicate line breaks in.
    */
   public static void removeDuplicateLineBreaks(final File f) {
     final String sep = StringUtil.getNewLine();
     if (!f.exists()) {
-      System.err.println("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath()
-          + " does not exist!");
+      System.err.println(
+          "FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath() + " does not exist!");
     } else {
       if (f.isDirectory()) {
-        System.err.println("FileUtil.removeDuplicateLineBreak(File f): " + f.getAbsolutePath()
-            + " is a directory!");
+        System.err.println(
+            "FileUtil.removeDuplicateLineBreak(File f): "
+                + f.getAbsolutePath()
+                + " is a directory!");
       } else {
         // real file
         FileInputStream inStream = null;
@@ -557,6 +514,7 @@ public final class FileUtil extends Object {
 
   /**
    * Utility class constructor.
+   *
    * <p>
    */
   private FileUtil() {
@@ -564,18 +522,13 @@ public final class FileUtil extends Object {
   }
 
   /**
-   * Returns the formatted file size to Bytes, KB, MB or GB depending on the
-   * given value.
+   * Returns the formatted file size to Bytes, KB, MB or GB depending on the given value.
+   *
    * <p>
-   * 
-   * @param filesize
-   *          in bytes
-   * 
-   * @param locale
-   *          the locale to translate the result to (e.g. in France they us
-   * 
-   * @return the formatted filesize to Bytes, KB, MB or GB depending on the
-   *         given value.
+   *
+   * @param filesize in bytes
+   * @param locale the locale to translate the result to (e.g. in France they us
+   * @return the formatted filesize to Bytes, KB, MB or GB depending on the given value.
    */
   public static String formatFilesize(final long filesize, final Locale locale) {
 
@@ -583,19 +536,27 @@ public final class FileUtil extends Object {
     final long filesizeNormal = Math.abs(filesize);
 
     if (Math.abs(filesize) < 1024) {
-      result = MessageFormat.format(m_bundle.getString("GUI_FILEUTIL_FILESIZE_BYTES_1"),
-          new Object[] {Long.valueOf(filesizeNormal) });
+      result =
+          MessageFormat.format(
+              m_bundle.getString("GUI_FILEUTIL_FILESIZE_BYTES_1"),
+              new Object[] {Long.valueOf(filesizeNormal)});
     } else if (filesizeNormal < 1048576) {
       // 1048576 = 1024.0 * 1024.0
-      result = MessageFormat.format(m_bundle.getString("GUI_FILEUTIL_FILESIZE_KBYTES_1"),
-          new Object[] {Double.valueOf(filesizeNormal / 1024.0) });
+      result =
+          MessageFormat.format(
+              m_bundle.getString("GUI_FILEUTIL_FILESIZE_KBYTES_1"),
+              new Object[] {Double.valueOf(filesizeNormal / 1024.0)});
     } else if (filesizeNormal < 1073741824) {
       // 1024.0^3 = 1073741824
-      result = MessageFormat.format(m_bundle.getString("GUI_FILEUTIL_FILESIZE_MBYTES_1"),
-          new Object[] {Double.valueOf(filesize / 1048576.0) });
+      result =
+          MessageFormat.format(
+              m_bundle.getString("GUI_FILEUTIL_FILESIZE_MBYTES_1"),
+              new Object[] {Double.valueOf(filesize / 1048576.0)});
     } else {
-      result = MessageFormat.format(m_bundle.getString("GUI_FILEUTIL_FILESIZE_GBYTES_1"),
-          new Object[] {Double.valueOf(filesizeNormal / 1073741824.0) });
+      result =
+          MessageFormat.format(
+              m_bundle.getString("GUI_FILEUTIL_FILESIZE_GBYTES_1"),
+              new Object[] {Double.valueOf(filesizeNormal / 1073741824.0)});
     }
     return result;
   }

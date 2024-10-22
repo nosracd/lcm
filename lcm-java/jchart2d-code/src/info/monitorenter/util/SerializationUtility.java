@@ -1,6 +1,6 @@
 /*
- *  SerializationUtility.java of project jchart2d, helpers for missing 
- *  serialization mechanism in java. 
+ *  SerializationUtility.java of project jchart2d, helpers for missing
+ *  serialization mechanism in java.
  *  Copyright (C) 2004 - 2011 Achim Westermann.
  *
  *  This library is free software; you can redistribute it and/or
@@ -30,9 +30,9 @@ import java.io.ObjectOutputStream;
 
 /**
  * A class containing useful utility methods relating to serialization.
- * <p>
- * This is originally inspired (serialization of trokes) by jfreechart.
- * 
+ *
+ * <p>This is originally inspired (serialization of trokes) by jfreechart.
+ *
  * @author David Gilbert (original)
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  * @version $Revision: 1.6 $
@@ -40,24 +40,21 @@ import java.io.ObjectOutputStream;
 public final class SerializationUtility {
 
   /**
-   * Reads a <code>Stroke</code> object that has been serialized by the
-   * {@link SerializationUtility#writeStroke} method.
-   * 
-   * @param stream
-   *            the input stream.
+   * Reads a <code>Stroke</code> object that has been serialized by the {@link
+   * SerializationUtility#writeStroke} method.
+   *
+   * @param stream the input stream.
    * @return The stroke object.
-   * @throws IOException
-   *             if there is an I/O problem.
-   * @throws ClassNotFoundException
-   *             if there is a problem loading a class.
+   * @throws IOException if there is an I/O problem.
+   * @throws ClassNotFoundException if there is a problem loading a class.
    */
-  public static Stroke readStroke(final ObjectInputStream stream) throws IOException,
-      ClassNotFoundException {
+  public static Stroke readStroke(final ObjectInputStream stream)
+      throws IOException, ClassNotFoundException {
 
     Stroke result = null;
     boolean isNull = stream.readBoolean();
     if (!isNull) {
-      Class< ? > c = (Class< ? >) stream.readObject();
+      Class<?> c = (Class<?>) stream.readObject();
       if (c.equals(BasicStroke.class)) {
         float width = stream.readFloat();
         int cap = stream.readInt();
@@ -75,13 +72,10 @@ public final class SerializationUtility {
 
   /**
    * Serializes a <code>Stroke</code> object.
-   * 
-   * @param stroke
-   *            the stroke object.
-   * @param stream
-   *            the output stream.
-   * @throws IOException
-   *             if there is an I/O error.
+   *
+   * @param stroke the stroke object.
+   * @param stream the output stream.
+   * @throws IOException if there is an I/O error.
    */
   public static void writeStroke(final Stroke stroke, final ObjectOutputStream stream)
       throws IOException {
@@ -108,6 +102,7 @@ public final class SerializationUtility {
 
   /**
    * Utility class constructor.
+   *
    * <p>
    */
   private SerializationUtility() {

@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,23 +30,23 @@ import info.monitorenter.util.collections.RingBufferArrayFast;
 import java.util.Iterator;
 
 /**
- * Additional to the Trace2DSimple the Trace2DLimited adds the following
- * functionality:
+ * Additional to the Trace2DSimple the Trace2DLimited adds the following functionality:
+ *
  * <p>
+ *
  * <ul>
- * <li>The amount of internal tracepoints is limited to the maxsize, passed to
- * the constructor.</li>
- * <li>If a new tracepoint is inserted and the maxsize has been reached, the
- * tracepoint residing for the longest time in this trace is thrown away.</li>
+ *   <li>The amount of internal tracepoints is limited to the maxsize, passed to the constructor.
+ *   <li>If a new tracepoint is inserted and the maxsize has been reached, the tracepoint residing
+ *       for the longest time in this trace is thrown away.
  * </UL>
- * Take this implementation to display frequently changing data (nonstatic, time
- * - dependant values). You will avoid a huge growing amount of tracepoints that
- * would increase the time for scaling and painting until system hangs or
- * java.lang.OutOfMemoryError is thrown.
+ *
+ * Take this implementation to display frequently changing data (nonstatic, time - dependant
+ * values). You will avoid a huge growing amount of tracepoints that would increase the time for
+ * scaling and painting until system hangs or java.lang.OutOfMemoryError is thrown.
+ *
  * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.19 $
  */
 public class Trace2DLtd extends ATrace2D implements ITrace2D {
@@ -54,14 +54,12 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -6664475237146326176L;
 
-  /**
-   * Internal fast FIFO buffer implementation based upon indexed access to an
-   * array.
-   */
+  /** Internal fast FIFO buffer implementation based upon indexed access to an array. */
   protected IRingBuffer<ITracePoint2D> m_buffer;
 
   /**
    * Constructs an instance with a default buffer size of 100.
+   *
    * <p>
    */
   public Trace2DLtd() {
@@ -70,11 +68,10 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
 
   /**
    * Constructs an instance with a buffersize of maxsize and a default name.
+   *
    * <p>
-   * 
-   * @param maxsize
-   *          the buffer size for the maximum amount of points that will be
-   *          shown.
+   *
+   * @param maxsize the buffer size for the maximum amount of points that will be shown.
    */
   public Trace2DLtd(final int maxsize) {
     this(maxsize, Trace2DLtd.class.getName() + "-" + ATrace2D.getInstanceCount());
@@ -82,14 +79,11 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
 
   /**
    * Constructs an instance with a buffersize of maxsize and a default name.
+   *
    * <p>
-   * 
-   * @param maxsize
-   *          the buffer size for the maximum amount of points that will be
-   *          shown.
-   * 
-   * @param name
-   *          the name that will be displayed for this trace.
+   *
+   * @param maxsize the buffer size for the maximum amount of points that will be shown.
+   * @param name the name that will be displayed for this trace.
    */
   public Trace2DLtd(final int maxsize, final String name) {
     this.m_buffer = new RingBufferArrayFast<ITracePoint2D>(maxsize);
@@ -98,10 +92,10 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
 
   /**
    * Creates an instance with a default buffersize of 100 and the given name.
+   *
    * <p>
-   * 
-   * @param name
-   *          the name that will be displayed for the trace.
+   *
+   * @param name the name that will be displayed for the trace.
    */
   public Trace2DLtd(final String name) {
     this(100, name);
@@ -122,20 +116,24 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
       if (tmpx >= this.m_maxX) {
         tmpx = this.m_maxX;
         this.maxXSearch();
-        this.firePropertyChange(ITrace2D.PROPERTY_MAX_X, Double.valueOf(tmpx), Double.valueOf(this.m_maxX));
+        this.firePropertyChange(
+            ITrace2D.PROPERTY_MAX_X, Double.valueOf(tmpx), Double.valueOf(this.m_maxX));
       } else if (tmpx <= this.m_minX) {
         tmpx = this.m_minX;
         this.minXSearch();
-        this.firePropertyChange(ITrace2D.PROPERTY_MIN_X, Double.valueOf(tmpx), Double.valueOf(this.m_minX));
+        this.firePropertyChange(
+            ITrace2D.PROPERTY_MIN_X, Double.valueOf(tmpx), Double.valueOf(this.m_minX));
       }
       if (tmpy >= this.m_maxY) {
         tmpy = this.m_maxY;
         this.maxYSearch();
-        this.firePropertyChange(ITrace2D.PROPERTY_MAX_Y, Double.valueOf(tmpy), Double.valueOf(this.m_maxY));
+        this.firePropertyChange(
+            ITrace2D.PROPERTY_MAX_Y, Double.valueOf(tmpy), Double.valueOf(this.m_maxY));
       } else if (tmpy <= this.m_minY) {
         tmpy = this.m_minY;
         this.minYSearch();
-        this.firePropertyChange(ITrace2D.PROPERTY_MIN_Y, Double.valueOf(tmpy), Double.valueOf(this.m_minY));
+        this.firePropertyChange(
+            ITrace2D.PROPERTY_MIN_Y, Double.valueOf(tmpy), Double.valueOf(this.m_minY));
       }
       // scale the new point, check for new bounds!
       this.firePointAdded(p);
@@ -183,10 +181,10 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
 
   /**
    * Returns the acutal amount of points in this trace.
+   *
    * <p>
-   * 
+   *
    * @return the acutal amount of points in this trace.
-   * 
    * @see info.monitorenter.gui.chart.ITrace2D#getSize()
    */
   public int getSize() {
@@ -241,18 +239,14 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
   }
 
   /**
-   * Returns null always because internally a ring buffer is used which does not
-   * allow removing of values because that would break the contract of a ring
-   * buffer.
+   * Returns null always because internally a ring buffer is used which does not allow removing of
+   * values because that would break the contract of a ring buffer.
+   *
    * <p>
-   * 
-   * @param point
-   *          the point to remove.
-   * 
-   * @return null always because internally a ring buffer is used which does not
-   *         allow removing of values because that would break the contract of a
-   *         ring buffer.
-   * 
+   *
+   * @param point the point to remove.
+   * @return null always because internally a ring buffer is used which does not allow removing of
+   *     values because that would break the contract of a ring buffer.
    */
   @Override
   protected ITracePoint2D removePointInternal(final ITracePoint2D point) {
@@ -261,17 +255,13 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
 
   /**
    * Sets the maximum amount of points that may be displayed.
-   * <p>
-   * 
-   * Don't use this too often as decreases in size may cause expensive array
-   * copy operations and new searches on all points for bound changes.
-   * <p>
-   * 
-   * TODO: Only search for bounds if size is smaller than before, debug and
-   * test.
-   * 
-   * @param amount
-   *          the new maximum amount of points to show.
+   *
+   * <p>Don't use this too often as decreases in size may cause expensive array copy operations and
+   * new searches on all points for bound changes.
+   *
+   * <p>TODO: Only search for bounds if size is smaller than before, debug and test.
+   *
+   * @param amount the new maximum amount of points to show.
    */
   public final void setMaxSize(final int amount) {
     if (Chart2D.DEBUG_THREADING) {
@@ -292,29 +282,29 @@ public class Trace2DLtd extends ATrace2D implements ITrace2D {
         final double xmin = this.m_minX;
         this.minXSearch();
         if (this.m_minX != xmin) {
-          this.firePropertyChange(ITrace2D.PROPERTY_MIN_X, Double.valueOf(xmin),
-              Double.valueOf(this.m_minX));
+          this.firePropertyChange(
+              ITrace2D.PROPERTY_MIN_X, Double.valueOf(xmin), Double.valueOf(this.m_minX));
         }
 
         final double xmax = this.m_maxX;
         this.maxXSearch();
         if (this.m_maxX != xmax) {
-          this.firePropertyChange(ITrace2D.PROPERTY_MAX_X, Double.valueOf(xmax),
-              Double.valueOf(this.m_maxX));
+          this.firePropertyChange(
+              ITrace2D.PROPERTY_MAX_X, Double.valueOf(xmax), Double.valueOf(this.m_maxX));
         }
 
         final double ymax = this.m_maxY;
         this.maxYSearch();
         if (this.m_maxY != ymax) {
-          this.firePropertyChange(ITrace2D.PROPERTY_MAX_Y, Double.valueOf(ymax),
-              Double.valueOf(this.m_maxY));
+          this.firePropertyChange(
+              ITrace2D.PROPERTY_MAX_Y, Double.valueOf(ymax), Double.valueOf(this.m_maxY));
         }
 
         final double ymin = this.m_minY;
         this.minYSearch();
         if (this.m_minY != ymin) {
-          this.firePropertyChange(ITrace2D.PROPERTY_MIN_Y, Double.valueOf(ymin),
-              Double.valueOf(this.m_minY));
+          this.firePropertyChange(
+              ITrace2D.PROPERTY_MIN_Y, Double.valueOf(ymin), Double.valueOf(this.m_minY));
         }
       }
     }

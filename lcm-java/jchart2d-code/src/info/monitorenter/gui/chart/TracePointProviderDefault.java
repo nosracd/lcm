@@ -1,6 +1,6 @@
 /*
- *  TracePointProviderDefault.java of project jchart2d, default 
- *  creator for trace points. 
+ *  TracePointProviderDefault.java of project jchart2d, default
+ *  creator for trace points.
  *  Copyright (C) 2004 - 2011 Achim Westermann.
  *
  *  This library is free software; you can redistribute it and/or
@@ -23,10 +23,11 @@
 package info.monitorenter.gui.chart;
 
 /**
- * Default creator of <code>{@link ITracePoint2D}</code> instances that returns
- * implementation <code>{@link TracePoint2D}</code>.
+ * Default creator of <code>{@link ITracePoint2D}</code> instances that returns implementation
+ * <code>{@link TracePoint2D}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
  * @version $Revision: 1.4 $
  */
@@ -34,6 +35,7 @@ public class TracePointProviderDefault implements ITracePointProvider {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public TracePointProviderDefault() {
@@ -41,11 +43,9 @@ public class TracePointProviderDefault implements ITracePointProvider {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.ITracePointProvider#createTracePoint(double,
-   *      double)
+   * @see info.monitorenter.gui.chart.ITracePointProvider#createTracePoint(double, double)
    */
   public ITracePoint2D createTracePoint(final double x, final double y) {
     return new TracePoint2D(x, y);
   }
-
 }

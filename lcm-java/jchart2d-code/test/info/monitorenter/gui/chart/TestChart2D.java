@@ -1,17 +1,17 @@
 /*
- *  TestChart.java - Junit test for info.monitorenter.chart.gui.Chart2D. 
+ *  TestChart.java - Junit test for info.monitorenter.chart.gui.Chart2D.
  *  Copyright (C) Achim Westermann, created on 16.07.2005, 10:52:43
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -44,17 +44,18 @@ import junit.framework.TestSuite;
 
 /**
  * Junit test for <code>{@link Chart2D}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  */
-public class TestChart2D
-    extends ATestJChart2D {
+public class TestChart2D extends ATestJChart2D {
 
   /**
    * Test suite for this test class.
+   *
    * <p>
-   * 
+   *
    * @return the test suite
    */
   public static Test suite() {
@@ -71,10 +72,10 @@ public class TestChart2D
 
   /**
    * Constructor with the test name.
+   *
    * <p>
-   * 
-   * @param testname
-   *            the test name.
+   *
+   * @param testname the test name.
    */
   public TestChart2D(final String testname) {
     super(testname);
@@ -101,11 +102,12 @@ public class TestChart2D
    */
   @Override
   protected ITrace2D[] createTraces() {
-    return new ITrace2D[]{ new Trace2DSimple()};
+    return new ITrace2D[] {new Trace2DSimple()};
   }
 
   /**
-   * @see info.monitorenter.gui.chart.test.ATestJChart2D#fillTrace(info.monitorenter.gui.chart.ITrace2D)
+   * @see
+   *     info.monitorenter.gui.chart.test.ATestJChart2D#fillTrace(info.monitorenter.gui.chart.ITrace2D)
    */
   @Override
   protected void fillTrace(final ITrace2D trace2D) {
@@ -116,13 +118,13 @@ public class TestChart2D
 
   /**
    * Tests adding an invisible trace for correct scaling.
-   * <p>
-   * Invisible traces should not be scaled. If they are turned visible afterwards they should be
+   *
+   * <p>Invisible traces should not be scaled. If they are turned visible afterwards they should be
    * scaled.
+   *
    * <p>
-   * 
-   * @throws InterruptedException
-   *             if something threads wrong.
+   *
+   * @throws InterruptedException if something threads wrong.
    */
   public void testAddInvisibleTrace() throws InterruptedException {
     ITrace2D trace = this.m_traces[0];
@@ -178,47 +180,46 @@ public class TestChart2D
     }
     Assert.assertTrue("Visible trace was not scaled in x dimension", scaleXDetected);
     Assert.assertTrue("Visible trace was not scaled in y dimension", scaleYDetected);
-
   }
 
   /**
    * Tries to serialize a chart.
+   *
    * <p>
-   * 
-   * @throws IOException
-   *             if something goes wrong.
-   * @throws ClassNotFoundException
-   *             if something goes wrong.
-   * @throws InterruptedException
-   *             if something goes wrong.
+   *
+   * @throws IOException if something goes wrong.
+   * @throws ClassNotFoundException if something goes wrong.
+   * @throws InterruptedException if something goes wrong.
    */
-  public void testSerializeChart() throws IOException, ClassNotFoundException, InterruptedException {
+  public void testSerializeChart()
+      throws IOException, ClassNotFoundException, InterruptedException {
     for (int i = 0; i < 100; i++) {
       this.m_traces[0].addPoint(i, (Math.random() + 1.0) * i);
     }
 
-     java.io.File tmpOut = File.createTempFile("chart", ".ser", null);
-     tmpOut.deleteOnExit();
-    
-     // write chart
-     ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(tmpOut));
-     objOut.writeObject(this.m_chart);
-     objOut.close();
-    
-     // read chart
-     Chart2D serChart;
-     ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(tmpOut));
-     serChart = (Chart2D) objIn.readObject();
-     JFrame frame = new JFrame();
-     frame.getContentPane().add(serChart);
-     frame.setSize(400, 600);
-     frame.setLocation(400, 0);
-     frame.setVisible(true);
+    java.io.File tmpOut = File.createTempFile("chart", ".ser", null);
+    tmpOut.deleteOnExit();
+
+    // write chart
+    ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(tmpOut));
+    objOut.writeObject(this.m_chart);
+    objOut.close();
+
+    // read chart
+    Chart2D serChart;
+    ObjectInputStream objIn = new ObjectInputStream(new FileInputStream(tmpOut));
+    serChart = (Chart2D) objIn.readObject();
+    JFrame frame = new JFrame();
+    frame.getContentPane().add(serChart);
+    frame.setSize(400, 600);
+    frame.setLocation(400, 0);
+    frame.setVisible(true);
     Thread.sleep(5000);
   }
 
   /**
    * Sets a new name to the trace.
+   *
    * <p>
    */
   public void testSetTraceName() {
@@ -229,5 +230,4 @@ public class TestChart2D
       e.printStackTrace();
     }
   }
-
 }

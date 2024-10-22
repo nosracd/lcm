@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *  
+ *
  *  If you modify or optimize the code in a useful way please let me know.
  *  Achim.Westermann@gmx.de
  *
@@ -31,28 +31,24 @@ import info.monitorenter.gui.chart.labelformatters.LabelFormatterSimple;
 import java.util.Iterator;
 
 /**
- * An {@link info.monitorenter.gui.chart.axis.AAxis} with log scaled display of
- * values.
+ * An {@link info.monitorenter.gui.chart.axis.AAxis} with log scaled display of values.
+ *
  * <p>
- * 
+ *
  * <h2>Caution</h2>
- * This will not work with negative values (Double.NaN is computed for log of
- * negative values).
+ *
+ * This will not work with negative values (Double.NaN is computed for log of negative values).
+ *
+ * <p>This will even not work with values < 1.0 as the log transformation turns negative for values
+ * < 1.0 and becomes {@link Double#NEGATIVE_INFINITY} with lim -> 0.0 with more and more turns to a
+ * 100 % CPU load.
+ *
  * <p>
- * This will even not work with values < 1.0 as the log transformation turns
- * negative for values < 1.0 and becomes {@link Double#NEGATIVE_INFINITY} with
- * lim -> 0.0 with more and more turns to a 100 % CPU load.
- * <p>
- * 
- * @param <T>
- *          Used to enforce that this instance only accepts
- *          {@link AxisScalePolicyTransformation} and subtypes.
- * 
+ *
+ * @param <T> Used to enforce that this instance only accepts {@link AxisScalePolicyTransformation}
+ *     and subtypes.
  * @author Pieter-Jan Busschaert (contributor)
- * 
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.13 $
  */
 public class AxisLogE<T extends AxisScalePolicyTransformation> extends AAxisTransformation<T> {
@@ -61,31 +57,27 @@ public class AxisLogE<T extends AxisScalePolicyTransformation> extends AAxisTran
   private static final long serialVersionUID = 1839309514449455729L;
 
   /**
-   * Creates an instance that uses a {@link LabelFormatterSimple} for formatting
-   * numbers and a {@link AxisScalePolicyAutomaticBestFit} for controlling the scale.
-   * <p> 
-   * 
+   * Creates an instance that uses a {@link LabelFormatterSimple} for formatting numbers and a
+   * {@link AxisScalePolicyAutomaticBestFit} for controlling the scale.
+   *
+   * <p>
    */
   @SuppressWarnings("unchecked")
   public AxisLogE() {
     /*
      * I consider this necessary cast to T as a bug (compare with declaration if T in class header):
      */
-    this(new LabelFormatterSimple(), (T)new AxisScalePolicyTransformation());
+    this(new LabelFormatterSimple(), (T) new AxisScalePolicyTransformation());
   }
 
   /**
-   * Creates an instance that will the given label formatter for formatting
-   * labels.
+   * Creates an instance that will the given label formatter for formatting labels.
+   *
    * <p>
-   * 
-   * @param formatter
-   *          needed for formatting labels of this axis. Prefer using simple
-   *          implementations like {@link LabelFormatterSimple}, a log axis is
-   *          complicated enough to understand.
-   * 
-   * @param scalePolicy
-   *          controls the ticks/labels and their distance.
+   *
+   * @param formatter needed for formatting labels of this axis. Prefer using simple implementations
+   *     like {@link LabelFormatterSimple}, a log axis is complicated enough to understand.
+   * @param scalePolicy controls the ticks/labels and their distance.
    */
   public AxisLogE(final IAxisLabelFormatter formatter, final T scalePolicy) {
     super(formatter, scalePolicy);
@@ -93,20 +85,16 @@ public class AxisLogE<T extends AxisScalePolicyTransformation> extends AAxisTran
 
   /**
    * Performs {@link Math#log10(double)} with a check for reaching infinity.
+   *
+   * <p>The argument should not be negative, so only normalized values (no chart values but their
+   * scaled values or pixel values) should be given here.
+   *
+   * <p>If the argument is close to zero, the result of log would be {@link
+   * Double#POSITIVE_INFINITY} which is transformed to {@link Double#MAX_VALUE}.
+   *
    * <p>
-   * 
-   * The argument should not be negative, so only normalized values (no chart
-   * values but their scaled values or pixel values) should be given here.
-   * <p>
-   * 
-   * If the argument is close to zero, the result of log would be
-   * {@link Double#POSITIVE_INFINITY} which is transformed to
-   * {@link Double#MAX_VALUE}.
-   * <p>
-   * 
-   * @param in
-   *          the value to compute the log base 10 of.
-   * 
+   *
+   * @param in the value to compute the log base 10 of.
    * @return log base 10 for the given value.
    */
   @Override
@@ -129,8 +117,11 @@ public class AxisLogE<T extends AxisScalePolicyTransformation> extends AAxisTran
           trace = itTraces.next();
           if (trace.iterator().hasNext()) {
             // Illegal value for transformation defined by a point added:
-            throw new IllegalArgumentException(this.getClass().getName()
-                + " must not be used with values < 1 :(" + toTransform + ")!");
+            throw new IllegalArgumentException(
+                this.getClass().getName()
+                    + " must not be used with values < 1 :("
+                    + toTransform
+                    + ")!");
           }
         }
         // No illegal point: everything was empty
@@ -152,5 +143,4 @@ public class AxisLogE<T extends AxisScalePolicyTransformation> extends AAxisTran
   public double untransform(final double in) {
     return Math.pow(Math.E, in);
   }
-
 }

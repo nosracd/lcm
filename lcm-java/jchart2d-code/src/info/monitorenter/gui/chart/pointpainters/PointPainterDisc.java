@@ -1,5 +1,5 @@
 /*
- *  PointPainterDisc.java of project jchart2d, paints round points. 
+ *  PointPainterDisc.java of project jchart2d, paints round points.
  *  Copyright (c) 2006 - 2011 Achim Westermann, created on 03.09.2006 20:27:06.
  *
  *  This library is free software; you can redistribute it and/or
@@ -30,11 +30,10 @@ import java.awt.Stroke;
 
 /**
  * Renders points in form of a disc with configurable diameter.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.22 $
  */
 public class PointPainterDisc extends APointPainter<PointPainterDisc> {
@@ -45,13 +44,12 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
   /** The diameter of the discs to paint. */
   private int m_discSize;
 
-  /**
-   * Cached m_discSize divided by two to save division for each point to render.
-   */
+  /** Cached m_discSize divided by two to save division for each point to render. */
   private int m_halfDiscSize;
 
   /**
    * Creates an instance with a default disc size of 4.
+   *
    * <p>
    */
   public PointPainterDisc() {
@@ -60,9 +58,8 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
 
   /**
    * Creates an instance with the given disc diameter.
-   * 
-   * @param diameter
-   *          the disc size in pixel to use.
+   *
+   * @param diameter the disc size in pixel to use.
    */
   public PointPainterDisc(final int diameter) {
     this.setDiscSize(diameter);
@@ -94,8 +91,9 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
 
   /**
    * Returns the diameter of the discs to paint in pixel.
+   *
    * <p>
-   * 
+   *
    * @return the diameter of the discs to paint in pixel.
    */
   public int getDiscSize() {
@@ -115,11 +113,16 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IPointPainter#paintPoint(int, int, int,
-   *      int, java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see info.monitorenter.gui.chart.IPointPainter#paintPoint(int, int, int, int,
+   *     java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
    */
-  public void paintPoint(final int absoluteX, final int absoluteY, final int nextX,
-      final int nextY, final Graphics g, final ITracePoint2D original) {
+  public void paintPoint(
+      final int absoluteX,
+      final int absoluteY,
+      final int nextX,
+      final int nextY,
+      final Graphics g,
+      final ITracePoint2D original) {
     final Stroke backupStroke = this.installStroke(g);
     Color backupColor = null;
     Color test = this.installColorFill(g);
@@ -142,7 +145,10 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
       // - this.m_halfDiscSize
       // + halfstrokeWidth, this.m_discSize - strokeWidth, this.m_discSize -
       // strokeWidth);
-      g.fillOval(absoluteX - this.m_halfDiscSize, absoluteY - this.m_halfDiscSize, this.m_discSize,
+      g.fillOval(
+          absoluteX - this.m_halfDiscSize,
+          absoluteY - this.m_halfDiscSize,
+          this.m_discSize,
           this.m_discSize);
     }
     test = this.installColor(g);
@@ -158,7 +164,10 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
         backupColor = null;
       }
     }
-    g.drawOval(absoluteX - this.m_halfDiscSize, absoluteY - this.m_halfDiscSize, this.m_discSize,
+    g.drawOval(
+        absoluteX - this.m_halfDiscSize,
+        absoluteY - this.m_halfDiscSize,
+        this.m_discSize,
         this.m_discSize);
 
     if (backupStroke != null) {
@@ -173,14 +182,13 @@ public class PointPainterDisc extends APointPainter<PointPainterDisc> {
 
   /**
    * Sets the diameter of the discs to paint in pixel.
+   *
    * <p>
-   * 
-   * @param discSize
-   *          the diameter of the discs to paint in pixel.
+   *
+   * @param discSize the diameter of the discs to paint in pixel.
    */
   public void setDiscSize(final int discSize) {
     this.m_discSize = discSize;
     this.m_halfDiscSize = this.m_discSize / 2;
   }
-
 }

@@ -9,12 +9,12 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -27,17 +27,15 @@ package info.monitorenter.gui.chart.rangepolicies;
 import info.monitorenter.util.Range;
 
 /**
- * Range policy implementation that will show a viewport with only the highest
- * values that are in the range of maximum - x which also forces the lower bound
- * to be shown if no data towards this bound exists.
+ * Range policy implementation that will show a viewport with only the highest values that are in
+ * the range of maximum - x which also forces the lower bound to be shown if no data towards this
+ * bound exists.
+ *
  * <p>
- * 
+ *
  * @author zoola
- * 
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.7 $
- * 
  */
 public final class RangePolicyHighestValuesForcedMin extends ARangePolicy {
 
@@ -48,17 +46,15 @@ public final class RangePolicyHighestValuesForcedMin extends ARangePolicy {
   private final double m_highestValueRangeToShow;
 
   /**
-   * Constructor with a range and the value range for the highest values to show
-   * only.
+   * Constructor with a range and the value range for the highest values to show only.
+   *
    * <p>
-   * 
-   * @param range
-   *          unused, maximum bound is always returned.
-   * 
-   * @param highestValueRangeToShow
-   *          the value range for the highest values to show.
+   *
+   * @param range unused, maximum bound is always returned.
+   * @param highestValueRangeToShow the value range for the highest values to show.
    */
-  public RangePolicyHighestValuesForcedMin(final Range range, final double highestValueRangeToShow) {
+  public RangePolicyHighestValuesForcedMin(
+      final Range range, final double highestValueRangeToShow) {
     super(range);
     this.m_highestValueRangeToShow = highestValueRangeToShow;
   }
@@ -78,8 +74,8 @@ public final class RangePolicyHighestValuesForcedMin extends ARangePolicy {
       return false;
     }
     final RangePolicyHighestValuesForcedMin other = (RangePolicyHighestValuesForcedMin) obj;
-    if (Double.doubleToLongBits(this.m_highestValueRangeToShow) != Double
-        .doubleToLongBits(other.m_highestValueRangeToShow)) {
+    if (Double.doubleToLongBits(this.m_highestValueRangeToShow)
+        != Double.doubleToLongBits(other.m_highestValueRangeToShow)) {
       return false;
     }
     return true;
@@ -87,16 +83,12 @@ public final class RangePolicyHighestValuesForcedMin extends ARangePolicy {
 
   /**
    * Returns the maximum of the chart always.
+   *
    * <p>
-   * 
+   *
    * @return Returns the maximum of the chart always.
-   * 
-   * @param chartMin
-   *          ignored.
-   * 
-   * @param chartMax
-   *          returned always.
-   * 
+   * @param chartMin ignored.
+   * @param chartMax returned always.
    * @see info.monitorenter.gui.chart.IRangePolicy#getMax(double, double)
    */
   public double getMax(final double chartMin, final double chartMax) {
@@ -105,19 +97,13 @@ public final class RangePolicyHighestValuesForcedMin extends ARangePolicy {
 
   /**
    * Returns the maximum of the chart - interal highestValueRangeToShow.
+   *
    * <p>
-   * 
-   * 
-   * @param chartMin
-   *          unused: the lower bound is always controlled by max - internal
-   *          highesValueRangeToShow.
-   * 
-   * @param chartMax
-   *          upper bound to compute down to the start of the latest highest
-   *          values.
-   * 
+   *
+   * @param chartMin unused: the lower bound is always controlled by max - internal
+   *     highesValueRangeToShow.
+   * @param chartMax upper bound to compute down to the start of the latest highest values.
    * @return the maximum of the chart - interal highestValueRangeToShow.
-   * 
    * @see info.monitorenter.gui.chart.IRangePolicy#getMin(double, double)
    */
   public double getMin(final double chartMin, final double chartMax) {

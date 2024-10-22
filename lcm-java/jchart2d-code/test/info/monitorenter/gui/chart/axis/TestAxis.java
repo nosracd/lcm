@@ -1,5 +1,5 @@
 /*
- *  TestAxis.java of project jchart2d, Junit test case for 
+ *  TestAxis.java of project jchart2d, Junit test case for
  *  IAxis implementations.
  *  Copyright (C) Achim Westermann, created on 16.07.2005, 10:52:43
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -35,17 +35,18 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Junit test for <code>{@link info.monitorenter.gui.chart.IAxis}</code>
- * implementations.
+ * Junit test for <code>{@link info.monitorenter.gui.chart.IAxis}</code> implementations.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
  */
 public class TestAxis extends ATestJChart2D {
   /**
    * Test suite for this test class.
+   *
    * <p>
-   * 
+   *
    * @return the test suite
    */
   public static Test suite() {
@@ -62,10 +63,10 @@ public class TestAxis extends ATestJChart2D {
 
   /**
    * Constructor with the test name.
+   *
    * <p>
-   * 
-   * @param testname
-   *          the test name.
+   *
+   * @param testname the test name.
    */
   public TestAxis(final String testname) {
     super(testname);
@@ -96,7 +97,8 @@ public class TestAxis extends ATestJChart2D {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.test.ATestJChart2D#fillTrace(info.monitorenter.gui.chart.ITrace2D)
+   * @see
+   *     info.monitorenter.gui.chart.test.ATestJChart2D#fillTrace(info.monitorenter.gui.chart.ITrace2D)
    */
   @Override
   protected void fillTrace(final ITrace2D trace2D) {
@@ -108,6 +110,7 @@ public class TestAxis extends ATestJChart2D {
   /**
    * Tests <code>{@link AAxis#setRangePolicy(IRangePolicy)}</code> with a <code>
    * {@link RangePolicyFixedViewport}</code>.
+   *
    * <p>
    */
   public void testSetRangePolicyFixedViewPort() {
@@ -124,8 +127,8 @@ public class TestAxis extends ATestJChart2D {
   }
 
   /**
-   * Tests the method {@link AAxis.AChart2DDataAccessor#translatePxToValue(int)}
-   * .
+   * Tests the method {@link AAxis.AChart2DDataAccessor#translatePxToValue(int)} .
+   *
    * <p>
    */
   public void testTransformPxToValue() {
@@ -166,12 +169,11 @@ public class TestAxis extends ATestJChart2D {
     pixel = 300;
     higherValue = this.m_axisY.m_accessor.translatePxToValue(pixel);
     Assert.assertTrue(higherValue < value);
-
   }
 
   /**
-   * Tests the method {@link AAxis.AChart2DDataAccessor#translatePxToValue(int)}
-   * .
+   * Tests the method {@link AAxis.AChart2DDataAccessor#translatePxToValue(int)} .
+   *
    * <p>
    */
   public void testTransformValueToPx() {

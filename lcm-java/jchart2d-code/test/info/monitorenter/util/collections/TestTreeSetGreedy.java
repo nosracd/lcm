@@ -1,18 +1,18 @@
 /*
- *  TestTreeSetGreedy.java of project jchart2d - Junit test case 
- *  for class TreeSetGreedy. 
+ *  TestTreeSetGreedy.java of project jchart2d - Junit test case
+ *  for class TreeSetGreedy.
  *  Copyright (C) Achim Westermann, created on 16.05.2005, 18:58:11
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -35,34 +35,32 @@ import junit.framework.TestSuite;
 
 /**
  * Junit test case for class <code>{@link TreeSetGreedy}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
-public class TestTreeSetGreedy
-    extends TestCase {
+public class TestTreeSetGreedy extends TestCase {
 
   /**
-   * Helper class for adding as element to the tested
-   * <code>{@link TreeSetGreedy}</code>.
+   * Helper class for adding as element to the tested <code>{@link TreeSetGreedy}</code>.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
-   * 
-   * 
    * @version $Revision: 1.8 $
    */
   final class Element implements IComparableProperty {
 
     /** Generated <code>serialVersionUID</code>. */
     private static final long serialVersionUID = -615304987571740852L;
-    
+
     /** The internal comparable. */
     private Number m_compare = Integer.valueOf(ITrace2D.ZINDEX_MAX);
 
     /**
      * Defcon.
+     *
      * <p>
      */
     public Element() {
@@ -77,7 +75,8 @@ public class TestTreeSetGreedy
     }
 
     /**
-     * @see info.monitorenter.util.collections.IComparableProperty#setComparableProperty(java.lang.Number)
+     * @see
+     *     info.monitorenter.util.collections.IComparableProperty#setComparableProperty(java.lang.Number)
      */
     public void setComparableProperty(final Number n) {
       this.m_compare = n;
@@ -95,8 +94,9 @@ public class TestTreeSetGreedy
 
   /**
    * Test suite for this test class.
+   *
    * <p>
-   * 
+   *
    * @return the test suite
    */
   public static Test suite() {
@@ -125,10 +125,10 @@ public class TestTreeSetGreedy
 
   /**
    * Creates an instance with the given name.
+   *
    * <p>
-   * 
-   * @param testName
-   *          the name of the test case.
+   *
+   * @param testName the name of the test case.
    */
   public TestTreeSetGreedy(final String testName) {
     super(testName);
@@ -154,8 +154,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add an element and ensure size is 1.
+   *
    * <p>
-   * 
    */
   public void testAdd() {
     Assert.assertNotNull(this.m_test);
@@ -165,11 +165,10 @@ public class TestTreeSetGreedy
   }
 
   /**
-   * Add 1,1,1,1 and remove one element that is in the center of the order
-   * (assuming that they will get different numbers due to correct add
-   * mechanism).
+   * Add 1,1,1,1 and remove one element that is in the center of the order (assuming that they will
+   * get different numbers due to correct add mechanism).
+   *
    * <p>
-   * 
    */
   public void testAdd10RemoveCenter() {
     Assert.assertNotNull(this.m_test);
@@ -208,8 +207,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add 1,1,1,1,1 and test, wether all numbers are different.
+   *
    * <p>
-   * 
    */
   public void testAddEqual10() {
     Assert.assertNotNull(this.m_test);
@@ -241,10 +240,10 @@ public class TestTreeSetGreedy
   }
 
   /**
-   * Add two distinct <code>{@link IComparableProperty}</code> elements with
-   * equal comparable and ensure size is 2.
+   * Add two distinct <code>{@link IComparableProperty}</code> elements with equal comparable and
+   * ensure size is 2.
+   *
    * <p>
-   * 
    */
   public void testAddEqual2() {
     Assert.assertNotNull(this.m_test);
@@ -260,6 +259,7 @@ public class TestTreeSetGreedy
 
   /**
    * Add 1,1,1 and test, wether all numbers are different.
+   *
    * <p>
    */
   public void testAddEqual3() {
@@ -279,8 +279,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add 1,1,1,1,1 and test, wether all numbers are different.
+   *
    * <p>
-   * 
    */
   public void testAddEqual5() {
     Assert.assertNotNull(this.m_test);
@@ -303,8 +303,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add two identical elements and ensure that the 2nd operation fails.
+   *
    * <p>
-   * 
    */
   public void testAddIdentical2() {
     Assert.assertNotNull(this.m_test);
@@ -315,13 +315,12 @@ public class TestTreeSetGreedy
     System.out.println("testAddIdentical");
     System.out.println(this.m_test);
     Assert.assertFalse(success);
-
   }
 
   /**
    * Add 1,1,1,1,1,1,1,1,1,1, remove them and ensure that no elements remain.
+   *
    * <p>
-   * 
    */
   public void testAddRemoveEqual10() {
     Assert.assertNotNull(this.m_test);
@@ -367,10 +366,10 @@ public class TestTreeSetGreedy
   }
 
   /**
-   * Add two distinct <code>{@link IComparableProperty}</code> elements with
-   * equal comparable, remove them and ensure size is 0.
+   * Add two distinct <code>{@link IComparableProperty}</code> elements with equal comparable,
+   * remove them and ensure size is 0.
+   *
    * <p>
-   * 
    */
   public void testAddRemoveEqual2() {
     Assert.assertNotNull(this.m_test);
@@ -393,8 +392,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add 1,1,1, remove then and ensure that zero elements remain.
+   *
    * <p>
-   * 
    */
   public void testAddRemoveEqual3() {
     Assert.assertNotNull(this.m_test);
@@ -420,8 +419,8 @@ public class TestTreeSetGreedy
 
   /**
    * Add 1,1,1,1,1, remove them and ensure that no elements remain.
+   *
    * <p>
-   * 
    */
   public void testAddRemoveEqual5() {
     Assert.assertNotNull(this.m_test);
@@ -452,31 +451,25 @@ public class TestTreeSetGreedy
   }
 
   /**
-   * Starting 20 Threads that will remove and add inital equal elements (with an
-   * internal comparableProperty of {@link ITrace2D#ZINDEX_MAX}) each 50 times
-   * with arbitrary sleep times. Each Thread will ensure that it's own
-   * {@link IComparableProperty} will be removed from the {@link TreeSetGreedy}
-   * after removing it and assert this by calling the remove call a 2nd time and
-   * looking for the returned boolean. The main Thread will wait until all
-   * Threads have terminated.
-   * 
-   * 
+   * Starting 20 Threads that will remove and add inital equal elements (with an internal
+   * comparableProperty of {@link ITrace2D#ZINDEX_MAX}) each 50 times with arbitrary sleep times.
+   * Each Thread will ensure that it's own {@link IComparableProperty} will be removed from the
+   * {@link TreeSetGreedy} after removing it and assert this by calling the remove call a 2nd time
+   * and looking for the returned boolean. The main Thread will wait until all Threads have
+   * terminated.
    */
   public void testMultiThreadingAddRemove() {
 
     /**
-     * Helper class that iteratively adds an element, asserts that the operation
-     * was successful and then removes it again and asserts again that removing
-     * was successful.
+     * Helper class that iteratively adds an element, asserts that the operation was successful and
+     * then removes it again and asserts again that removing was successful.
+     *
      * <p>
-     * 
+     *
      * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
-     * 
-     * 
      * @version $Revision: 1.8 $
      */
-    class TreeSetGreedyAddRemover
-        extends Thread {
+    class TreeSetGreedyAddRemover extends Thread {
 
       /** Amount of instances to use concurrently. */
       public static final int INSTANCES = 30;
@@ -498,6 +491,7 @@ public class TestTreeSetGreedy
 
       /**
        * Defcon.
+       *
        * <p>
        */
       public TreeSetGreedyAddRemover() {
@@ -535,7 +529,8 @@ public class TestTreeSetGreedy
             success = TestTreeSetGreedy.this.m_test.remove(this.m_element);
             try {
               // avoid ConcurrentModificationException for toString() of test:
-              Assert.assertFalse("A remove operation of my own removed element was successful! ", success);
+              Assert.assertFalse(
+                  "A remove operation of my own removed element was successful! ", success);
             } catch (Exception fail) {
               fail.printStackTrace(System.err);
               this.m_failure = fail;
@@ -546,12 +541,12 @@ public class TestTreeSetGreedy
             fail.printStackTrace(System.err);
             this.m_failure = fail;
           }
-
         }
       }
     }
 
-    TreeSetGreedyAddRemover[] threads = new TreeSetGreedyAddRemover[TreeSetGreedyAddRemover.INSTANCES];
+    TreeSetGreedyAddRemover[] threads =
+        new TreeSetGreedyAddRemover[TreeSetGreedyAddRemover.INSTANCES];
     for (int i = 0; i < TreeSetGreedyAddRemover.INSTANCES; i++) {
       threads[i] = new TreeSetGreedyAddRemover();
     }
@@ -595,6 +590,5 @@ public class TestTreeSetGreedy
       }
     }
     System.out.println("testMultiThreadingAddRemove() finished.");
-
   }
 }

@@ -1,5 +1,5 @@
 /*
- *  IAxisScalePolicy.java of project jchart2d, <enterpurposehere>. 
+ *  IAxisScalePolicy.java of project jchart2d, <enterpurposehere>.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on Apr 22, 2011
  *
  *  This library is free software; you can redistribute it and/or
@@ -10,7 +10,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -32,38 +32,32 @@ import java.util.List;
 public interface IAxisScalePolicy {
 
   /**
-   * Returns the array of labeled values that will be used by the
-   * <code>{@link Chart2D}</code> to paint labels.
+   * Returns the array of labeled values that will be used by the <code>{@link Chart2D}</code> to
+   * paint labels.
+   *
    * <p>
-   * 
-   * @param g2d
-   *          Provides information about the graphic context (e.g. font
-   *          metrics).
-   * 
-   * @param axis
-   *          the axis to work for.
-   * 
+   *
+   * @param g2d Provides information about the graphic context (e.g. font metrics).
+   * @param axis the axis to work for.
    * @return the labeled values that will be used by the <code>{@link Chart2D}
    *         </code> to paint labels.
    */
   public abstract List<LabeledValue> getScaleValues(final Graphics g2d, final IAxis<?> axis);
 
   /**
-   * Performs expensive calculations for various values that are used by many
-   * calls throughout a paint iterations.
+   * Performs expensive calculations for various values that are used by many calls throughout a
+   * paint iterations.
+   *
+   * <p>These values are constant throughout a paint iteration by the contract that no point is
+   * added removed or changed in this period. Because these values are used from many methods it is
+   * impossible to calculate them at a "transparent" method that may perform this caching over a
+   * paint period without knowledge from outside. The first method called in a paint iteration is
+   * called several further times in the iteration. So this is the common hook to invoke before
+   * painting a chart.
+   *
    * <p>
-   * These values are constant throughout a paint iteration by the contract that
-   * no point is added removed or changed in this period. Because these values
-   * are used from many methods it is impossible to calculate them at a
-   * "transparent" method that may perform this caching over a paint period
-   * without knowledge from outside. The first method called in a paint
-   * iteration is called several further times in the iteration. So this is the
-   * common hook to invoke before painting a chart.
-   * <p>
-   * 
-   * @param axis
-   *          the axis to read data from.
+   *
+   * @param axis the axis to read data from.
    */
   public void initPaintIteration(final IAxis<?> axis);
-
 }

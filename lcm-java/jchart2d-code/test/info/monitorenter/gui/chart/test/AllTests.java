@@ -1,5 +1,5 @@
 /*
- *  AllTest.java of project JChart2d, 
+ *  AllTest.java of project JChart2d,
  *  mother of all test suites that incorporates all tests for JChart2d..
  *  Copyright 2007 (C) Achim Westermann, created on 25.02.2007 18:59:08.
  *
@@ -28,20 +28,20 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * JChart2D main test suite, executes the individual test suites of all core
- * packages.
+ * JChart2D main test suite, executes the individual test suites of all core packages.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
  * @version $Revision: 1.7 $
- * 
  * @since 2.1.0
  */
 public final class AllTests {
   /**
    * Creates the JChart2D JUnit test suite.
+   *
    * <p>
-   * 
+   *
    * @return the JChart2D JUnit test suite
    */
   public static Test suite() {
@@ -57,33 +57,34 @@ public final class AllTests {
     suite.addTest(info.monitorenter.gui.chart.traces.AllTests.suite());
     suite.addTest(info.monitorenter.util.collections.AllTests.suite());
 
-    TestSetup wrapper = new TestSetup(suite) {
+    TestSetup wrapper =
+        new TestSetup(suite) {
 
-      /**
-       * @see junit.extensions.TestSetup#setUp()
-       */
-      @Override
-      protected void setUp() {
+          /**
+           * @see junit.extensions.TestSetup#setUp()
+           */
+          @Override
+          protected void setUp() {
 
-        // oneTimeSetUp();
-      }
+            // oneTimeSetUp();
+          }
 
-      /**
-       * 
-       * @see junit.extensions.TestSetup#tearDown()
-       */
-      @Override
-      protected void tearDown() {
+          /**
+           * @see junit.extensions.TestSetup#tearDown()
+           */
+          @Override
+          protected void tearDown() {
 
-        // oneTimeTearDown();
-      }
-    };
+            // oneTimeTearDown();
+          }
+        };
 
     return wrapper;
   }
 
   /**
    * Hide constructor to prevent generation of class instances.
+   *
    * <p>
    */
   private AllTests() {

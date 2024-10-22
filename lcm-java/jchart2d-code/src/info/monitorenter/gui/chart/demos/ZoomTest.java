@@ -1,6 +1,6 @@
 /*
- *  ZoomTest.java of project jchart2d, demonstration of a zoom-enabled 
- *  chart. 
+ *  ZoomTest.java of project jchart2d, demonstration of a zoom-enabled
+ *  chart.
  *  Copyright 2007 - 2011 (C) Achim Westermann, created on 23:59:21.
  *
  *  This library is free software; you can redistribute it and/or
@@ -43,16 +43,17 @@ import javax.swing.JFrame;
 
 /**
  * Demonstration of a zoom - enabled chart ({@link info.monitorenter.gui.chart.ZoomableChart}).
+ *
  * <p>
- * 
+ *
  * @author Alessio Sambarino (Contributor)
  * @version $Revision: 1.17 $
  */
-public class ZoomTest
-    extends JFrame {
+public class ZoomTest extends JFrame {
 
   /**
    * Action adapter for zoomAllButton.
+   *
    * <p>
    */
   class ZoomAllAdapter implements ActionListener {
@@ -62,10 +63,10 @@ public class ZoomTest
     /**
      * Creates an instance that will reset zooming on the given zoomable chart upon the triggered
      * action.
+     *
      * <p>
-     * 
-     * @param chart
-     *            the target to reset zooming on.
+     *
+     * @param chart the target to reset zooming on.
      */
     public ZoomAllAdapter(final ZoomableChart chart) {
       this.m_zoomableChart = chart;
@@ -81,16 +82,17 @@ public class ZoomTest
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = -2249660781499017221L;
 
   /**
    * Main startup method.
+   *
    * <p>
-   * 
-   * @param args
-   *            ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
 
@@ -98,11 +100,11 @@ public class ZoomTest
     // Show the frame
     zoomTest.setSize(640, 480);
     zoomTest.setVisible(true);
-
   }
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public ZoomTest() {
@@ -120,8 +122,8 @@ public class ZoomTest
     chart.addTrace(trace);
     trace.setColor(Color.RED);
     trace.setStroke(new BasicStroke(4));
-//    ITracePainter<?> painter = new TracePainterDisc(8);
-//    trace.setTracePainter(painter);
+    //    ITracePainter<?> painter = new TracePainterDisc(8);
+    //    trace.setTracePainter(painter);
 
     // Add all points, as it is static
     trace.addPoint(0, 1);
@@ -133,7 +135,6 @@ public class ZoomTest
     trace.addPoint(0, 4);
     trace.addPoint(3, 2);
 
-    
     trace = new Trace2DSimple();
     chart.addTrace(trace);
     trace.addPoint(0, 3);
@@ -146,10 +147,10 @@ public class ZoomTest
     trace.addPoint(7, 4);
     trace.addPoint(8, 4);
     trace.addPoint(9, 4);
-    
+
     trace.setColor(Color.BLUE);
 
-    // Tool tips and highlighting: Both modes point out the neares trace point to the cursor: 
+    // Tool tips and highlighting: Both modes point out the neares trace point to the cursor:
     chart.setToolTipType(Chart2D.ToolTipType.VALUE_SNAP_TO_TRACEPOINTS);
     trace.setPointHighlighter(new PointPainterDisc(10));
     chart.enablePointHighlighting(true);
@@ -165,15 +166,15 @@ public class ZoomTest
     c.add(zoomAllButton, BorderLayout.NORTH);
 
     // Enable the termination button:
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
-
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
   }
 }

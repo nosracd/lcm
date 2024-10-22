@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -34,24 +34,22 @@ import junit.framework.TestSuite;
  * Contributed by zoola for bug report <a href=
  * "http://sourceforge.net/tracker/?func=detail&atid=459734&aid=1426449&group_id=50440"
  * target="_blank">#1426449 </a>.
+ *
  * <p>
- * 
+ *
  * @author zoola
- * 
  * @version $Revision: 1.3 $
  */
-public final class BlankChart
-    extends TestCase {
+public final class BlankChart extends TestCase {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3258408426458525753L;
 
   /**
    * Test suite for this test class.
+   *
    * <p>
-   * 
+   *
    * @return the test suite
    */
   public static Test suite() {
@@ -66,22 +64,21 @@ public final class BlankChart
 
   /**
    * Creates a test case with the given name.
+   *
    * <p>
-   * 
-   * @param testName
-   *          the name of the test case.
+   *
+   * @param testName the name of the test case.
    */
   public BlankChart(final String testName) {
     super(testName);
-
   }
 
   /**
    * Test the display for a blank chart.
+   *
    * <p>
-   * 
-   * @throws InterruptedException
-   *           if sleep is interrupted.
+   *
+   * @throws InterruptedException if sleep is interrupted.
    */
   public void testBlankChart() throws InterruptedException {
     JFrame frame = new JFrame(this.getClass().getName());
@@ -92,5 +89,4 @@ public final class BlankChart
       Thread.sleep(1000);
     }
   }
-
 }

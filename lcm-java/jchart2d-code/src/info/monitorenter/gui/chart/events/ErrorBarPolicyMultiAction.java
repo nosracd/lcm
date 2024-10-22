@@ -1,6 +1,6 @@
 /*
- * ErrorBarPolicyMultiAction.java of project jchart2d, 
- * highly proprietary error bar action that changes the behaviour 
+ * ErrorBarPolicyMultiAction.java of project jchart2d,
+ * highly proprietary error bar action that changes the behaviour
  * depending on the <code>{@link JMenu}</code> from which it is triggered.
  * Copyright (C) 2007 - 2011 Achim Westermann, created on 17.08.2007 21:02:52.
  *
@@ -37,13 +37,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
- * Highly proprietary error bar action that changes the behavior depending on
- * the <code>{@link JMenu}</code> from which it is triggered.
+ * Highly proprietary error bar action that changes the behavior depending on the <code>
+ * {@link JMenu}</code> from which it is triggered.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.8 $
  */
 public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolicy {
@@ -55,9 +54,8 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
   private Action m_addAction;
 
   /**
-   * The menu for add operation items, needed to remove the add item from when
-   * an add operation was triggered and add an add item when a remove operation
-   * was triggered.
+   * The menu for add operation items, needed to remove the add item from when an add operation was
+   * triggered and add an add item when a remove operation was triggered.
    */
   private JMenu m_addMenu;
 
@@ -65,9 +63,8 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
   private Action m_editAction;
 
   /**
-   * The menu for edit operation items, needed to remove the edit item from when
-   * a remove operation was triggered and add an edit item when an add operation
-   * was triggered.
+   * The menu for edit operation items, needed to remove the edit item from when a remove operation
+   * was triggered and add an edit item when an add operation was triggered.
    */
   private JMenu m_editMenu;
 
@@ -75,47 +72,36 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
   private Action m_removeAction;
 
   /**
-   * The menu for remove operation items, needed to remove the remove item from
-   * when a remove operation was triggered and add a remove item when an add
-   * operation was triggered.
+   * The menu for remove operation items, needed to remove the remove item from when a remove
+   * operation was triggered and add a remove item when an add operation was triggered.
    */
   private JMenu m_removeMenu;
 
   /**
-   * Create an <code>Action</code> that accesses the trace and identifies itself
-   * with the given action String.
+   * Create an <code>Action</code> that accesses the trace and identifies itself with the given
+   * action String.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
-   * @param errorBarPolicy
-   *          the error bar policy to use by this action.
-   * 
-   * @param addMenu
-   *          The menu for add operation items, needed to remove the add item
-   *          from when an add operation was triggered and add an add item when
-   *          a remove operation was triggered.
-   * 
-   * @param removeMenu
-   *          The menu for remove operation items, needed to remove the remove
-   *          item from when a remove operation was triggered and add a remove
-   *          item when an add operation was triggered.
-   * 
-   * @param editMenu
-   *          The menu for edit operation items, needed to remove the edit item
-   *          from when a remove operation was triggered and add an edit item
-   *          when an add operation was triggered.
-   * 
+   *
+   * @param trace the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * @param errorBarPolicy the error bar policy to use by this action.
+   * @param addMenu The menu for add operation items, needed to remove the add item from when an add
+   *     operation was triggered and add an add item when a remove operation was triggered.
+   * @param removeMenu The menu for remove operation items, needed to remove the remove item from
+   *     when a remove operation was triggered and add a remove item when an add operation was
+   *     triggered.
+   * @param editMenu The menu for edit operation items, needed to remove the edit item from when a
+   *     remove operation was triggered and add an edit item when an add operation was triggered.
    */
-  public ErrorBarPolicyMultiAction(final ITrace2D trace, final String description,
-      final IErrorBarPolicy< ? > errorBarPolicy, final JMenu addMenu, final JMenu removeMenu,
+  public ErrorBarPolicyMultiAction(
+      final ITrace2D trace,
+      final String description,
+      final IErrorBarPolicy<?> errorBarPolicy,
+      final JMenu addMenu,
+      final JMenu removeMenu,
       final JMenu editMenu) {
     super(trace, description, errorBarPolicy);
     this.m_addAction = new Trace2DActionAddErrorBarPolicy(trace, description, errorBarPolicy);
@@ -146,10 +132,18 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
       JMenuItem editItem;
       // add a new JMenuItem to the remove menu and to the edit menu:
       if (item instanceof LayoutFactory.PropertyChangeMenuItem) {
-        removeItem = new LayoutFactory.PropertyChangeMenuItem(
-            ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(), this, new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(this.m_trace));
-        editItem = new LayoutFactory.PropertyChangeMenuItem(
-            ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(), this, new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(this.m_trace));
+        removeItem =
+            new LayoutFactory.PropertyChangeMenuItem(
+                ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(),
+                this,
+                new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(
+                    this.m_trace));
+        editItem =
+            new LayoutFactory.PropertyChangeMenuItem(
+                ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(),
+                this,
+                new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(
+                    this.m_trace));
       } else {
         removeItem = new JMenuItem(this);
         editItem = new JMenuItem(this);
@@ -171,8 +165,12 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
       // add an add menu item:
       JMenuItem addItem;
       if (item instanceof LayoutFactory.PropertyChangeMenuItem) {
-        addItem = new LayoutFactory.PropertyChangeMenuItem(
-            ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(), this, new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(this.m_trace));
+        addItem =
+            new LayoutFactory.PropertyChangeMenuItem(
+                ((LayoutFactory.PropertyChangeMenuItem) item).getUIAdaptee(),
+                this,
+                new BasicPropertyAdaptSupport.RemoveAsListenerFromComponentIfTraceIsDropped(
+                    this.m_trace));
       } else {
         addItem = new JMenuItem(this);
       }
@@ -208,5 +206,4 @@ public final class ErrorBarPolicyMultiAction extends ATrace2DActionErrorBarPolic
   public void propertyChange(final PropertyChangeEvent evt) {
     // nop
   }
-
 }

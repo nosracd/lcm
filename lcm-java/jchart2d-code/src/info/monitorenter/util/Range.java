@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -27,21 +27,19 @@ import info.monitorenter.util.math.MathUtil;
 import java.io.Serializable;
 
 /**
- * A simple data structure that defines a minimum and a maximum and knows, what
- * lies within it and what not.
+ * A simple data structure that defines a minimum and a maximum and knows, what lies within it and
+ * what not.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
 public class Range implements Serializable {
 
   /** The unbounded range. */
   public static final Range RANGE_UNBOUNDED = new Range(-Double.MAX_VALUE, +Double.MAX_VALUE);
 
-  /**
-   * Generated for <code>serialVersionUID</code>.
-   */
+  /** Generated for <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3760565278089754419L;
 
   /** The upper bound of this range. */
@@ -52,13 +50,11 @@ public class Range implements Serializable {
 
   /**
    * Constructs a new Range that covers the given bounds.
+   *
    * <p>
-   * 
-   * @param min
-   *          the lower bound for the range.
-   * 
-   * @param max
-   *          the upper bound for the range.
+   *
+   * @param min the lower bound for the range.
+   * @param max the upper bound for the range.
    */
   public Range(final double min, final double max) {
     if (Double.isNaN(min)) {
@@ -77,14 +73,11 @@ public class Range implements Serializable {
 
   /**
    * Force this Range to cover the given value.
+   *
    * <p>
-   * 
-   * @param contain
-   *          the value that has to be contained within this range.
-   * 
-   * @return true, if an internal modification of one bound took place, false
-   *         else.
-   * 
+   *
+   * @param contain the value that has to be contained within this range.
+   * @return true, if an internal modification of one bound took place, false else.
    */
   public boolean ensureContained(final double contain) {
     boolean ret = false;
@@ -124,8 +117,9 @@ public class Range implements Serializable {
 
   /**
    * Returns the extent of this range.
+   *
    * <p>
-   * 
+   *
    * @return the extent of this range.
    */
   public double getExtent() {
@@ -134,8 +128,9 @@ public class Range implements Serializable {
 
   /**
    * Returns the upper bound of this range.
+   *
    * <p>
-   * 
+   *
    * @return the upper bound of this range.
    */
   public double getMax() {
@@ -144,8 +139,9 @@ public class Range implements Serializable {
 
   /**
    * Returns the lower bound of this range.
+   *
    * <p>
-   * 
+   *
    * @return the lower bound of this range.
    */
   public double getMin() {
@@ -169,11 +165,10 @@ public class Range implements Serializable {
 
   /**
    * Returns true if the given value is covered by this range.
+   *
    * <p>
-   * 
-   * @param contained
-   *          the value to test wether it is contained within this range.
-   * 
+   *
+   * @param contained the value to test wether it is contained within this range.
    * @return true if the given value is covered by this range.
    */
   public boolean isContained(final double contained) {
@@ -182,14 +177,12 @@ public class Range implements Serializable {
 
   /**
    * Mutator that shifts this range to the given one.
+   *
+   * <p>This is support for "clone" without allocations in case range instances are reused.
+   *
    * <p>
-   * 
-   * This is support for "clone" without allocations in case range instances are
-   * reused.
-   * <p>
-   * 
-   * @param r
-   *          the range to copy from.
+   *
+   * @param r the range to copy from.
    */
   public void mimic(final Range r) {
     this.m_max = r.m_max;
@@ -198,10 +191,10 @@ public class Range implements Serializable {
 
   /**
    * Sets the max value of this range.
+   *
    * <p>
-   * 
-   * @param max
-   *          the max to set.
+   *
+   * @param max the max to set.
    */
   public final void setMax(final double max) {
     this.m_max = max;
@@ -209,10 +202,10 @@ public class Range implements Serializable {
 
   /**
    * Sets the min value of this range.
+   *
    * <p>
-   * 
-   * @param min
-   *          the min to set
+   *
+   * @param min the min to set
    */
   public final void setMin(final double min) {
     this.m_min = min;
@@ -228,5 +221,4 @@ public class Range implements Serializable {
     ret.append(this.m_max).append(']');
     return ret.toString();
   }
-
 }

@@ -1,6 +1,6 @@
 /*
- *  AllTests.java of project jchart2d, main test suite for 
- *  the package info.monitorenter.util.collections. 
+ *  AllTests.java of project jchart2d, main test suite for
+ *  the package info.monitorenter.util.collections.
  *  Copyright (c) 2007 Achim Westermann, created on 08.10.2006 11:59:12.
  *
  *  This library is free software; you can redistribute it and/or
@@ -26,20 +26,20 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Main test suite for the package
- * <code>{@link info.monitorenter.util.collections}</code>.
+ * Main test suite for the package <code>{@link info.monitorenter.util.collections}</code>.
+ *
  * <p>
- * 
+ *
  * @author Achim westermann
  * @version $Revision: 1.4 $
- * 
  * @since 2.1.0
  */
 public final class AllTests {
   /**
    * Returns the JUnit test suite for this package.
+   *
    * <p>
-   * 
+   *
    * @return the JUnit test suite for this package
    */
   public static Test suite() {
@@ -53,11 +53,11 @@ public final class AllTests {
 
   /**
    * Hide constructor to prevent generation of class instances.
+   *
    * <p>
    */
   private AllTests() {
 
     // empty
   }
-
 }

@@ -1,20 +1,20 @@
 /*
- *  ErrorBarPaintersPanel.java of project jchart2d, a panel 
- *  that displays all ErrorBarPainterConfigurable instances of an IErrorBarPolicy 
- *  and offers their edit and remove buttons as well as 
- *  an add button for a new IErrorBarPainter. 
+ *  ErrorBarPaintersPanel.java of project jchart2d, a panel
+ *  that displays all ErrorBarPainterConfigurable instances of an IErrorBarPolicy
+ *  and offers their edit and remove buttons as well as
+ *  an add button for a new IErrorBarPainter.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 09:50:20.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -46,35 +46,30 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * A panel that displays all
- * {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} instances of an
- * {@link info.monitorenter.gui.chart.IErrorBarPolicy} and offers their edit and
- * remove buttons as well as an add button for a new
- * {@link info.monitorenter.gui.chart.IErrorBarPainter} instance to configure.
+ * A panel that displays all {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} instances
+ * of an {@link info.monitorenter.gui.chart.IErrorBarPolicy} and offers their edit and remove
+ * buttons as well as an add button for a new {@link info.monitorenter.gui.chart.IErrorBarPainter}
+ * instance to configure.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.11 $
  */
-public class ErrorBarPaintersPanel
-    extends JPanel implements PropertyChangeListener {
+public class ErrorBarPaintersPanel extends JPanel implements PropertyChangeListener {
 
   /**
-   * A panel that displays a single
-   * {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} instance of
-   * an {@link info.monitorenter.gui.chart.IErrorBarPolicy} and offers their
-   * edit and remove buttons as well as an add button for a new
-   * {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} instance to
-   * configure.
+   * A panel that displays a single {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter}
+   * instance of an {@link info.monitorenter.gui.chart.IErrorBarPolicy} and offers their edit and
+   * remove buttons as well as an add button for a new {@link
+   * info.monitorenter.gui.chart.errorbars.ErrorBarPainter} instance to configure.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
-   * 
    * @version $Revision: 1.11 $
    */
-  public class ErrorBarPainterConfigurablePanel
-      extends JPanel implements PropertyChangeListener {
+  public class ErrorBarPainterConfigurablePanel extends JPanel implements PropertyChangeListener {
 
     /** Generated <code>serialVersionUID</code>. */
     private static final long serialVersionUID = 1055140441129248409L;
@@ -83,19 +78,16 @@ public class ErrorBarPaintersPanel
     private IErrorBarPainter m_errorBarPainter;
 
     /**
-     * Creates an instance that displays as a control (view & controller) to the
-     * error bar painter instance.
+     * Creates an instance that displays as a control (view & controller) to the error bar painter
+     * instance.
+     *
      * <p>
-     * 
-     * @param errorBarPainter
-     *            the error bar painter to control.
-     * 
-     * @param errorBarPolicy
-     *            the parent error bar policy for the remove action.
-     * 
+     *
+     * @param errorBarPainter the error bar painter to control.
+     * @param errorBarPolicy the parent error bar policy for the remove action.
      */
-    public ErrorBarPainterConfigurablePanel(final IErrorBarPainter errorBarPainter,
-        final IErrorBarPolicy<?> errorBarPolicy) {
+    public ErrorBarPainterConfigurablePanel(
+        final IErrorBarPainter errorBarPainter, final IErrorBarPolicy<?> errorBarPolicy) {
 
       super();
       this.m_errorBarPainter = errorBarPainter;
@@ -123,8 +115,9 @@ public class ErrorBarPaintersPanel
       this.add(editButton, gbc);
       gbc.gridx = 2;
       JButton removeButton;
-      removeButton = new JButton(new ErrorBarPolicyActionRemovePainter(errorBarPolicy, "Remove",
-          errorBarPainter));
+      removeButton =
+          new JButton(
+              new ErrorBarPolicyActionRemovePainter(errorBarPolicy, "Remove", errorBarPainter));
       this.add(removeButton, gbc);
       gbc.gridx = 0;
       gbc.gridy++;
@@ -149,8 +142,8 @@ public class ErrorBarPaintersPanel
             // remove
             ErrorBarPaintersPanel.this.remove(this);
             // also as a listener:
-            errorBarPolicy.removePropertyChangeListener(IErrorBarPolicy.PROPERTY_ERRORBARPAINTER,
-                this);
+            errorBarPolicy.removePropertyChangeListener(
+                IErrorBarPolicy.PROPERTY_ERRORBARPAINTER, this);
             // invalidate / repaint parent: This has to be done at the level
             // of the error bar wizard level: we are a child of
             // errorbarpainterspanel ->
@@ -176,12 +169,12 @@ public class ErrorBarPaintersPanel
   private JButton m_addButton;
 
   /**
-   * Creates an instance that hooks as a control (view & controller) to the
-   * error bar policy model instance.
+   * Creates an instance that hooks as a control (view & controller) to the error bar policy model
+   * instance.
+   *
    * <p>
-   * 
-   * @param errorBarPolicy
-   *            the error bar policy to control directions of display of.
+   *
+   * @param errorBarPolicy the error bar policy to control directions of display of.
    */
   public ErrorBarPaintersPanel(final IErrorBarPolicy<?> errorBarPolicy) {
 
@@ -241,6 +234,5 @@ public class ErrorBarPaintersPanel
         }
       }
     }
-
   }
 }

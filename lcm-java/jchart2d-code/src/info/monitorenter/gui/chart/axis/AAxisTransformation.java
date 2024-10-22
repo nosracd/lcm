@@ -1,7 +1,7 @@
 /*
- *  AAxisTransformation.java of project jchart2d, 
- *  base class for Axis implementations that transform the scale 
- *  for changed display.  
+ *  AAxisTransformation.java of project jchart2d,
+ *  base class for Axis implementations that transform the scale
+ *  for changed display.
  *  Copyright (C) 2007 -2011 Achim Westermann, created on 20:33:13.
  *
  *  This library is free software; you can redistribute it and/or
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
- *  
+ *
  *  If you modify or optimize the code in a useful way please let me know.
  *  Achim.Westermann@gmx.de
  *
@@ -37,30 +37,26 @@ import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
 /**
- * Base class for Axis implementations that transform the scale for changed
- * display.
+ * Base class for Axis implementations that transform the scale for changed display.
+ *
+ * <p>Note that instances of this implementations will only accept subtypes of {@link
+ * AxisScalePolicyTransformation} for the method {@link #setAxisScalePolicy(IAxisScalePolicy)}.
+ *
  * <p>
- * 
- * Note that instances of this implementations will only accept subtypes of
- * {@link AxisScalePolicyTransformation} for the method
- * {@link #setAxisScalePolicy(IAxisScalePolicy)}.
- * <p>
- * 
- * 
- * @param <T>
- *          Used to enforce that this instance only accepts
- *          {@link AxisScalePolicyTransformation} and subtypes.
- * 
+ *
+ * @param <T> Used to enforce that this instance only accepts {@link AxisScalePolicyTransformation}
+ *     and subtypes.
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
  * @version $Revision: 1.32 $
  */
-public abstract class AAxisTransformation<T extends AxisScalePolicyTransformation> extends AAxis<T> {
+public abstract class AAxisTransformation<T extends AxisScalePolicyTransformation>
+    extends AAxis<T> {
 
   /**
    * An accessor for the x axis of a chart.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de>Achim Westermann </a>
    * @see Chart2D#getAxisX()
    */
@@ -71,10 +67,10 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
     /**
      * Creates an instance that accesses the given chart's x axis.
+     *
      * <p>
-     * 
-     * @param chart
-     *          the chart to access.
+     *
+     * @param chart the chart to access.
      */
     public XDataAccessor(final Chart2D chart) {
 
@@ -82,8 +78,9 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
     }
 
     /**
-     * @see info.monitorenter.gui.chart.axis.AAxis.XDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
-     *      info.monitorenter.util.Range)
+     * @see
+     *     info.monitorenter.gui.chart.axis.AAxis.XDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
+     *     info.monitorenter.util.Range)
      */
     @Override
     protected void scaleTrace(final ITrace2D trace, final Range range) {
@@ -104,7 +101,8 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
             }
           } catch (IllegalArgumentException e) {
             long tstamp = System.currentTimeMillis();
-            if (tstamp - AAxisTransformation.this.m_outputErrorTstamp > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
+            if (tstamp - AAxisTransformation.this.m_outputErrorTstamp
+                > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
               System.out.println(e.getLocalizedMessage());
               AAxisTransformation.this.m_outputErrorTstamp = tstamp;
             }
@@ -127,8 +125,10 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
       final int rangeX = this.m_chart.getXChartEnd() - this.m_chart.getXChartStart();
       if (rangeX != 0) {
         final double scaledX = px / rangeX;
-        final Range valueRangeX = new Range(AAxisTransformation.this.getMinTransformed(),
-            AAxisTransformation.this.getMaxTransformed());
+        final Range valueRangeX =
+            new Range(
+                AAxisTransformation.this.getMinTransformed(),
+                AAxisTransformation.this.getMaxTransformed());
         result = scaledX * valueRangeX.getExtent() + valueRangeX.getMin();
       }
       return result;
@@ -146,8 +146,10 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
        */
       int result;
       double normalizedValue;
-      Range range = new Range(AAxisTransformation.this.getMinTransformed(),
-          AAxisTransformation.this.getMaxTransformed());
+      Range range =
+          new Range(
+              AAxisTransformation.this.getMinTransformed(),
+              AAxisTransformation.this.getMaxTransformed());
       double scaler = range.getExtent();
       double absolute = value;
       try {
@@ -158,7 +160,8 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
         }
       } catch (IllegalArgumentException e) {
         long tstamp = System.currentTimeMillis();
-        if (tstamp - AAxisTransformation.this.m_outputErrorTstamp > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
+        if (tstamp - AAxisTransformation.this.m_outputErrorTstamp
+            > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
           System.out.println(e.getLocalizedMessage());
           AAxisTransformation.this.m_outputErrorTstamp = tstamp;
         }
@@ -169,19 +172,17 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
       int pixelRange = this.getPixelRange();
       result = (int) Math.round(chart.getXChartStart() + normalizedValue * pixelRange);
       return result;
-
     }
-
   }
 
   /**
    * Accesses the y axis of the {@link Chart2D}.
+   *
    * <p>
-   * 
+   *
    * @see AAxis#setAccessor(info.monitorenter.gui.chart.axis.AAxis.AChart2DDataAccessor)
    * @see Chart2D#getAxisY()
    */
-
   protected final class YDataAccessor extends AAxis<T>.YDataAccessor {
 
     /** Generated <code>serialVersionUID</code>. */
@@ -189,18 +190,19 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
     /**
      * Creates an instance that accesses the y axis of the given chart.
+     *
      * <p>
-     * 
-     * @param chart
-     *          the chart to access.
+     *
+     * @param chart the chart to access.
      */
     public YDataAccessor(final Chart2D chart) {
       super(chart);
     }
 
     /**
-     * @see info.monitorenter.gui.chart.axis.AAxis.YDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
-     *      info.monitorenter.util.Range)
+     * @see
+     *     info.monitorenter.gui.chart.axis.AAxis.YDataAccessor#scaleTrace(info.monitorenter.gui.chart.ITrace2D,
+     *     info.monitorenter.util.Range)
      */
     @Override
     protected void scaleTrace(final ITrace2D trace, final Range range) {
@@ -222,7 +224,8 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
             }
           } catch (IllegalArgumentException e) {
             long tstamp = System.currentTimeMillis();
-            if (tstamp - AAxisTransformation.this.m_outputErrorTstamp > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
+            if (tstamp - AAxisTransformation.this.m_outputErrorTstamp
+                > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
               System.out.println(e.getLocalizedMessage());
               AAxisTransformation.this.m_outputErrorTstamp = tstamp;
             }
@@ -245,8 +248,10 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
       final int rangeY = this.m_chart.getYChartStart() - this.m_chart.getYChartEnd();
       if (rangeY != 0) {
         final double scaledY = px / rangeY;
-        final Range valueRangeY = new Range(AAxisTransformation.this.getMinTransformed(),
-            AAxisTransformation.this.getMaxTransformed());
+        final Range valueRangeY =
+            new Range(
+                AAxisTransformation.this.getMinTransformed(),
+                AAxisTransformation.this.getMaxTransformed());
         result = scaledY * valueRangeY.getExtent() + valueRangeY.getMin();
       }
       return result;
@@ -277,7 +282,8 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
         }
       } catch (IllegalArgumentException e) {
         long tstamp = System.currentTimeMillis();
-        if (tstamp - AAxisTransformation.this.m_outputErrorTstamp > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
+        if (tstamp - AAxisTransformation.this.m_outputErrorTstamp
+            > AAxisTransformation.OUTPUT_ERROR_THRESHHOLD) {
           System.out.println(e.getLocalizedMessage());
           AAxisTransformation.this.m_outputErrorTstamp = tstamp;
         }
@@ -289,29 +295,25 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
       result = (int) Math.round(chart.getYChartStart() - normalizedValue * pixelRange);
       return result;
     }
-
   }
 
   /**
-   * Internal flag that defines that only every n milliseconds a transformation
-   * error (untransformable value was used in chart: this axis implementation of
-   * axis is not recommended for the data used) should be reported on system
-   * output.
+   * Internal flag that defines that only every n milliseconds a transformation error
+   * (untransformable value was used in chart: this axis implementation of axis is not recommended
+   * for the data used) should be reported on system output.
    */
   private static final int OUTPUT_ERROR_THRESHHOLD = 30000;
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = -4665444421196939779L;
 
-  /**
-   * Internal timestamp of the last transformation error reporting.
-   */
+  /** Internal timestamp of the last transformation error reporting. */
   protected long m_outputErrorTstamp = 0;
 
   /**
-   * Creates a default instance that will use a
-   * {@link info.monitorenter.gui.chart.labelformatters.LabelFormatterAutoUnits}
-   * for formatting labels.
+   * Creates a default instance that will use a {@link
+   * info.monitorenter.gui.chart.labelformatters.LabelFormatterAutoUnits} for formatting labels.
+   *
    * <p>
    */
   public AAxisTransformation() {
@@ -319,15 +321,12 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
   }
 
   /**
-   * Creates an instance that will the given label formatter for formatting
-   * labels.
+   * Creates an instance that will the given label formatter for formatting labels.
+   *
    * <p>
-   * 
-   * @param formatter
-   *          needed for formatting labels of this axis.
-   * 
-   * @param scalePolicy
-   *          controls the ticks/labels and their distance.
+   *
+   * @param formatter needed for formatting labels of this axis.
+   * @param scalePolicy controls the ticks/labels and their distance.
    */
   public AAxisTransformation(final IAxisLabelFormatter formatter, final T scalePolicy) {
     super(formatter, scalePolicy);
@@ -335,11 +334,11 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
   /**
    * @see info.monitorenter.gui.chart.axis.AAxis#createAccessor(info.monitorenter.gui.chart.Chart2D,
-   *      int, int)
+   *     int, int)
    */
   @Override
-  protected AAxis<T>.AChart2DDataAccessor createAccessor(final Chart2D chart, final int dimension,
-      final int position) {
+  protected AAxis<T>.AChart2DDataAccessor createAccessor(
+      final Chart2D chart, final int dimension, final int position) {
     AAxis<T>.AChart2DDataAccessor result;
     if (dimension == Chart2D.X) {
       // Don't allow a combination of dimension and position that is not usable:
@@ -362,13 +361,11 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
   }
 
   /**
-   * Returns the transformed max with additional error treatment in case of
-   * empty traces.
+   * Returns the transformed max with additional error treatment in case of empty traces.
+   *
    * <p>
-   * 
-   * @return the transformed max with additional error treatment in case of
-   *         empty traces.
-   * 
+   *
+   * @return the transformed max with additional error treatment in case of empty traces.
    * @see info.monitorenter.gui.chart.axis.AAxis#getMax()
    */
   public double getMaxTransformed() {
@@ -382,13 +379,11 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
   }
 
   /**
-   * Returns the transformed min with additional error treatment in case of
-   * empty traces.
+   * Returns the transformed min with additional error treatment in case of empty traces.
+   *
    * <p>
-   * 
-   * @return the transformed min with additional error treatment in case of
-   *         empty traces.
-   * 
+   *
+   * @return the transformed min with additional error treatment in case of empty traces.
    * @see info.monitorenter.gui.chart.axis.AAxis#getMin()
    */
   public double getMinTransformed() {
@@ -427,8 +422,9 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
   /**
    * Overridden to incorporate transformation.
+   *
    * <p>
-   * 
+   *
    * @see info.monitorenter.gui.chart.IAxis#scaleTrace(info.monitorenter.gui.chart.ITrace2D)
    */
   @Override
@@ -439,20 +435,16 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
   /**
    * Template method for performing the axis transformation.
+   *
+   * <p>The argument should not be negative, so only normalized values (no chart values but their
+   * scaled values or pixel values) should be given here.
+   *
    * <p>
-   * The argument should not be negative, so only normalized values (no chart
-   * values but their scaled values or pixel values) should be given here.
-   * <p>
-   * 
-   * @param in
-   *          the value to transform.
-   * 
+   *
+   * @param in the value to transform.
    * @return the transformed value.
-   * 
-   * @throws IllegalArgumentException
-   *           if scaling is impossible (due to some mathematical transformation
-   *           in implementations like
-   *           {@link info.monitorenter.gui.chart.axis.AxisLog10}
+   * @throws IllegalArgumentException if scaling is impossible (due to some mathematical
+   *     transformation in implementations like {@link info.monitorenter.gui.chart.axis.AxisLog10}
    */
   public abstract double transform(final double in) throws IllegalArgumentException;
 
@@ -475,12 +467,12 @@ public abstract class AAxisTransformation<T extends AxisScalePolicyTransformatio
 
   /**
    * Template method for performing the reverse axis transformation.
+   *
+   * <p>This is the counterpart to {@link #transform(double)}.
+   *
    * <p>
-   * This is the counterpart to {@link #transform(double)}.
-   * <p>
-   * 
-   * @param in
-   *          the transformed value.
+   *
+   * @param in the transformed value.
    * @return the normal value;
    */
   public abstract double untransform(final double in);

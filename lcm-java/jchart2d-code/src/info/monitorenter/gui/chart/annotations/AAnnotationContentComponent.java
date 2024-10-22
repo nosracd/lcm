@@ -1,6 +1,6 @@
 /*
- *  AAnnotationContentComponent.java of project jchart2d, a special 
- *  JComponent for rendering annotation content. 
+ *  AAnnotationContentComponent.java of project jchart2d, a special
+ *  JComponent for rendering annotation content.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on 02.02.2009
  *
  *  This library is free software; you can redistribute it and/or
@@ -11,7 +11,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -36,44 +36,39 @@ import info.monitorenter.gui.chart.ITracePoint2D;
 import javax.swing.JPanel;
 
 /**
- * 
- * A special <code>{@link javax.swing.JComponent}</code> for rendering
- * annotation content.
+ * A special <code>{@link javax.swing.JComponent}</code> for rendering annotation content.
+ *
+ * <p>The methods <code>{@link #paint(java.awt.Graphics)}</code> and <code>
+ * {@link #paintComponents(java.awt.Graphics)}</code> are finalized to enforce implementations to
+ * use <code>{@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code> for custom
+ * rendering. The finalized methods will invoke the latter method with the appropriate parameters.
+ *
+ * <p>The visible annotation that will contain this "content panel" will respect the method <code>
+ * {@link #getPreferredSize()}</code> of implementations and enlarge it's bounds to guarantee that
+ * all content is shown.
+ *
  * <p>
- * 
- * The methods <code>{@link #paint(java.awt.Graphics)}</code> and
- * <code>{@link #paintComponents(java.awt.Graphics)}</code> are finalized to
- * enforce implementations to use
- * <code>{@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code> for
- * custom rendering. The finalized methods will invoke the latter method with
- * the appropriate parameters.
- * <p>
- * 
- * The visible annotation that will contain this "content panel" will respect
- * the method <code>{@link #getPreferredSize()}</code> of implementations and
- * enlarge it's bounds to guarantee that all content is shown.
- * <p>
- * 
+ *
  * @author <a href="achim.westermann@gmx.de">Achim Westermann</a>
- * 
  */
 public abstract class AAnnotationContentComponent extends JPanel {
 
   /**
    * The trace point this annotation is related to.
+   *
    * <p>
    */
   private ITracePoint2D m_annotatedPoint;
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = 3147218476248666442L;
 
   /**
    * Creates an instance that is related to the given point to annotate.
+   *
    * <p>
-   * 
-   * @param point
-   *          the point to annotate.
+   *
+   * @param point the point to annotate.
    */
   public AAnnotationContentComponent(final ITracePoint2D point) {
     this.m_annotatedPoint = point;
@@ -81,8 +76,9 @@ public abstract class AAnnotationContentComponent extends JPanel {
 
   /**
    * Returns the annotatedPoint.
+   *
    * <p>
-   * 
+   *
    * @return the annotatedPoint
    */
   public final synchronized ITracePoint2D getAnnotatedPoint() {
@@ -90,9 +86,9 @@ public abstract class AAnnotationContentComponent extends JPanel {
   }
 
   /**
-   * Finalized to enforce using
-   * <code>{@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code>.
-   * 
+   * Finalized to enforce using <code>
+   * {@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code>.
+   *
    * @see javax.swing.JComponent#paint(java.awt.Graphics)
    */
   @Override
@@ -102,30 +98,23 @@ public abstract class AAnnotationContentComponent extends JPanel {
 
   /**
    * Paint this annotation for the given chart, trace and point.
+   *
+   * <p>The arguments may help to render information about the point that is annotated.
+   *
    * <p>
-   * The arguments may help to render information about the point that is
-   * annotated.
-   * <p>
-   * 
-   * @param g
-   *          the graphics context.
-   * 
-   * @param chart
-   *          the chart to annotate.
-   * 
-   * @param trace
-   *          the trace to annotate.
-   * 
-   * @param point
-   *          the point to annotate.
+   *
+   * @param g the graphics context.
+   * @param chart the chart to annotate.
+   * @param trace the trace to annotate.
+   * @param point the point to annotate.
    */
-  public abstract void paintAnnotation(Graphics g, Chart2D chart, ITrace2D trace,
-      ITracePoint2D point);
+  public abstract void paintAnnotation(
+      Graphics g, Chart2D chart, ITrace2D trace, ITracePoint2D point);
 
   /**
-   * Finalized to enforce using
-   * <code>{@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code>.
-   * 
+   * Finalized to enforce using <code>
+   * {@link #paintAnnotation(Graphics, Chart2D, ITrace2D, ITracePoint2D)}</code>.
+   *
    * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
    */
   @Override
@@ -140,10 +129,10 @@ public abstract class AAnnotationContentComponent extends JPanel {
 
   /**
    * Sets the annotatedPoint.
+   *
    * <p>
-   * 
-   * @param annotatedPoint
-   *          the annotatedPoint to set
+   *
+   * @param annotatedPoint the annotatedPoint to set
    */
   public final synchronized void setAnnotatedPoint(final ITracePoint2D annotatedPoint) {
     this.m_annotatedPoint = annotatedPoint;
@@ -152,5 +141,4 @@ public abstract class AAnnotationContentComponent extends JPanel {
     Chart2D chart = this.m_annotatedPoint.getListener().getRenderer();
     chart.setRequestedRepaint(true);
   }
-
 }

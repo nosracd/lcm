@@ -14,8 +14,8 @@
  *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
- *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
- *  
+ *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
  *  If you modify or optimize the code in a useful way please let me know.
  *  Achim.Westermann@gmx.de
  *
@@ -33,16 +33,12 @@ import info.monitorenter.util.math.MathUtil;
 
 /**
  * An <code>{@link AAxis}</code> with linear display of values.
+ *
  * <p>
- * 
- * @param <T>
- *          Subtypes may be more picky which scale policies the accept to
- *          disallow incorrect scales: This supports it (see
- *          {@link IAxis#setAxisScalePolicy(IAxisScalePolicy)}).  
- *           
+ *
+ * @param <T> Subtypes may be more picky which scale policies the accept to disallow incorrect
+ *     scales: This supports it (see {@link IAxis#setAxisScalePolicy(IAxisScalePolicy)}).
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.22 $
  */
 public class AxisLinear<T extends IAxisScalePolicy> extends AAxis<T> {
@@ -51,46 +47,42 @@ public class AxisLinear<T extends IAxisScalePolicy> extends AAxis<T> {
   private static final long serialVersionUID = 4725336592625669661L;
 
   /**
-   * Creates an instance that uses a {@link LabelFormatterSimple} for formatting
-   * numbers and a {@link AxisScalePolicyAutomaticBestFit} for controlling the
-   * scale.
+   * Creates an instance that uses a {@link LabelFormatterSimple} for formatting numbers and a
+   * {@link AxisScalePolicyAutomaticBestFit} for controlling the scale.
+   *
    * <p>
-   * 
    */
   @SuppressWarnings("unchecked")
   public AxisLinear() {
     /*
      * Necessary cast a java bug?
      */
-    this(new LabelFormatterSimple(), (T)new AxisScalePolicyAutomaticBestFit());
+    this(new LabelFormatterSimple(), (T) new AxisScalePolicyAutomaticBestFit());
   }
 
   /**
    * Constructor that uses the given label formatter for formatting labels.
+   *
    * <p>
-   * 
-   * @param formatter
-   *          needed for formatting labels of this axis.
-   * 
+   *
+   * @param formatter needed for formatting labels of this axis.
    */
   @SuppressWarnings("unchecked")
   public AxisLinear(final IAxisLabelFormatter formatter) {
     /*
      * Necessary cast a java bug?
      */
-    this(formatter, (T)new AxisScalePolicyAutomaticBestFit());
+    this(formatter, (T) new AxisScalePolicyAutomaticBestFit());
   }
-  
+
   /**
-   * Constructor that uses the given label formatter for formatting labels along with the given 
+   * Constructor that uses the given label formatter for formatting labels along with the given
    * scale policy.
+   *
    * <p>
-   * 
-   * @param formatter
-   *          needed for formatting labels of this axis.
-   * 
-   * @param scalePolicy
-   *          controls the ticks/labels and their distance.
+   *
+   * @param formatter needed for formatting labels of this axis.
+   * @param scalePolicy controls the ticks/labels and their distance.
    */
   public AxisLinear(final IAxisLabelFormatter formatter, final T scalePolicy) {
     super(formatter, scalePolicy);
@@ -98,11 +90,11 @@ public class AxisLinear<T extends IAxisScalePolicy> extends AAxis<T> {
 
   /**
    * @see info.monitorenter.gui.chart.axis.AAxis#createAccessor(info.monitorenter.gui.chart.Chart2D,
-   *      int, int)
+   *     int, int)
    */
   @Override
-  protected AChart2DDataAccessor createAccessor(final Chart2D chart, final int dimension,
-      final int position) {
+  protected AChart2DDataAccessor createAccessor(
+      final Chart2D chart, final int dimension, final int position) {
     AChart2DDataAccessor result;
     if (dimension == Chart2D.X) {
       // Don't allow a combination of dimension and position that is not usable:

@@ -1,5 +1,5 @@
 /*
- *  ColorIcon.java of project jchart2d, an icon that displays a 
+ *  ColorIcon.java of project jchart2d, an icon that displays a
  *  rectangular color.
  *  Copyright (C) 2004 - 2011 Achim Westermann.
  *
@@ -30,11 +30,10 @@ import javax.swing.Icon;
 
 /**
  * An icon that displays a rectangular <code>{@link java.awt.Color}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.7 $
  */
 public class ColorIcon implements Icon {
@@ -43,10 +42,10 @@ public class ColorIcon implements Icon {
 
   /**
    * Creates an icon with the given color.
+   *
    * <p>
-   * 
-   * @param color
-   *          the color of this icon.
+   *
+   * @param color the color of this icon.
    */
   public ColorIcon(final Color color) {
     this.m_color = color;
@@ -79,8 +78,9 @@ public class ColorIcon implements Icon {
 
   /**
    * Returns the color of this icon.
+   *
    * <p>
-   * 
+   *
    * @return the color of this icon.
    */
   public final Color getColor() {
@@ -113,8 +113,7 @@ public class ColorIcon implements Icon {
   }
 
   /**
-   * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int,
-   *      int)
+   * @see javax.swing.Icon#paintIcon(java.awt.Component, java.awt.Graphics, int, int)
    */
   public void paintIcon(final Component c, final Graphics g, final int x, final int y) {
     final Color old = g.getColor();
@@ -129,13 +128,12 @@ public class ColorIcon implements Icon {
 
   /**
    * Sets the color of this icon.
+   *
    * <p>
-   * 
-   * @param color
-   *          The color of this icon to set.
+   *
+   * @param color The color of this icon to set.
    */
   public final void setColor(final Color color) {
     this.m_color = color;
   }
-
 }

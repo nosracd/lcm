@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -26,12 +26,12 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * A <code>Comparator</code> that compares the given Objects by their
- * {@link java.lang.Object#toString()} value.
+ * A <code>Comparator</code> that compares the given Objects by their {@link
+ * java.lang.Object#toString()} value.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @param <T> the type to compare by <code>{@link Object#toString()}</code>.
  * @version $Revision: 1.7 $
  */
@@ -42,6 +42,7 @@ public final class ComparatorToString<T> implements Comparator<T>, Serializable 
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public ComparatorToString() {
@@ -50,8 +51,9 @@ public final class ComparatorToString<T> implements Comparator<T>, Serializable 
 
   /**
    * Compares both Objects by their {@link Object#toString()} presentation.
+   *
    * <p>
-   * 
+   *
    * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
    */
   public int compare(final T o1, final T o2) throws IllegalArgumentException {

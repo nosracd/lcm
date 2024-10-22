@@ -1,6 +1,6 @@
 /*
- *  ErrorBarPolicyRelative.java of project jchart2d, configurable 
- *  info.monitorenter.gui.chart.IErrorBarPolicy that adds an 
+ *  ErrorBarPolicyRelative.java of project jchart2d, configurable
+ *  info.monitorenter.gui.chart.IErrorBarPolicy that adds an
  *  absolute error to the points to render.
  *  Copyright (c) 2006 - 2011 Achim Westermann, created on 10.08.2006 19:37:54.
  *
@@ -45,14 +45,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * Configurable <code>{@link info.monitorenter.gui.chart.IErrorBarPolicy}</code>
- * that adds an absolute error (relative to the absolute values) to the points
- * to render.
+ * Configurable <code>{@link info.monitorenter.gui.chart.IErrorBarPolicy}</code> that adds an
+ * absolute error (relative to the absolute values) to the points to render.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.19 $
  */
 public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable {
@@ -67,24 +65,15 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
   private double m_yError = 4;
 
   /**
-   * Creates an instance with the given absolute errors to add in x and y
-   * direction.
+   * Creates an instance with the given absolute errors to add in x and y direction.
+   *
+   * <p>The absolute errors are added to / subtracted from the absolut x and y values to render.
+   *
    * <p>
-   * 
-   * The absolute errors are added to / subtracted from the absolut x and y
-   * values to render.
-   * <p>
-   * 
-   * @param xError
-   *          a positive value that is added to / subtracted from the x value to
-   *          render.
-   * 
-   * @param yError
-   *          a positive value that is added to / subtracted from the y value to
-   *          render.
-   * 
-   * @throws IllegalArgumentException
-   *           if arguments are < 0.
+   *
+   * @param xError a positive value that is added to / subtracted from the x value to render.
+   * @param yError a positive value that is added to / subtracted from the y value to render.
+   * @throws IllegalArgumentException if arguments are < 0.
    */
   public ErrorBarPolicyAbsoluteSummation(final double xError, final double yError)
       throws IllegalArgumentException {
@@ -139,8 +128,8 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
 
     panel.add(xErrorLable, gbc);
 
-    final SpinnerModel numberXModel = new SpinnerNumberModel(ErrorBarPolicyAbsoluteSummation.this
-        .getXError(0), 0, 1000000, 10);
+    final SpinnerModel numberXModel =
+        new SpinnerNumberModel(ErrorBarPolicyAbsoluteSummation.this.getXError(0), 0, 1000000, 10);
     final JSpinner xErrorSelector = new JSpinner(numberXModel);
 
     gbc.gridx = 1;
@@ -165,8 +154,8 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
 
     panel.add(yErrorLable, gbc);
 
-    final SpinnerModel numberYModel = new SpinnerNumberModel(ErrorBarPolicyAbsoluteSummation.this
-        .getYError(0), 0, 1000000, 10);
+    final SpinnerModel numberYModel =
+        new SpinnerNumberModel(ErrorBarPolicyAbsoluteSummation.this.getYError(0), 0, 1000000, 10);
     final JSpinner yErrorSelector = new JSpinner(numberYModel);
 
     gbc.gridx = 1;
@@ -175,23 +164,25 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
     panel.add(yErrorSelector, gbc);
 
     // actions:
-    xErrorSelector.addChangeListener(new ChangeListener() {
-      public void stateChanged(final ChangeEvent e) {
-        final JSpinner spinner = (JSpinner) e.getSource();
-        final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
-        final Number number = model.getNumber();
-        ErrorBarPolicyAbsoluteSummation.this.setXError(number.doubleValue());
-      }
-    });
+    xErrorSelector.addChangeListener(
+        new ChangeListener() {
+          public void stateChanged(final ChangeEvent e) {
+            final JSpinner spinner = (JSpinner) e.getSource();
+            final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
+            final Number number = model.getNumber();
+            ErrorBarPolicyAbsoluteSummation.this.setXError(number.doubleValue());
+          }
+        });
 
-    yErrorSelector.addChangeListener(new ChangeListener() {
-      public void stateChanged(final ChangeEvent e) {
-        final JSpinner spinner = (JSpinner) e.getSource();
-        final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
-        final Number number = model.getNumber();
-        ErrorBarPolicyAbsoluteSummation.this.setYError(number.doubleValue());
-      }
-    });
+    yErrorSelector.addChangeListener(
+        new ChangeListener() {
+          public void stateChanged(final ChangeEvent e) {
+            final JSpinner spinner = (JSpinner) e.getSource();
+            final SpinnerNumberModel model = (SpinnerNumberModel) spinner.getModel();
+            final Number number = model.getNumber();
+            ErrorBarPolicyAbsoluteSummation.this.setYError(number.doubleValue());
+          }
+        });
 
     return panel;
   }
@@ -226,12 +217,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeXError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeXError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetNegativeXError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
+  protected int internalGetNegativeXError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
     final ITrace2D trace = this.getTrace();
     final Chart2D chart = trace.getRenderer();
     final IAxis<?> axisX = chart.getAxisX();
@@ -243,12 +235,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeYError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetNegativeYError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetNegativeYError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
+  protected int internalGetNegativeYError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
     final ITrace2D trace = this.getTrace();
     final Chart2D chart = trace.getRenderer();
     final IAxis<?> axisY = chart.getAxisY();
@@ -260,12 +253,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveXError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveXError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetPositiveXError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
+  protected int internalGetPositiveXError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
     final ITrace2D trace = this.getTrace();
     final Chart2D chart = trace.getRenderer();
     final IAxis<?> axisX = chart.getAxisX();
@@ -278,12 +272,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
   }
 
   /**
-   * @see info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveYError(int,
-   *      int, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.errorbars.AErrorBarPolicyConfigurable#internalGetPositiveYError(int,
+   *     int, info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  protected int internalGetPositiveYError(final int xPixel, final int yPixel,
-      final ITracePoint2D original) {
+  protected int internalGetPositiveYError(
+      final int xPixel, final int yPixel, final ITracePoint2D original) {
     final ITrace2D trace = this.getTrace();
     final Chart2D chart = trace.getRenderer();
     final IAxis<?> axisY = chart.getAxisY();
@@ -296,17 +291,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
 
   /**
    * Sets the absolute x error to add to each error bar.
+   *
+   * <p>The absolute error is added to the absolut x values to render. It has to be > 0.
+   *
    * <p>
-   * 
-   * The absolute error is added to the absolut x values to render. It has to be
-   * > 0.
-   * <p>
-   * 
-   * @param xError
-   *          a positive value.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is < 0.
+   *
+   * @param xError a positive value.
+   * @throws IllegalArgumentException if the argument is < 0.
    */
   public final void setXError(final double xError) throws IllegalArgumentException {
     if (xError < 0.0) {
@@ -321,17 +312,13 @@ public class ErrorBarPolicyAbsoluteSummation extends AErrorBarPolicyConfigurable
 
   /**
    * Sets the absolute y error to add to each error bar.
+   *
+   * <p>The absolute error is added to the absolut y values to render. It has to be > 0.
+   *
    * <p>
-   * 
-   * The absolute error is added to the absolut y values to render. It has to be
-   * > 0.
-   * <p>
-   * 
-   * @param yError
-   *          a positive value.
-   * 
-   * @throws IllegalArgumentException
-   *           if the argument is < 0.
+   *
+   * @param yError a positive value.
+   * @throws IllegalArgumentException if the argument is < 0.
    */
   public final void setYError(final double yError) throws IllegalArgumentException {
     if (yError < 0.0) {

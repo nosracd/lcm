@@ -1,6 +1,6 @@
 /*
- *  ErrorBarPolicyActionAddPainter.java of project jchart2d, action 
- *  that adds a new ErrorBarPainterConfigureable to the given IErrorBarPolicy. 
+ *  ErrorBarPolicyActionAddPainter.java of project jchart2d, action
+ *  that adds a new ErrorBarPainterConfigureable to the given IErrorBarPolicy.
  *  Copyright (C) 2006 - 2011 Achim Westermann, created on 09.12.2006 00:14:25.
  *
  *  This library is free software; you can redistribute it and/or
@@ -33,14 +33,12 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * Action that adds a new
- * {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} to the given
+ * Action that adds a new {@link info.monitorenter.gui.chart.errorbars.ErrorBarPainter} to the given
  * {@link info.monitorenter.gui.chart.IErrorBarPolicy}.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.9 $
  */
 public class ErrorBarPolicyActionAddPainter extends AErrorBarPolicyAction {
@@ -49,23 +47,17 @@ public class ErrorBarPolicyActionAddPainter extends AErrorBarPolicyAction {
   private static final long serialVersionUID = -697786192464802918L;
 
   /**
-   * Create an instance that accesses the error bar policy to add a new painter
-   * to it with the given action String.
-   * 
-   * @param errorBarPolicy
-   *          the target the action will work on.
-   * 
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * Create an instance that accesses the error bar policy to add a new painter to it with the given
+   * action String.
+   *
+   * @param errorBarPolicy the target the action will work on.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
-  public ErrorBarPolicyActionAddPainter(final IErrorBarPolicy< ? > errorBarPolicy,
-      final String description) {
+  public ErrorBarPolicyActionAddPainter(
+      final IErrorBarPolicy<?> errorBarPolicy, final String description) {
     super(errorBarPolicy, description);
-
   }
 
   /**

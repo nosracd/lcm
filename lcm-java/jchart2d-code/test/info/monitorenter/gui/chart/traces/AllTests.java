@@ -1,5 +1,5 @@
 /*
- *  AllTests.java, invokes all tests for package 
+ *  AllTests.java, invokes all tests for package
  *  info.monitorenter.gui.chart.traces.
  *  Copyright (C) Achim Westermann, created on 23.04.2005, 15:24:13
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -27,33 +27,38 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Main test suite for the package <code>{@link info.monitorenter.gui.chart.traces}</code>.<p>
- * 
+ * Main test suite for the package <code>{@link info.monitorenter.gui.chart.traces}</code>.
+ *
+ * <p>
+ *
  * @author Achim westermann
  * @version $Revision: 1.2 $
- * 
  * @since 2.1.0
  */
 public final class AllTests {
 
   /**
-   * Returns the JUnit test suite for this package.<p>
-   * 
+   * Returns the JUnit test suite for this package.
+   *
+   * <p>
+   *
    * @return the JUnit test suite for this package
    */
   public static Test suite() {
 
     TestSuite suite = new TestSuite("Tests for package " + AllTests.class.getPackage().getName());
-    //$JUnit-BEGIN$
+    // $JUnit-BEGIN$
     suite.addTest(TestTrace2D.suite());
     suite.addTest(TestTrace2DLtd.suite());
-  suite.addTest(TestTrace2DSimple.suite());
-    //$JUnit-END$
+    suite.addTest(TestTrace2DSimple.suite());
+    // $JUnit-END$
     return suite;
   }
 
   /**
-   * Hide constructor to prevent generation of class instances.<p>
+   * Hide constructor to prevent generation of class instances.
+   *
+   * <p>
    */
   private AllTests() {
 

@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,40 +30,32 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * <code>Action</code> that sets a constructor-given color of the
- * corresponding trace.
+ * <code>Action</code> that sets a constructor-given color of the corresponding trace.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.5 $
  */
 public final class Trace2DActionSetColor extends ATrace2DAction {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3761972665908473913L;
 
   /** The color to set. */
   private Color m_color;
 
   /**
-   * Create an <code>Action</code> that accesses the trace and identifies
-   * itself with the given action String.
+   * Create an <code>Action</code> that accesses the trace and identifies itself with the given
+   * action String.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the target the action will work on.
-   * 
-   * @param colorName
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
-   * @param color
-   *          the color to set to the corresponding trace.
+   *
+   * @param trace the target the action will work on.
+   * @param colorName the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * @param color the color to set to the corresponding trace.
    */
   public Trace2DActionSetColor(final ITrace2D trace, final String colorName, final Color color) {
     super(trace, colorName);
@@ -86,11 +78,15 @@ public final class Trace2DActionSetColor extends ATrace2DAction {
     if (property.equals(ITrace2D.PROPERTY_COLOR)) {
       Color newValue = (Color) evt.getNewValue();
       if (newValue.equals(this.m_color)) {
-        this.firePropertyChange(PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
-            Boolean.valueOf(false), Boolean.valueOf(true));
+        this.firePropertyChange(
+            PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
+            Boolean.valueOf(false),
+            Boolean.valueOf(true));
       } else {
-        this.firePropertyChange(PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
-            Boolean.valueOf(true), Boolean.valueOf(false));
+        this.firePropertyChange(
+            PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
+            Boolean.valueOf(true),
+            Boolean.valueOf(false));
       }
     }
   }

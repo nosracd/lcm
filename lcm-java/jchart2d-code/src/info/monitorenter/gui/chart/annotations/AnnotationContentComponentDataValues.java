@@ -1,6 +1,6 @@
 /*
- *  AnnotationContentComponentDataValues.java of project jchart2d, 
- *  annotation that displays the annotated point's data values. 
+ *  AnnotationContentComponentDataValues.java of project jchart2d,
+ *  annotation that displays the annotated point's data values.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on 16.02.2009
  *
  *  This library is free software; you can redistribute it and/or
@@ -11,7 +11,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -42,16 +42,17 @@ import javax.swing.JTextField;
 
 /**
  * Annotation that displays the annotated point's data values.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- **/
+ */
 public final class AnnotationContentComponentDataValues extends AAnnotationContentComponent {
 
   /** Internal padding. */
   private static final int PADDING = 8;
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = 5288884368670766243L;
 
   /** Internal text field used to display the value. */
@@ -59,10 +60,10 @@ public final class AnnotationContentComponentDataValues extends AAnnotationConte
 
   /**
    * Creates an instance that is related to the given point to annotate.
+   *
    * <p>
-   * 
-   * @param point
-   *          the point to annotate.
+   *
+   * @param point the point to annotate.
    */
   public AnnotationContentComponentDataValues(final ITracePoint2D point) {
     super(point);
@@ -91,14 +92,14 @@ public final class AnnotationContentComponentDataValues extends AAnnotationConte
   }
 
   /**
-   * @see info.monitorenter.gui.chart.annotations.AAnnotationContentComponent#paintAnnotation(Graphics,
-   *      info.monitorenter.gui.chart.Chart2D,
-   *      info.monitorenter.gui.chart.ITrace2D,
-   *      info.monitorenter.gui.chart.ITracePoint2D)
+   * @see
+   *     info.monitorenter.gui.chart.annotations.AAnnotationContentComponent#paintAnnotation(Graphics,
+   *     info.monitorenter.gui.chart.Chart2D, info.monitorenter.gui.chart.ITrace2D,
+   *     info.monitorenter.gui.chart.ITracePoint2D)
    */
   @Override
-  public void paintAnnotation(final Graphics g, final Chart2D chart, final ITrace2D trace,
-      final ITracePoint2D point) {
+  public void paintAnnotation(
+      final Graphics g, final Chart2D chart, final ITrace2D trace, final ITracePoint2D point) {
     // this.updateDataValueTextField();
 
   }
@@ -115,10 +116,9 @@ public final class AnnotationContentComponentDataValues extends AAnnotationConte
   }
 
   /**
-   * Internally updates the text field value to the data value of the point that
-   * is annotated.
+   * Internally updates the text field value to the data value of the point that is annotated.
+   *
    * <p>
-   * 
    */
   private void updateDataValueTextField() {
     ITracePoint2D point = this.getAnnotatedPoint();
@@ -131,12 +131,12 @@ public final class AnnotationContentComponentDataValues extends AAnnotationConte
     int width = fmetrics.stringWidth(text);
     int height = fmetrics.getHeight();
 
-//    Dimension d = new Dimension(width, height);
+    //    Dimension d = new Dimension(width, height);
     this.m_textfield.setText(textbuffer.toString());
     // this.m_textfield.setMaximumSize(d);
     // this.m_textfield.setPreferredSize(d);
     // this.m_textfield.setSize(d);
-//    System.out.println("calculated: " + d + ", textfield: " + this.m_textfield.getPreferredSize());
+    //    System.out.println("calculated: " + d + ", textfield: " +
+    // this.m_textfield.getPreferredSize());
   }
-
 }

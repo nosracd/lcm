@@ -1,7 +1,7 @@
 /*
- *  APointPainter.java of project jchart2d, adapter class 
- *  that implements the optional methods of the interface 
- *  IPointPainter with "no operations". 
+ *  APointPainter.java of project jchart2d, adapter class
+ *  that implements the optional methods of the interface
+ *  IPointPainter with "no operations".
  *  Copyright (c) 2006 - 2011 Achim Westermann, created on 03.09.2006 20:27:06.
  *
  *  This library is free software; you can redistribute it and/or
@@ -33,22 +33,19 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 
 /**
- * Adapter class that implements optional methods of
- * <code>{@link IPointPainter}</code> as "no operation".
+ * Adapter class that implements optional methods of <code>{@link IPointPainter}</code> as "no
+ * operation".
+ *
  * <p>
- * 
- * @param <T>
- *          needed for generic comparable<T>.
- * 
+ *
+ * @param <T> needed for generic comparable<T>.
  * @author Achim Westermann
- * 
  * @version $Revision: 1.13 $
- * 
  * @since 3.0.0
  */
-public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> implements
-    IPointPainterConfigurableUI<T> {
-  /** Generated <code>serialVersionUID</code>. **/
+public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>>
+    implements IPointPainterConfigurableUI<T> {
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = -8279972259015294590L;
 
   /** Color used for paint operations. */
@@ -62,6 +59,7 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
 
   /**
    * Default constructor (sets the consumed by paint flag to false).
+   *
    * <p>
    */
   public APointPainter() {
@@ -83,10 +81,10 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
   }
 
   /**
-   * Caution: <code>{@link ClassCastException}</code> thrown if wrong type
-   * given.
+   * Caution: <code>{@link ClassCastException}</code> thrown if wrong type given.
+   *
    * <p>
-   * 
+   *
    * @see java.lang.Object#equals(java.lang.Object)
    */
   // @SuppressWarnings("unchecked")
@@ -100,7 +98,6 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
   // }
 
   /**
-   * 
    * @see java.lang.Object#equals(java.lang.Object)
    */
   @Override
@@ -114,7 +111,7 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
     if (this.getClass() != obj.getClass()) {
       return false;
     }
-    final APointPainter< ? > other = (APointPainter< ? >) obj;
+    final APointPainter<?> other = (APointPainter<?>) obj;
     if (this.m_color == null) {
       if (other.m_color != null) {
         return false;
@@ -188,51 +185,40 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
   }
 
   /**
-   * Installs the color to the graphics context if and only if a color has been
-   * set.
+   * Installs the color to the graphics context if and only if a color has been set.
+   *
    * <p>
-   * 
+   *
    * @see #setColor(Color)
-   * 
-   * @param g
-   *          the graphics context to use.
-   * 
-   * @return the previous color of the graphics context or <code>null</code> if
-   *         no action was taken.
+   * @param g the graphics context to use.
+   * @return the previous color of the graphics context or <code>null</code> if no action was taken.
    */
   protected Color installColor(final Graphics g) {
     return this.m_color.applyColorIfChange(g);
   }
 
   /**
-   * Installs the fill color to the graphics context if and only if a fill color
-   * has been set.
+   * Installs the fill color to the graphics context if and only if a fill color has been set.
+   *
    * <p>
-   * 
+   *
    * @see #setColorFill(Color)
-   * 
-   * @param g
-   *          the graphics context to use.
-   * 
-   * @return the previous color of the graphics context or <code>null</code> if
-   *         no action was taken.
+   * @param g the graphics context to use.
+   * @return the previous color of the graphics context or <code>null</code> if no action was taken.
    */
   protected Color installColorFill(final Graphics g) {
     return this.m_colorFill.applyColorUnconditionally(g);
   }
 
   /**
-   * Installs the stroke to the graphics context if and only if a stroke has
-   * been set.
+   * Installs the stroke to the graphics context if and only if a stroke has been set.
+   *
    * <p>
-   * 
+   *
    * @see #setStroke(Stroke)
-   * 
-   * @param g
-   *          the graphics context to use.
-   * 
-   * @return the previous stroke of the graphics context or <code>null</code> if
-   *         no action was taken.
+   * @param g the graphics context to use.
+   * @return the previous stroke of the graphics context or <code>null</code> if no action was
+   *     taken.
    */
   protected Stroke installStroke(final Graphics g) {
     Stroke result = null;
@@ -242,8 +228,9 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
         result = g2d.getStroke();
         g2d.setStroke(this.m_stroke);
       } else {
-        System.out.println("Cannot use stroke as given graphic context is of wrong type: "
-            + g.getClass().getName());
+        System.out.println(
+            "Cannot use stroke as given graphic context is of wrong type: "
+                + g.getClass().getName());
       }
     }
     return result;
@@ -293,5 +280,4 @@ public abstract class APointPainter<T extends IPointPainterConfigurableUI<T>> im
   public void startPaintIteration(final Graphics g2d) {
     // nop
   }
-
 }

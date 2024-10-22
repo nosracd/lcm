@@ -1,5 +1,5 @@
 /*
- *  AxisScalePolicyAutomaticBestFit.java of project jchart2d, <enterpurposehere>. 
+ *  AxisScalePolicyAutomaticBestFit.java of project jchart2d, <enterpurposehere>.
  *  Copyright (C) 2002 - 2011, Achim Westermann, created on Apr 22, 2011
  *
  *  This library is free software; you can redistribute it and/or
@@ -10,7 +10,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -39,25 +39,24 @@ import java.util.List;
 
 /**
  * Very basic and fast scale policy implementation that ensures the following:
+ *
  * <ul>
- * <li>Every scale tick is a minor or major tick of the corresponding axis.</li>
- * <li>If a scale tick was found that matches a major and a minor tick it is judged as major tick.</li>
- * <li>Every major tick is a multiple of minor ticks: It is not possible for the sum minor ticks to "skip" a major tick.</li>
- * <li>There is no guarantee that the labels of ticks will overwrite each others.</li>
- * <li>There is no guarantee that the major and minor ticks of the axis are chosen in a reasonable manner: You could get no labels at all if the values are too high or thousands of labels with a weird output.</li>
+ *   <li>Every scale tick is a minor or major tick of the corresponding axis.
+ *   <li>If a scale tick was found that matches a major and a minor tick it is judged as major tick.
+ *   <li>Every major tick is a multiple of minor ticks: It is not possible for the sum minor ticks
+ *       to "skip" a major tick.
+ *   <li>There is no guarantee that the labels of ticks will overwrite each others.
+ *   <li>There is no guarantee that the major and minor ticks of the axis are chosen in a reasonable
+ *       manner: You could get no labels at all if the values are too high or thousands of labels
+ *       with a weird output.
  * </ul>
+ *
  * <p>
- * 
- * 
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
-
 public class AxisScalePolicyAutomaticBestFit implements IAxisScalePolicy {
-  /**
-   * Internally used for rounding to ticks, calculated once per paint iteration.
-   */
+  /** Internally used for rounding to ticks, calculated once per paint iteration. */
   protected double m_power;
 
   public List<LabeledValue> getScaleValues(final Graphics g2d, final IAxis<?> axis) {
@@ -68,7 +67,8 @@ public class AxisScalePolicyAutomaticBestFit implements IAxisScalePolicy {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisScalePolicy#initPaintIteration(info.monitorenter.gui.chart.IAxis)
+   * @see
+   *     info.monitorenter.gui.chart.IAxisScalePolicy#initPaintIteration(info.monitorenter.gui.chart.IAxis)
    */
   public void initPaintIteration(IAxis<?> axis) {
     // get the powers of ten of the range, a minor Tick of 1.0 has to be
@@ -96,20 +96,18 @@ public class AxisScalePolicyAutomaticBestFit implements IAxisScalePolicy {
       tmpPower = 1 / Math.pow(10, tmpPower);
     }
     this.m_power = tmpPower;
-
   }
 
   /**
    * Returns the labels for this axis.
+   *
+   * <p>The labels will have at least the given argument <code>resolution</code> as distance in the
+   * value domain of the chart.
+   *
    * <p>
-   * The labels will have at least the given argument <code>resolution</code> as
-   * distance in the value domain of the chart.
-   * <p>
-   * 
-   * @param resolution
-   *          the distance in the value domain of the chart that has to be at
-   *          least between to labels.
-   * 
+   *
+   * @param resolution the distance in the value domain of the chart that has to be at least between
+   *     to labels.
    * @return the labels for the axis.
    */
   protected List<LabeledValue> getLabels(final double resolution, final IAxis<?> axis) {
@@ -178,25 +176,22 @@ public class AxisScalePolicyAutomaticBestFit implements IAxisScalePolicy {
 
   /**
    * Internal rounding routine.
+   *
+   * <p>Arguments are not chosen to be "understandable" or "usable" but optimized for performance.
+   *
+   * <p>The <code> findMajorTick</code> argument may be used e.g. to force labels to start from a
+   * major tick.
+   *
    * <p>
-   * Arguments are not chosen to be "understandable" or "usable" but optimized
-   * for performance.
-   * <p>
-   * The <code> findMajorTick</code> argument may be used e.g. to force labels
-   * to start from a major tick.
-   * <p>
-   * 
-   * @param value
-   *          the value to round.
-   * @param floor
-   *          if true, rounding goes to floor else to ceiling.
-   * @param findMajorTick
-   *          if true the returned value will be a major tick (which might be
-   *          fare more away from the given value than the next major tick).
+   *
+   * @param value the value to round.
+   * @param floor if true, rounding goes to floor else to ceiling.
+   * @param findMajorTick if true the returned value will be a major tick (which might be fare more
+   *     away from the given value than the next major tick).
    * @return the value rounded to minor or major ticks.
    */
-  protected LabeledValue roundToTicks(final double value, final boolean floor,
-      final boolean findMajorTick, final IAxis<?> axis) {
+  protected LabeledValue roundToTicks(
+      final double value, final boolean floor, final boolean findMajorTick, final IAxis<?> axis) {
     final LabeledValue ret = new LabeledValue();
 
     final double minorTick = axis.getMinorTickSpacing() * this.m_power;
@@ -247,6 +242,5 @@ public class AxisScalePolicyAutomaticBestFit implements IAxisScalePolicy {
     // point the label string describes.
     ret.setValue(axis.getFormatter().parse(ret.getLabel()).doubleValue());
     return ret;
-  } 
-
+  }
 }

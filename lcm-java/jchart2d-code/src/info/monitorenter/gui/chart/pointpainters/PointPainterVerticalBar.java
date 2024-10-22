@@ -1,5 +1,5 @@
 /*
- *  PointPainterVerticalBar.java, a point painter that renders a bar 
+ *  PointPainterVerticalBar.java, a point painter that renders a bar
  *  for each point.
  *  Copyright (c) 2004 - 2011 Achim Westermann, Achim.Westermann@gmx.de
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -29,15 +29,14 @@ import java.awt.Graphics;
 
 /**
  * Renders points by painting a bar with choosable width for each point to show.
+ *
+ * <p>Bars are placed around the x value to render: the middle of the bar in x dimension is the
+ * exact x value.
+ *
  * <p>
- * Bars are placed around the x value to render: the middle of the bar in x
- * dimension is the exact x value.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.18 $
- * 
  */
 public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalBar> {
 
@@ -45,8 +44,8 @@ public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalB
   private static final long serialVersionUID = 659897369391828199L;
 
   /**
-   * Stores the corresponding chart to know the coordinate roots for closing the
-   * rectangle to fill.
+   * Stores the corresponding chart to know the coordinate roots for closing the rectangle to fill.
+   *
    * <p>
    */
   private final Chart2D m_chart;
@@ -56,10 +55,10 @@ public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalB
 
   /**
    * Creates an instance with a default bar width size of 4.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the corresponding chart for bound information.
+   *
+   * @param chart the corresponding chart for bound information.
    */
   public PointPainterVerticalBar(final Chart2D chart) {
     this(4, chart);
@@ -67,12 +66,9 @@ public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalB
 
   /**
    * Creates an instance with the bar width.
-   * 
-   * @param barWidth
-   *          the bar width in pixel to use.
-   * 
-   * @param chart
-   *          the corresponding chart for bound information.
+   *
+   * @param barWidth the bar width in pixel to use.
+   * @param chart the corresponding chart for bound information.
    */
   public PointPainterVerticalBar(final int barWidth, final Chart2D chart) {
     this.setBarWidth(barWidth);
@@ -109,8 +105,9 @@ public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalB
 
   /**
    * Returns the diameter of the discs to paint in pixel.
+   *
    * <p>
-   * 
+   *
    * @return the diameter of the discs to paint in pixel.
    */
   public int getBarWidth() {
@@ -130,25 +127,31 @@ public class PointPainterVerticalBar extends APointPainter<PointPainterVerticalB
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IPointPainter#paintPoint(int, int, int,
-   *      int, java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
+   * @see info.monitorenter.gui.chart.IPointPainter#paintPoint(int, int, int, int,
+   *     java.awt.Graphics, info.monitorenter.gui.chart.ITracePoint2D)
    */
-  public void paintPoint(final int absoluteX, final int absoluteY, final int nextX,
-      final int nextY, final Graphics g, final ITracePoint2D original) {
-    g.fillRect(absoluteX - this.m_halfWidth, absoluteY, 2 * this.m_halfWidth, this.m_chart
-        .getYChartStart()
-        - absoluteY);
+  public void paintPoint(
+      final int absoluteX,
+      final int absoluteY,
+      final int nextX,
+      final int nextY,
+      final Graphics g,
+      final ITracePoint2D original) {
+    g.fillRect(
+        absoluteX - this.m_halfWidth,
+        absoluteY,
+        2 * this.m_halfWidth,
+        this.m_chart.getYChartStart() - absoluteY);
   }
 
   /**
    * Sets the width of the bars to paint in pixel.
+   *
    * <p>
-   * 
-   * @param barWidth
-   *          the width of the bars to paint in pixel.
+   *
+   * @param barWidth the width of the bars to paint in pixel.
    */
   public void setBarWidth(final int barWidth) {
     this.m_halfWidth = barWidth / 2;
   }
-
 }

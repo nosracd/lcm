@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,20 +30,20 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * <code>Action</code> that invokes
- * {@link info.monitorenter.gui.chart.Chart2D#setToolTipType(IToolTipType)} with a
- * constructor given {@link info.monitorenter.gui.chart.IToolTipType}.
+ * <code>Action</code> that invokes {@link
+ * info.monitorenter.gui.chart.Chart2D#setToolTipType(IToolTipType)} with a constructor given {@link
+ * info.monitorenter.gui.chart.IToolTipType}.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.3 $
  */
 public class ChartActionSetToolTipType extends AChart2DAction {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = -5816028313134616682L;
@@ -52,27 +52,20 @@ public class ChartActionSetToolTipType extends AChart2DAction {
   private IToolTipType m_toolTipType = null;
 
   /**
-   * Create an <code>Action</code> that sets the constructor given
-   * <code>{@link IToolTipType}</code> to the chart.
+   * Create an <code>Action</code> that sets the constructor given <code>{@link IToolTipType}</code>
+   * to the chart.
+   *
    * <p>
-   * 
+   *
    * @see Chart2D#setToolTipType(IToolTipType)
-   * 
-   * @param chart
-   *          the owner of the axis to trigger actions upon.
-   * 
-   * @param toolTipType
-   *          the tool tip type to use.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
-   * 
+   * @param chart the owner of the axis to trigger actions upon.
+   * @param toolTipType the tool tip type to use.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
-  public ChartActionSetToolTipType(final Chart2D chart, final String description,
-      final IToolTipType toolTipType) {
+  public ChartActionSetToolTipType(
+      final Chart2D chart, final String description, final IToolTipType toolTipType) {
     super(chart, description);
     this.m_toolTipType = toolTipType;
     chart.addPropertyChangeListener(Chart2D.PROPERTY_TOOLTIP_TYPE, this);
@@ -93,12 +86,16 @@ public class ChartActionSetToolTipType extends AChart2DAction {
     if (property.equals(Chart2D.PROPERTY_TOOLTIP_TYPE)) {
       IToolTipType newType = (IToolTipType) evt.getNewValue();
       if (newType.equals(this.m_toolTipType)) {
-        this.firePropertyChange(PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED, Boolean
-            .valueOf(false), Boolean.valueOf(true));
+        this.firePropertyChange(
+            PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
+            Boolean.valueOf(false),
+            Boolean.valueOf(true));
 
       } else {
-        this.firePropertyChange(PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED, Boolean
-            .valueOf(true), Boolean.valueOf(false));
+        this.firePropertyChange(
+            PropertyChangeCheckBoxMenuItem.PROPERTY_SELECTED,
+            Boolean.valueOf(true),
+            Boolean.valueOf(false));
       }
     }
   }

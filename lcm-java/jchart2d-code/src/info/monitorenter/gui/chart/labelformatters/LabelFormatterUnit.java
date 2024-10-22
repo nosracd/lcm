@@ -1,19 +1,19 @@
 /*
- * LabelFormatterUnit.java, a label formatter that adds 
- * a constructor given unit with the unit SI prefix to a decorated 
- * label formatter. 
+ * LabelFormatterUnit.java, a label formatter that adds
+ * a constructor given unit with the unit SI prefix to a decorated
+ * label formatter.
  * Copyright (c) 2005 - 2011  Achim Westermann, Achim.Westermann@gmx.de
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,64 +31,52 @@ import java.beans.PropertyChangeListener;
 import java.text.NumberFormat;
 
 /**
- * A label formatter that adds a constructor given <code>{@link AUnit}</code>
- * of the unit SI prefix to a decorated
- * <code>{@link info.monitorenter.gui.chart.IAxisLabelFormatter}</code>.
+ * A label formatter that adds a constructor given <code>{@link AUnit}</code> of the unit SI prefix
+ * to a decorated <code>{@link info.monitorenter.gui.chart.IAxisLabelFormatter}</code>.
+ *
+ * <p>The formatted Strings will be divided by a factor according to the chosen unit.
+ *
  * <p>
- * 
- * The formatted Strings will be divided by a factor according to the chosen
- * unit.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.7 $
- * 
  */
-public class LabelFormatterUnit
-    extends ALabelFormatter {
-  
+public class LabelFormatterUnit extends ALabelFormatter {
+
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = -6180347628045892405L;
 
-  /**
-   * The decorated instance.
-   */
+  /** The decorated instance. */
   private ALabelFormatter m_delegate;
 
   /**
    * The internal unit.
-   * <p>
-   * 
-   * In this implementation it is only used for finding labels that match the
-   * ticks.
+   *
+   * <p>In this implementation it is only used for finding labels that match the ticks.
+   *
    * <p>
    */
   private AUnit m_unit = UNIT_UNCHANGED;
 
   /**
-   * Default constructor that uses a <code>{@link LabelFormatterSimple}</code>
-   * to add the unit feature to.
+   * Default constructor that uses a <code>{@link LabelFormatterSimple}</code> to add the unit
+   * feature to.
+   *
    * <p>
-   * 
-   * @param unit
-   *          the unit to use.
-   * 
+   *
+   * @param unit the unit to use.
    */
   public LabelFormatterUnit(final AUnit unit) {
     this(unit, new LabelFormatterSimple());
   }
 
   /**
-   * Creates an instance that will add "unit-functionality" to the given
-   * formatter.
+   * Creates an instance that will add "unit-functionality" to the given formatter.
+   *
    * <p>
-   * 
-   * @param unit
-   *          the unit to use.
-   * 
-   * @param delegate
-   *          the formatter that will be decorated with units.
+   *
+   * @param unit the unit to use.
+   * @param delegate the formatter that will be decorated with units.
    */
   public LabelFormatterUnit(final AUnit unit, final ALabelFormatter delegate) {
     super();
@@ -97,12 +85,13 @@ public class LabelFormatterUnit
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#addPropertyChangeListener(java.lang.String,
-   *      java.beans.PropertyChangeListener)
+   * @see
+   *     info.monitorenter.gui.chart.IAxisLabelFormatter#addPropertyChangeListener(java.lang.String,
+   *     java.beans.PropertyChangeListener)
    */
   @Override
-  public void addPropertyChangeListener(final String propertyName,
-      final PropertyChangeListener listener) {
+  public void addPropertyChangeListener(
+      final String propertyName, final PropertyChangeListener listener) {
     this.m_delegate.addPropertyChangeListener(propertyName, listener);
   }
 
@@ -132,8 +121,9 @@ public class LabelFormatterUnit
 
   /**
    * Returns the decoroated label formatter.
+   *
    * <p>
-   * 
+   *
    * @return the the decoroated label formatter.
    */
   final ALabelFormatter getDelegate() {
@@ -204,7 +194,6 @@ public class LabelFormatterUnit
     }
     // <sign> integerDigits <dot> fractionDigits:
     return 1 + integerDigits + 1 + fractionDigits;
-
   }
 
   /**
@@ -215,8 +204,7 @@ public class LabelFormatterUnit
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#getNextEvenValue(double,
-   *      boolean)
+   * @see info.monitorenter.gui.chart.IAxisLabelFormatter#getNextEvenValue(double, boolean)
    */
   public double getNextEvenValue(final double value, final boolean ceiling) {
     return this.m_delegate.getNextEvenValue(value, ceiling);
@@ -256,12 +244,13 @@ public class LabelFormatterUnit
   }
 
   /**
-   * @see info.monitorenter.gui.chart.labelformatters.ALabelFormatter#removePropertyChangeListener(java.lang.String,
-   *      java.beans.PropertyChangeListener)
+   * @see
+   *     info.monitorenter.gui.chart.labelformatters.ALabelFormatter#removePropertyChangeListener(java.lang.String,
+   *     java.beans.PropertyChangeListener)
    */
   @Override
-  public void removePropertyChangeListener(final String property,
-      final PropertyChangeListener listener) {
+  public void removePropertyChangeListener(
+      final String property, final PropertyChangeListener listener) {
     this.m_delegate.removePropertyChangeListener(property, listener);
   }
 
@@ -275,13 +264,11 @@ public class LabelFormatterUnit
   }
 
   /**
-   * Sets the label formatter to decorate by the feature of automatic unit
-   * choice.
+   * Sets the label formatter to decorate by the feature of automatic unit choice.
+   *
    * <p>
-   * 
-   * @param delegate
-   *          the label formatter to decorate by the feature of automatic unit
-   *          choice.
+   *
+   * @param delegate the label formatter to decorate by the feature of automatic unit choice.
    */
   final void setDelegate(final ALabelFormatter delegate) {
     this.m_delegate = delegate;

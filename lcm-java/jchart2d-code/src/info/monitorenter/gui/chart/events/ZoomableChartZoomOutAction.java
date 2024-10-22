@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -29,33 +29,30 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * <code>Action</code> for zooming a <code>{@link  ZoomableChart}</code> 
- * to the original size (zoom out).
+ * <code>Action</code> for zooming a <code>{@link  ZoomableChart}</code> to the original size (zoom
+ * out).
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:vpappas@gmail.com">Vasilis Pappas </a>
- * 
  * @version $Revision: 1.4 $
  */
-public final class ZoomableChartZoomOutAction
-    extends AZoomableChartAction {
+public final class ZoomableChartZoomOutAction extends AZoomableChartAction {
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = 1663463025252405898L;
 
   /**
    * Create an <code>Action</code> that zooms out a zoomable chart.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the target the action will work on.
-   * 
-   * @param description
-   *          the description of this action to show in the UI.
-   * 
+   *
+   * @param chart the target the action will work on.
+   * @param description the description of this action to show in the UI.
    */
   public ZoomableChartZoomOutAction(final ZoomableChart chart, final String description) {
 
@@ -78,5 +75,4 @@ public final class ZoomableChartZoomOutAction
     // nop as this action will not be used
     // by checkbox or radio button menu items that have a state.
   }
-
 }

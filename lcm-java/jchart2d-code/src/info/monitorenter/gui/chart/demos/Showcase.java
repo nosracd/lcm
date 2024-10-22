@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -56,33 +56,27 @@ import javax.swing.event.ChangeListener;
 
 /**
  * Advanced demonstration applet for jchart2d.
+ *
+ * <p>Please right click on the chart and on the label for the traces to see popup menus that offer
+ * the freshest new features.
+ *
  * <p>
- * Please right click on the chart and on the label for the traces to see popup
- * menus that offer the freshest new features.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.15 $
- * 
  */
-public final class Showcase
-    extends JApplet { 
+public final class Showcase extends JApplet {
 
   /**
    * Panel with controls for the chart.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
-   * 
-   * 
    * @version $Revision: 1.15 $
    */
-  final class ControlPanel
-      extends JPanel {
-    /**
-     * Generated for <code>serialVersionUID</code>.
-     */
+  final class ControlPanel extends JPanel {
+    /** Generated for <code>serialVersionUID</code>. */
     private static final long serialVersionUID = 3257005441048129846L;
 
     /** Slider for the maximum amount of points to show. */
@@ -91,11 +85,7 @@ public final class Showcase
     /** Button to clear data from the chart. */
     private JButton m_clear;
 
-    /**
-     * <p>
-     * The <code>JComboBox</code> used to choose the color of the chart.
-     * </p>
-     */
+    /** The <code>JComboBox</code> used to choose the color of the chart. */
     private JComboBox m_colorChooser;
 
     /** The slider for choosing the speed of adding new points. */
@@ -109,6 +99,7 @@ public final class Showcase
 
     /**
      * Defcon.
+     *
      * <p>
      */
     protected ControlPanel() {
@@ -147,6 +138,7 @@ public final class Showcase
 
     /**
      * Helper to create a slider for maximum amount of points to show.
+     *
      * <p>
      */
     private void createAmountPointSlider() {
@@ -160,24 +152,29 @@ public final class Showcase
       this.m_amountPointsSlider.setMinorTickSpacing(20);
       this.m_amountPointsSlider.setSnapToTicks(true);
       this.m_amountPointsSlider.setPaintLabels(true);
-      this.m_amountPointsSlider.setBorder(BorderFactory.createTitledBorder(BorderFactory
-          .createEtchedBorder(), "Amount of points.", TitledBorder.LEFT, TitledBorder.BELOW_TOP));
+      this.m_amountPointsSlider.setBorder(
+          BorderFactory.createTitledBorder(
+              BorderFactory.createEtchedBorder(),
+              "Amount of points.",
+              TitledBorder.LEFT,
+              TitledBorder.BELOW_TOP));
       this.m_amountPointsSlider.setPaintTicks(true);
-      this.m_amountPointsSlider.addChangeListener(new ChangeListener() {
-        public void stateChanged(final ChangeEvent e) {
-          JSlider source = (JSlider) e.getSource();
-          // Only if not currently dragged...
-          if (!source.getValueIsAdjusting()) {
-            int value = source.getValue();
-            Showcase.this.getTrace().setMaxSize(value);
-          }
-        }
-      });
-
+      this.m_amountPointsSlider.addChangeListener(
+          new ChangeListener() {
+            public void stateChanged(final ChangeEvent e) {
+              JSlider source = (JSlider) e.getSource();
+              // Only if not currently dragged...
+              if (!source.getValueIsAdjusting()) {
+                int value = source.getValue();
+                Showcase.this.getTrace().setMaxSize(value);
+              }
+            }
+          });
     }
 
     /**
      * Helper to create a button for clearing data from the chart.
+     *
      * <p>
      */
     private void createClearButton() {
@@ -185,16 +182,17 @@ public final class Showcase
       this.m_clear = new JButton("clear");
       this.m_clear.setBackground(Color.WHITE);
       this.m_clear.setBackground(Color.WHITE);
-      this.m_clear.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent e) {
-          Showcase.this.clearTrace();
-        }
-      });
-
+      this.m_clear.addActionListener(
+          new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+              Showcase.this.clearTrace();
+            }
+          });
     }
 
     /**
      * Helper to create a button for choosing trace colors.
+     *
      * <p>
      */
     private void createColorChooserButton() {
@@ -204,16 +202,14 @@ public final class Showcase
 
       /**
        * Color with a name.
+       *
        * <p>
-       * 
+       *
        * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
        * @version $Revision: 1.15 $
        */
-      final class ColorItem
-          extends Color {
-        /**
-         * Generated <code>serialVersionUID</code>.
-         */
+      final class ColorItem extends Color {
+        /** Generated <code>serialVersionUID</code>. */
         private static final long serialVersionUID = 3257854281104568629L;
 
         /** The name of the color. */
@@ -221,13 +217,11 @@ public final class Showcase
 
         /**
          * Creates an instance with the given color and it's name.
+         *
          * <p>
-         * 
-         * @param c
-         *          the color to use.
-         * 
-         * @param name
-         *          the name of the color.
+         *
+         * @param c the color to use.
+         * @param name the name of the color.
          */
         public ColorItem(final Color c, final String name) {
           super(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha());
@@ -255,22 +249,22 @@ public final class Showcase
       this.m_colorChooser.addItem(new ColorItem(Color.RED, "red"));
       this.m_colorChooser.addItem(new ColorItem(Color.YELLOW, "yellow"));
 
-      this.m_colorChooser.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent ae) {
-          Color color = (Color) ((JComboBox) ae.getSource()).getSelectedItem();
-          Showcase.this.getTrace().setColor(color);
-        }
-      });
+      this.m_colorChooser.addActionListener(
+          new ActionListener() {
+            public void actionPerformed(final ActionEvent ae) {
+              Color color = (Color) ((JComboBox) ae.getSource()).getSelectedItem();
+              Showcase.this.getTrace().setColor(color);
+            }
+          });
       this.m_colorChooser.setSelectedIndex(10);
       this.m_colorChooser.setMaximumSize(new Dimension(200, this.m_clear.getMaximumSize().height));
-
     }
 
     /**
      * Helper to create a slider for speed of adding new points.
+     *
      * <p>
      */
-
     private void createLatencySlider() {
       // Latency slider:
       this.m_latencyTimeSlider = new JSlider(10, 210);
@@ -280,71 +274,76 @@ public final class Showcase
       this.m_latencyTimeSlider.setMinorTickSpacing(10);
       this.m_latencyTimeSlider.setSnapToTicks(true);
       this.m_latencyTimeSlider.setPaintLabels(true);
-      this.m_latencyTimeSlider.setBorder(BorderFactory.createTitledBorder(BorderFactory
-          .createEtchedBorder(), "Latency for adding points.", TitledBorder.LEFT,
-          TitledBorder.BELOW_TOP));
+      this.m_latencyTimeSlider.setBorder(
+          BorderFactory.createTitledBorder(
+              BorderFactory.createEtchedBorder(),
+              "Latency for adding points.",
+              TitledBorder.LEFT,
+              TitledBorder.BELOW_TOP));
       this.m_latencyTimeSlider.setPaintTicks(true);
 
-      this.m_latencyTimeSlider.addChangeListener(new ChangeListener() {
-        public void stateChanged(final ChangeEvent e) {
-          JSlider source = (JSlider) e.getSource();
-          // Only if not currently dragged...
-          if (!source.getValueIsAdjusting()) {
-            int value = source.getValue();
-            Showcase.this.getCollector().setLatency(value);
-          }
-        }
-      });
+      this.m_latencyTimeSlider.addChangeListener(
+          new ChangeListener() {
+            public void stateChanged(final ChangeEvent e) {
+              JSlider source = (JSlider) e.getSource();
+              // Only if not currently dragged...
+              if (!source.getValueIsAdjusting()) {
+                int value = source.getValue();
+                Showcase.this.getCollector().setLatency(value);
+              }
+            }
+          });
     }
 
     /**
      * Helper to create a button for taking snapshot images.
+     *
      * <p>
      */
     private void createSnapShotButton() {
       // the button for snapshot:
-      this.m_snapshot = new JButton(Chart2DActionSaveImageSingleton.getInstance(
-          Showcase.this.m_chart, "Save image"));
+      this.m_snapshot =
+          new JButton(
+              Chart2DActionSaveImageSingleton.getInstance(Showcase.this.m_chart, "Save image"));
       this.m_snapshot.setBackground(Color.WHITE);
     }
 
     /**
      * Helper to create a button to start and stop button for data collection.
+     *
      * <p>
      */
     private void createStartStopButton() {
       // Start stop Button
       this.m_startStop = new JButton("start");
       this.m_startStop.setBackground(Color.WHITE);
-      this.m_startStop.addActionListener(new ActionListener() {
-        public void actionPerformed(final ActionEvent e) {
-          JButton source = (JButton) e.getSource();
-          if (Showcase.this.getCollector().isRunning()) {
-            Showcase.this.stopData();
-            source.setText("start");
-          } else {
-            Showcase.this.startData();
-            source.setText("stop");
-          }
-          source.invalidate();
-          source.repaint();
-        }
-      });
+      this.m_startStop.addActionListener(
+          new ActionListener() {
+            public void actionPerformed(final ActionEvent e) {
+              JButton source = (JButton) e.getSource();
+              if (Showcase.this.getCollector().isRunning()) {
+                Showcase.this.stopData();
+                source.setText("start");
+              } else {
+                Showcase.this.startData();
+                source.setText("stop");
+              }
+              source.invalidate();
+              source.repaint();
+            }
+          });
     }
   }
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3904676068135678004L;
 
   /**
    * Main entry that uses the applet initialization.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
-   * 
+   *
+   * @param args ignored.
    * @see #init()
    */
   public static void main(final String[] args) {
@@ -354,15 +353,16 @@ public final class Showcase
     frame.getContentPane().add(showcase);
     frame.setSize(400, 600);
     // Enable the termination button [cross on the upper right edge]:
-    frame.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
+    frame.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
     frame.setVisible(true);
   }
 
@@ -375,16 +375,14 @@ public final class Showcase
   /** The trace to use. */
   private Trace2DLtd m_trace;
 
-  /**
-   * Defcon.
-   * 
-   */
+  /** Defcon. */
   public Showcase() {
     super();
   }
 
   /**
    * Clears the internal trace.
+   *
    * <p>
    */
   public synchronized void clearTrace() {
@@ -393,8 +391,9 @@ public final class Showcase
 
   /**
    * Returns the chart.
+   *
    * <p>
-   * 
+   *
    * @return the chart to use.
    */
   public Chart2D getChart() {
@@ -403,8 +402,9 @@ public final class Showcase
 
   /**
    * Returns the collector to use.
+   *
    * <p>
-   * 
+   *
    * @return the collector to use.
    */
   public ADataCollector getCollector() {
@@ -413,8 +413,9 @@ public final class Showcase
 
   /**
    * Returns the trace.
+   *
    * <p>
-   * 
+   *
    * @return the trace.
    */
   public Trace2DLtd getTrace() {
@@ -454,17 +455,15 @@ public final class Showcase
 
   /**
    * Sets the chart to use.
+   *
+   * <p>I would never code this but applets won't access private members and Checkstyle does not
+   * accept non-private members.
+   *
+   * <p>So it is only accepted if the member is null. Don't try calling.
+   *
    * <p>
-   * 
-   * I would never code this but applets won't access private members and
-   * Checkstyle does not accept non-private members.
-   * <p>
-   * 
-   * So it is only accepted if the member is null. Don't try calling.
-   * <p>
-   * 
-   * @param chart2D
-   *          the chart to use.
+   *
+   * @param chart2D the chart to use.
    */
   public void setChart(final Chart2D chart2D) {
     if (this.m_chart == null) {
@@ -474,10 +473,10 @@ public final class Showcase
 
   /**
    * Sets the collector to use.
+   *
    * <p>
-   * 
-   * @param collector
-   *          the collector to use.
+   *
+   * @param collector the collector to use.
    */
   private void setCollector(final RandomDataCollectorOffset collector) {
     this.m_collector = collector;
@@ -485,14 +484,13 @@ public final class Showcase
 
   /**
    * Sets the trace to use.
+   *
+   * <p>This will do nothing if the internal trace has been set before and is only intended for the
+   * applet which needs public members or setters.
+   *
    * <p>
-   * 
-   * This will do nothing if the internal trace has been set before and is only
-   * intended for the applet which needs public members or setters.
-   * <p>
-   * 
-   * @param trace
-   *          the trace to use.
+   *
+   * @param trace the trace to use.
    */
   public void setTrace(final Trace2DLtd trace) {
     if (this.m_trace == null) {
@@ -502,8 +500,8 @@ public final class Showcase
 
   /**
    * Starts data collection.
+   *
    * <p>
-   * 
    */
   public synchronized void startData() {
     if (!this.getCollector().isRunning()) {
@@ -513,7 +511,7 @@ public final class Showcase
 
   /**
    * Stops data collection.
-   * 
+   *
    * <p>
    */
   public synchronized void stopData() {

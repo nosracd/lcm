@@ -1,16 +1,16 @@
 /*
- * Chart2D, a component for displaying ITrace2D instances. 
+ * Chart2D, a component for displaying ITrace2D instances.
  * Copyright (C) 2004 - 2011 Achim Westermann, Achim.Westermann@gmx.de
- * 
+ *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
- * 
+ *
  * If you modify or optimize the code in a useful way please let me know. Achim.Westermann@gmx.de
  */
 package info.monitorenter.gui.chart;
@@ -61,50 +61,46 @@ import javax.swing.JToolTip;
 import javax.swing.Timer;
 
 /**
- * <code> Chart2D</code> is a component for displaying the data contained in a
- * <code>ITrace2D</code>. It inherits many features from
- * <code>javax.swing.JPanel</code> and allows specific configuration. <br>
- * In order to simplify the use of it, the scaling, labeling and choosing of
- * display- range is done automatically which flattens the free configuration.
- * <p>
- * There are several default settings that may be changed in
- * <code>Chart2D</code><br>
+ * <code> Chart2D</code> is a component for displaying the data contained in a <code>ITrace2D</code>
+ * . It inherits many features from <code>javax.swing.JPanel</code> and allows specific
+ * configuration. <br>
+ * In order to simplify the use of it, the scaling, labeling and choosing of display- range is done
+ * automatically which flattens the free configuration.
+ *
+ * <p>There are several default settings that may be changed in <code>Chart2D</code><br>
+ *
  * <ul>
- * <li>The display range is chosen always big enough to show every
- * <code>TracePoint2D</code> contained in the all <code>ITrace2d</code>
- * instances connected. This is because the
- * {@link info.monitorenter.gui.chart.IAxis} of the chart (for x and y) use by
- * default a
- * {@link info.monitorenter.gui.chart.rangepolicies.RangePolicyUnbounded}. To
- * change this, get the axis of the chart to change (via {@link #getAxisX()},
- * {@link #getAxisY()}) and invoke
- * {@link info.monitorenter.gui.chart.IAxis#setRangePolicy(IRangePolicy)} with
- * the desired view port behavior.
- * <li>During the <code>paint()</code> operation every <code>TracePoint2D</code>
- * is taken from the <code>ITrace2D</code>- instance exactly in the order, it's
- * iterator returns them. From every <code>TracePoint2D</code> then a line is
- * drawn to the next. <br>
- * Unordered traces may cause a weird display. Choose the right implementation
- * of <code>ITrace2D</code> to avoid this. To change this line painting behavior
- * you can use custom renderers at the level of traces via
- * {@link info.monitorenter.gui.chart.ITrace2D#addTracePainter(ITracePainter)}
- * or
- * {@link info.monitorenter.gui.chart.ITrace2D#setTracePainter(ITracePainter)}.
- * <li>If no scaling is chosen, no grids will be painted. See:
- * <code>{@link IAxis#setPaintScale(boolean)}</code> This allows saving of many
- * computations.
- * <li>The distance of the scalepoints is always big enough to display the
- * labels fully without overwriting each other.</li>
+ *   <li>The display range is chosen always big enough to show every <code>TracePoint2D</code>
+ *       contained in the all <code>ITrace2d</code> instances connected. This is because the {@link
+ *       info.monitorenter.gui.chart.IAxis} of the chart (for x and y) use by default a {@link
+ *       info.monitorenter.gui.chart.rangepolicies.RangePolicyUnbounded}. To change this, get the
+ *       axis of the chart to change (via {@link #getAxisX()}, {@link #getAxisY()}) and invoke
+ *       {@link info.monitorenter.gui.chart.IAxis#setRangePolicy(IRangePolicy)} with the desired
+ *       view port behavior.
+ *   <li>During the <code>paint()</code> operation every <code>TracePoint2D</code> is taken from the
+ *       <code>ITrace2D</code>- instance exactly in the order, it's iterator returns them. From
+ *       every <code>TracePoint2D</code> then a line is drawn to the next. <br>
+ *       Unordered traces may cause a weird display. Choose the right implementation of <code>
+ *       ITrace2D</code> to avoid this. To change this line painting behavior you can use custom
+ *       renderers at the level of traces via {@link
+ *       info.monitorenter.gui.chart.ITrace2D#addTracePainter(ITracePainter)} or {@link
+ *       info.monitorenter.gui.chart.ITrace2D#setTracePainter(ITracePainter)}.
+ *   <li>If no scaling is chosen, no grids will be painted. See: <code>
+ *       {@link IAxis#setPaintScale(boolean)}</code> This allows saving of many computations.
+ *   <li>The distance of the scalepoints is always big enough to display the labels fully without
+ *       overwriting each other.
  * </ul>
+ *
  * <p>
+ *
  * <h3>Demo- code:</h3>
- * 
+ *
  * <pre>
- * 
+ *
  *   ...
  *   Chart2D test = new Chart2D();
  *   JFrame frame = new JFrame(&quot;Chart2D- Debug&quot;);
- *            
+ *
  *   frame.setSize(400,200);
  *   frame.setVisible(true);
  *   ITrace2D atrace = new Trace2DLtd(100);
@@ -118,19 +114,23 @@ import javax.swing.Timer;
  *     ....
  *   }
  * </pre>
- * 
+ *
  * <p>
+ *
  * <h3>PropertyChangeEvents</h3>
- * {@link java.beans.PropertyChangeListener} instances may be added via
- * {@link javax.swing.JComponent#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
- * . They inherit the properties to listen from
- * {@link java.awt.Container#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
- * . Additionally more <code>PropertyChangeEvents</code> are triggered.
- * <p>
- * As the set of traces inside this class is a collection (and no single
- * property) the {@link java.beans.PropertyChangeEvent} fired for a change of
- * properties property will contain a reference to the <code>Chart2D</code>
- * instance as well as the <code>ITrace2D</code> (if involved in the change). <br>
+ *
+ * {@link java.beans.PropertyChangeListener} instances may be added via {@link
+ * javax.swing.JComponent#addPropertyChangeListener(java.lang.String,
+ * java.beans.PropertyChangeListener)} . They inherit the properties to listen from {@link
+ * java.awt.Container#addPropertyChangeListener(java.lang.String,
+ * java.beans.PropertyChangeListener)} . Additionally more <code>PropertyChangeEvents</code> are
+ * triggered.
+ *
+ * <p>As the set of traces inside this class is a collection (and no single property) the {@link
+ * java.beans.PropertyChangeEvent} fired for a change of properties property will contain a
+ * reference to the <code>Chart2D</code> instance as well as the <code>ITrace2D</code> (if involved
+ * in the change). <br>
+ *
  * <table width="100%">
  * <tr>
  * <th ><code>getPropertyName()</code></th>
@@ -271,70 +271,71 @@ import javax.swing.Timer;
  * <td>if {@link Chart2D#setPointFinder(IPointFinder)} caused a change.</td>
  * </tr>
  * </table>
+ *
  * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.142.2.1 $
  */
-
-public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<ITrace2D>,
-    Printable {
+public class Chart2D extends JPanel
+    implements PropertyChangeListener, Iterable<ITrace2D>, Printable {
   /**
    * Types of tool tip.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
    * @version $Revision: 1.142.2.1 $
    */
   public static enum PointFinder implements IPointFinder {
     /**
      * Uses the Manhattan distance to find the nearest point.
-     * <p>
-     * This implementation is slower than MANHATTAN but has a search field in
-     * form of a circle which is more natural for human eyes.
-     * 
+     *
+     * <p>This implementation is slower than MANHATTAN but has a search field in form of a circle
+     * which is more natural for human eyes.
+     *
      * @see Chart2D#getNearestPointEuclid(int, int)
      */
     EUCLID {
 
       /**
-       * @see info.monitorenter.gui.chart.Chart2D.PointFinder#getNearestPoint(java.awt.event.MouseEvent,
-       *      info.monitorenter.gui.chart.Chart2D)
+       * @see
+       *     info.monitorenter.gui.chart.Chart2D.PointFinder#getNearestPoint(java.awt.event.MouseEvent,
+       *     info.monitorenter.gui.chart.Chart2D)
        */
-      public ITracePoint2D getNearestPoint(final int mouseEventX, final int mouseEventY,
-          final Chart2D chart) {
+      public ITracePoint2D getNearestPoint(
+          final int mouseEventX, final int mouseEventY, final Chart2D chart) {
         return chart.getNearestPointEuclid(mouseEventX, mouseEventY);
       }
     },
     /**
      * Uses the Manhattan distance to find the nearest point.
-     * <p>
-     * This implementation is faster than EUCLID (only
-     * subtractions/additions/abs) but has a search field in form of a rhombus
-     * which may confuse human eyes.
-     * 
+     *
+     * <p>This implementation is faster than EUCLID (only subtractions/additions/abs) but has a
+     * search field in form of a rhombus which may confuse human eyes.
+     *
      * @see Chart2D#getNearestPointManhattan(int, int)
      */
     MANHATTAN {
 
       /**
-       * @see info.monitorenter.gui.chart.Chart2D.PointFinder#getNearestPoint(java.awt.event.MouseEvent,
-       *      info.monitorenter.gui.chart.Chart2D)
+       * @see
+       *     info.monitorenter.gui.chart.Chart2D.PointFinder#getNearestPoint(java.awt.event.MouseEvent,
+       *     info.monitorenter.gui.chart.Chart2D)
        */
-      public ITracePoint2D getNearestPoint(final int mouseEventX, final int mouseEventY,
-          final Chart2D chart) {
+      public ITracePoint2D getNearestPoint(
+          final int mouseEventX, final int mouseEventY, final Chart2D chart) {
         return chart.getNearestPointManhattan(mouseEventX, mouseEventY);
       }
-
     };
 
     /**
      * Default implementation always returns null.
+     *
      * <p>
-     * 
+     *
      * @see info.monitorenter.gui.chart.IPointFinder#getNearestPoint(java.awt.event.MouseEvent,
-     *      Chart2D)
+     *     Chart2D)
      */
     public ITracePoint2D getNearestPoint(final MouseEvent me, final Chart2D chart) {
       return this.getNearestPoint(me.getX(), me.getY(), chart);
@@ -343,19 +344,20 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Types of tool tip.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
    * @version $Revision: 1.142.2.1 $
    */
   public static enum ToolTipType implements IToolTipType {
     /**
      * Chart data value tool tips are shown.
-     * <p>
-     * Note that this implementation only works correctly for one left y axis
-     * and one bottom x axis as it does not search for the nearest trace.
-     * Displayed values will be formatted according to the formatting of the
-     * axes mentioned above.
+     *
+     * <p>Note that this implementation only works correctly for one left y axis and one bottom x
+     * axis as it does not search for the nearest trace. Displayed values will be formatted
+     * according to the formatting of the axes mentioned above.
+     *
      * <p>
      */
     DATAVALUES {
@@ -369,7 +371,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       }
 
       /**
-       * @see info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
+       * @see
+       *     info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
        */
       @Override
       public String getToolTipText(final Chart2D chart, final MouseEvent me) {
@@ -382,7 +385,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         result = buffer.toString();
         return result;
       }
-
     },
     /** No tool tips are shown. */
     NONE,
@@ -398,20 +400,19 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       }
 
       /**
-       * @see info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
+       * @see
+       *     info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
        */
       @Override
       public String getToolTipText(final Chart2D chart, final MouseEvent me) {
         return "pixel, not implemented yet";
       }
-
     },
     /**
-     * Snaps to the nearest <code>{@link TracePoint2D}</code> and shows it's
-     * value.
-     * <p>
-     * Warning: due to the data structure of multiple axes this is very
-     * expensive!
+     * Snaps to the nearest <code>{@link TracePoint2D}</code> and shows it's value.
+     *
+     * <p>Warning: due to the data structure of multiple axes this is very expensive!
+     *
      * <p>
      */
     VALUE_SNAP_TO_TRACEPOINTS {
@@ -425,7 +426,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       }
 
       /**
-       * @see info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
+       * @see
+       *     info.monitorenter.gui.chart.Chart2D.ToolTipType#getToolTipText(java.awt.event.MouseEvent)
        */
       @Override
       public String getToolTipText(final Chart2D chart, final MouseEvent me) {
@@ -446,7 +448,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         result = buffer.toString();
         return result;
       }
-
     };
 
     /**
@@ -457,252 +458,271 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     }
 
     /**
-     * @see info.monitorenter.gui.chart.IToolTipType#getToolTipText(info.monitorenter.gui.chart.Chart2D,
-     *      java.awt.event.MouseEvent)
+     * @see
+     *     info.monitorenter.gui.chart.IToolTipType#getToolTipText(info.monitorenter.gui.chart.Chart2D,
+     *     java.awt.event.MouseEvent)
      */
     public String getToolTipText(final Chart2D chart, final MouseEvent me) {
       // NONE implementation (defined by this enum type).
       return null;
     }
-
   }
 
   /** Speaking names for axis constants - used for debugging only. */
-  public static final String[] AXIX_CONSTANT_NAMES = new String[] {"dummy", "X", "Y", "X,Y" };
+  public static final String[] AXIX_CONSTANT_NAMES = new String[] {"dummy", "X", "Y", "X,Y"};
 
   /**
    * Constant describing the bottom side of the chart.
+   *
    * <p>
-   * 
+   *
    * @see IAxis#getAxisPosition()
    */
   public static final int CHART_POSITION_BOTTOM = 32;
 
   /**
    * Constant describing the left side of the chart.
+   *
    * <p>
-   * 
+   *
    * @see IAxis#getAxisPosition()
    */
   public static final int CHART_POSITION_LEFT = 4;
 
   /**
    * Constant describing the right side of the chart.
+   *
    * <p>
-   * 
+   *
    * @see IAxis#getAxisPosition()
    */
   public static final int CHART_POSITION_RIGHT = 8;
 
   /**
    * Constant describing the top side of the chart.
+   *
    * <p>
-   * 
+   *
    * @see IAxis#getAxisPosition()
    */
   public static final int CHART_POSITION_TOP = 16;
 
   /**
-   * A package wide switch for debugging problems with scaling. Set to false the
-   * compiler will remove the debugging statements.
+   * A package wide switch for debugging problems with scaling. Set to false the compiler will
+   * remove the debugging statements.
    */
   public static final boolean DEBUG_SCALING = false;
 
   /**
-   * A package wide switch for debugging problems with highlighting. Set to
-   * false the compiler will remove the debugging statements.
+   * A package wide switch for debugging problems with highlighting. Set to false the compiler will
+   * remove the debugging statements.
    */
   public static final boolean DEBUG_HIGHLIGHTING = false;
 
   /**
-   * A package wide switch for debugging problems with multithreading. Set to
-   * false the compiler will remove the debugging statements.
+   * A package wide switch for debugging problems with multithreading. Set to false the compiler
+   * will remove the debugging statements.
    */
   public static final boolean DEBUG_THREADING = false;
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * antialiasing enabled state.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
+   * The bean property <code>constant</code> identifying a change of the antialiasing enabled state.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
    * <p>
    */
-  public static final String PROPERTY_ANTIALIASING_ENABLED = "Chart2D.PROPERTY_ANTIALIASING_ENABLED";
+  public static final String PROPERTY_ANTIALIASING_ENABLED =
+      "Chart2D.PROPERTY_ANTIALIASING_ENABLED";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * internal <code>{@link IAxis}</code> instance for the x dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a change of the internal <code>
+   * {@link IAxis}</code> instance for the x dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
   public static final String PROPERTY_AXIS_X = "Chart2D.PROPERTY_AXIS_X";
 
   /**
-   * The bean property <code>constant</code> identifying a replacement of an
-   * internal <code>{@link IAxis}</code> instance for the bottom x dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a replacement of an internal <code>
+   * {@link IAxis}</code> instance for the bottom x dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
-  public static final String PROPERTY_AXIS_X_BOTTOM_REPLACE = "Chart2D.PROPERTY_AXIS_X_BOTTOM_REPLACE";
+  public static final String PROPERTY_AXIS_X_BOTTOM_REPLACE =
+      "Chart2D.PROPERTY_AXIS_X_BOTTOM_REPLACE";
 
   /**
-   * The bean property <code>constant</code> identifying a replacement of an
-   * internal <code>{@link IAxis}</code> instance for the top x dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a replacement of an internal <code>
+   * {@link IAxis}</code> instance for the top x dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
   public static final String PROPERTY_AXIS_X_TOP_REPLACE = "Chart2D.PROPERTY_AXIS_X_TOP_REPLACE";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * internal <code>{@link IAxis}</code> instance for the y dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a change of the internal <code>
+   * {@link IAxis}</code> instance for the y dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
   public static final String PROPERTY_AXIS_Y = "Chart2D.PROPERTY_AXIS_Y";
 
   /**
-   * The bean property <code>constant</code> identifying a replacement of an
-   * internal <code>{@link IAxis}</code> instance for the left y dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a replacement of an internal <code>
+   * {@link IAxis}</code> instance for the left y dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
   public static final String PROPERTY_AXIS_Y_LEFT_REPLACE = "Chart2D.PROPERTY_AXIS_Y_LEFT_REPLACE";
 
   /**
-   * The bean property <code>constant</code> identifying a replacement of an
-   * internal <code>{@link IAxis}</code> instance for the right y dimension.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a replacement of an internal <code>
+   * {@link IAxis}</code> instance for the right y dimension.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
-  public static final String PROPERTY_AXIS_Y_RIGHT_REPLACE = "Chart2D.PROPERTY_AXIS_Y_RIGHT_REPLACE";
+  public static final String PROPERTY_AXIS_Y_RIGHT_REPLACE =
+      "Chart2D.PROPERTY_AXIS_Y_RIGHT_REPLACE";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * background color. <br>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * The property change events for this change are constructed and fired by the
-   * superclass {@link java.awt.Container} so this constant is just for
-   * clarification of the String that is related to that property.
+   * The bean property <code>constant</code> identifying a change of the background color. <br>
+   * Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>The property change events for this change are constructed and fired by the superclass
+   * {@link java.awt.Container} so this constant is just for clarification of the String that is
+   * related to that property.
+   *
    * <p>
    */
   public static final String PROPERTY_BACKGROUND_COLOR = "background";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the font. <br/>
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * The property change events for this change are constructed and fired by the
-   * superclass {@link java.awt.Container} so this constant is just for
-   * clarification of the String that is related to that property.
+   * The bean property <code>constant</code> identifying a change of the font. <br>
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>The property change events for this change are constructed and fired by the superclass
+   * {@link java.awt.Container} so this constant is just for clarification of the String that is
+   * related to that property.
+   *
    * <p>
    */
   public static final String PROPERTY_FONT = "font";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * foreground color. <br>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * The property change events for this change are constructed and fired by the
-   * superclass {@link java.awt.Container} so this constant is just for
-   * clarification of the String that is related to that property.
+   * The bean property <code>constant</code> identifying a change of the foreground color. <br>
+   * Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>The property change events for this change are constructed and fired by the superclass
+   * {@link java.awt.Container} so this constant is just for clarification of the String that is
+   * related to that property.
+   *
    * <p>
    */
   public static final String PROPERTY_FOREGROUND_COLOR = "foreground";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the grid
-   * color.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
+   * The bean property <code>constant</code> identifying a change of the grid color.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
    * <p>
    */
   public static final String PROPERTY_GRID_COLOR = "Chart2D.PROPERTY_GRID_COLOR";
 
   /**
    * The bean property <code>constant</code> identifying a change of traces.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
    * <p>
    */
   public static final String PROPERTY_ADD_REMOVE_TRACE = IAxis.PROPERTY_ADD_REMOVE_TRACE;
 
   /**
-   * The bean property <code>constant</code> identifying a change of the paint
-   * labels flag.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
+   * The bean property <code>constant</code> identifying a change of the paint labels flag.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
    * <p>
    */
   public static final String PROPERTY_PAINTLABELS = "Chart2D.PROPERTY_PAINTLABELS";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the point
-   * highlighting enabled state.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
+   * The bean property <code>constant</code> identifying a change of the point highlighting enabled
+   * state.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
    * <p>
    */
-  public static final String PROPERTY_POINT_HIGHLIGHTING_ENABLED = "Chart2D.PROPERTY_POINT_HIGHLIGHTING_ENABLED";
+  public static final String PROPERTY_POINT_HIGHLIGHTING_ENABLED =
+      "Chart2D.PROPERTY_POINT_HIGHLIGHTING_ENABLED";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the
-   * internal <code>{@link IPointFinder}</code> instance used to find the
-   * nearest point corresponding to mouse events over the chart.
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * See the class description for property change events fired.
+   * The bean property <code>constant</code> identifying a change of the internal <code>
+   * {@link IPointFinder}</code> instance used to find the nearest point corresponding to mouse
+   * events over the chart.
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>See the class description for property change events fired.
+   *
    * <p>
    */
   public static final String PROPERTY_POINTFINDER = "Chart2D.POINTFINDER";
 
   /**
-   * The bean property <code>constant</code> identifying a change of the tool
-   * tip type (<code>{Chart2D{@link #setToolTipType(IToolTipType)}</code>). <br/>
-   * <p>
-   * Use this constant to register a {@link java.beans.PropertyChangeListener}
-   * with the <code>Chart2D</code>.
-   * <p>
-   * The property change events for this change are constructed and fired by the
-   * superclass {@link java.awt.Container} so this constant is just for
-   * clarification of the String that is related to that property.
+   * The bean property <code>constant</code> identifying a change of the tool tip type (<code>
+   * {Chart2D{@link #setToolTipType(IToolTipType)}</code>). <br>
+   *
+   * <p>Use this constant to register a {@link java.beans.PropertyChangeListener} with the <code>
+   * Chart2D</code>.
+   *
+   * <p>The property change events for this change are constructed and fired by the superclass
+   * {@link java.awt.Container} so this constant is just for clarification of the String that is
+   * related to that property.
+   *
    * <p>
    */
   public static final String PROPERTY_TOOLTIP_TYPE = "Chart2D.PROPERTY_TOOLTIP_TYPE";
@@ -721,34 +741,38 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * The bottom x axes of the chart.
-   * <p>
-   * The first element is always existing and is the downward compatible result
-   * of the call <code>{@link Chart2D#getAxisX()}</code>.
+   *
+   * <p>The first element is always existing and is the downward compatible result of the call
+   * <code>{@link Chart2D#getAxisX()}</code>.
+   *
    * <p>
    */
   private List<IAxis<?>> m_axesXBottom;
 
   /**
    * The top x axes of the chart.
-   * <p>
-   * If empty no top x axes are shown.
+   *
+   * <p>If empty no top x axes are shown.
+   *
    * <p>
    */
   private List<IAxis<?>> m_axesXTop;
 
   /**
    * The left y axes of the chart.
-   * <p>
-   * The first element is always existing and is the downward compatible result
-   * of the call <code>{@link Chart2D#getAxisY()}</code>.
+   *
+   * <p>The first element is always existing and is the downward compatible result of the call
+   * <code>{@link Chart2D#getAxisY()}</code>.
+   *
    * <p>
    */
   private List<IAxis<?>> m_axesYLeft;
 
   /**
    * The right y axes of the chart.
-   * <p>
-   * If empty no right y axes are shown.
+   *
+   * <p>If empty no right y axes are shown.
+   *
    * <p>
    */
   private List<IAxis<?>> m_axesYRight;
@@ -760,71 +784,68 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   private Color m_gridcolor = Color.lightGray;
 
   /**
-   * Chart - wide setting for the ms to give a repaint operation time for
-   * collecting several repaint requests into one (performance versus update
-   * speed).
+   * Chart - wide setting for the ms to give a repaint operation time for collecting several repaint
+   * requests into one (performance versus update speed).
+   *
    * <p>
    */
   protected int m_minPaintLatency = 50;
 
   /**
-   * The axis that is used for translation from mouse event to x value by method
-   * <code>Chart2D{@link #translateMousePosition(MouseEvent)}</code>.
-   * <p>
-   * Defaults to the first bottom x axis.
+   * The axis that is used for translation from mouse event to x value by method <code>
+   * Chart2D{@link #translateMousePosition(MouseEvent)}</code>.
+   *
+   * <p>Defaults to the first bottom x axis.
+   *
    * <p>
    */
   private AAxis<?> m_mouseTranslationXAxis;
 
   /**
-   * The axis that is used for translation from mouse event to y value by method
-   * <code>Chart2D{@link #translateMousePosition(MouseEvent)}</code>.
-   * <p>
-   * Defaults to the first left y axis.
+   * The axis that is used for translation from mouse event to y value by method <code>
+   * Chart2D{@link #translateMousePosition(MouseEvent)}</code>.
+   *
+   * <p>Defaults to the first left y axis.
+   *
    * <p>
    */
   private AAxis<?> m_mouseTranslationYAxis;
 
-  /**
-   * When not null this format will be used within paint: then we deal with a
-   * printing request.
-   */
+  /** When not null this format will be used within paint: then we deal with a printing request. */
   private transient PageFormat m_pageFormat;
 
-  /**
-   * Flag that decides whether labels for traces are painted below the chart.
-   */
+  /** Flag that decides whether labels for traces are painted below the chart. */
   private boolean m_paintLabels = true;
 
-  /**
-   * The point finder used to find the nearest point corresponding to a mouse
-   * event.
-   */
+  /** The point finder used to find the nearest point corresponding to a mouse event. */
   private IPointFinder m_pointFinder = PointFinder.EUCLID;
 
   /**
-   * Used to track mouse motion events and highlight the nearest trace point
-   * according to the point highlighters in the corresponding trace (
-   * <code>{@link ITrace2D#getPointHighlighters()}</code>).
-   * <p>
-   * Also removes highlighters (potentially if they are exclusive) from the
-   * previous highlighted point.
+   * Used to track mouse motion events and highlight the nearest trace point according to the point
+   * highlighters in the corresponding trace ( <code>{@link ITrace2D#getPointHighlighters()}</code>
+   * ).
+   *
+   * <p>Also removes highlighters (potentially if they are exclusive) from the previous highlighted
+   * point.
+   *
    * <p>
    */
   private final PointHighlighter m_pointHighlightListener = new PointHighlighter();
 
   /**
    * Tracks mouse motion events and highlights the nearest point in the trace.
+   *
    * <p>
-   * 
+   *
    * @author <a href="mailto:achim.westermann@gmx.de">Achim Westermann</a>
    */
-  final class PointHighlighter extends MouseMotionAdapter implements MouseMotionListener,
-      PropertyChangeListener {
+  final class PointHighlighter extends MouseMotionAdapter
+      implements MouseMotionListener, PropertyChangeListener {
 
     /**
-     * Default constructor, adds property change listener for point highlighters
-     * to the enclosing chart.
+     * Default constructor, adds property change listener for point highlighters to the enclosing
+     * chart.
+     *
      * <p>
      */
     public PointHighlighter() {
@@ -835,7 +856,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       this.m_previousHighlighted = new IdentityHashMap<ITrace2D, ITracePoint2D>();
       Chart2D.this.addPropertyChangeListener(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED, this);
       Chart2D.this.addPropertyChangeListener(Chart2D.PROPERTY_ADD_REMOVE_TRACE, this);
-
     }
 
     /** Needed to de-highlight previously highlighted points. */
@@ -843,14 +863,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
     /**
      * Activates or deactivates point higlighting.
+     *
+     * <p>This handles tracking of mouse motion events of the chart.
+     *
      * <p>
-     * This handles tracking of mouse motion events of the chart.
-     * <p>
-     * 
-     * @param onoff
-     *          if true, highlighting will be enabled, if false it will be
-     *          deactivated.
-     * 
+     *
+     * @param onoff if true, highlighting will be enabled, if false it will be deactivated.
      * @return true if a change took place.
      */
     @SuppressWarnings("synthetic-access")
@@ -864,13 +882,13 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
             // deactivate all previously highlighted traces:
             for (Map.Entry<ITrace2D, ITracePoint2D> entry : this.m_previousHighlighted.entrySet()) {
               synchronized (entry.getKey()) {
-                Set<IPointPainter< ? >> highlighters = entry.getKey().getPointHighlighters();
-                Set<IPointPainter< ? >> additionalPainters = entry.getValue()
-                    .getAdditionalPointPainters();
-                Iterator<IPointPainter< ? >> itAdditionasPainters = additionalPainters.iterator();
+                Set<IPointPainter<?>> highlighters = entry.getKey().getPointHighlighters();
+                Set<IPointPainter<?>> additionalPainters =
+                    entry.getValue().getAdditionalPointPainters();
+                Iterator<IPointPainter<?>> itAdditionasPainters = additionalPainters.iterator();
                 while (itAdditionasPainters.hasNext()) {
-                  IPointPainter< ? > assignedHighlighter = itAdditionasPainters.next();
-                  for (IPointPainter< ? > highlighter : highlighters) {
+                  IPointPainter<?> assignedHighlighter = itAdditionasPainters.next();
+                  for (IPointPainter<?> highlighter : highlighters) {
                     // cannot check for equality as outside configured same
                     // additional point painters not working for highlighting
                     // could be erased.
@@ -880,12 +898,11 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
                     }
                   }
                 }
-
               }
             }
             Chart2D.this.removeMouseMotionListener(this);
-            Chart2D.this.firePropertyChange(PROPERTY_POINT_HIGHLIGHTING_ENABLED, Boolean.TRUE,
-                Boolean.FALSE);
+            Chart2D.this.firePropertyChange(
+                PROPERTY_POINT_HIGHLIGHTING_ENABLED, Boolean.TRUE, Boolean.FALSE);
             this.m_previousHighlighted.clear();
             Chart2D.this.setRequestedRepaint(true);
             result = true;
@@ -896,8 +913,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         if (!isEnabled) {
           synchronized (Chart2D.this) {
             Chart2D.this.addMouseMotionListener(this);
-            Chart2D.this.firePropertyChange(PROPERTY_POINT_HIGHLIGHTING_ENABLED, Boolean.FALSE,
-                Boolean.TRUE);
+            Chart2D.this.firePropertyChange(
+                PROPERTY_POINT_HIGHLIGHTING_ENABLED, Boolean.FALSE, Boolean.TRUE);
             Chart2D.this.setRequestedRepaint(true);
             result = true;
           }
@@ -907,32 +924,30 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     }
 
     /**
-     * Attaches the highlighters of the trace of the point to the point: it will
-     * be highlighted then.
+     * Attaches the highlighters of the trace of the point to the point: it will be highlighted
+     * then.
+     *
      * <p>
-     * 
-     * @param point
-     *          the point to highlight.
+     *
+     * @param point the point to highlight.
      */
     private void attachHighlighters(ITracePoint2D point) {
 
       ITrace2D trace = point.getListener();
-      for (IPointPainter< ? > highlighter : trace.getPointHighlighters()) {
+      for (IPointPainter<?> highlighter : trace.getPointHighlighters()) {
         point.addAdditionalPointPainter(highlighter);
       }
     }
 
-    /**
-     * Removes the exclusive point highlighters from the old highlighted point.
-     */
+    /** Removes the exclusive point highlighters from the old highlighted point. */
     private void clearOutdatedHighlighters(final ITrace2D trace) {
 
       ITracePoint2D previousHighlightedPoint = this.m_previousHighlighted.remove(trace);
       if (previousHighlightedPoint != null) {
-        Iterator<IPointPainter< ? >> itAdditionaPainters = previousHighlightedPoint
-            .getAdditionalPointPainters().iterator();
-        IPointPainter< ? > additionalPainter;
-        Set<IPointPainter< ? >> highlighters = trace.getPointHighlighters();
+        Iterator<IPointPainter<?>> itAdditionaPainters =
+            previousHighlightedPoint.getAdditionalPointPainters().iterator();
+        IPointPainter<?> additionalPainter;
+        Set<IPointPainter<?>> highlighters = trace.getPointHighlighters();
         if (Chart2D.DEBUG_HIGHLIGHTING) {
           System.err.println("Trace " + trace.getName() + " has highlighters " + highlighters);
           ITrace2D prevHiTrace = previousHighlightedPoint.getListener();
@@ -942,7 +957,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         }
         while (itAdditionaPainters.hasNext()) {
           additionalPainter = itAdditionaPainters.next();
-          for (IPointPainter< ? > highlighter : highlighters) {
+          for (IPointPainter<?> highlighter : highlighters) {
             /*
              * Cannot rely on "contains" method as comparable/equals might judge
              * an equal highlighter added externally via api as a highlighter
@@ -952,8 +967,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
               break;
             } else {
               if (Chart2D.DEBUG_HIGHLIGHTING) {
-                System.err.println("Additional painter " + additionalPainter + " and highlighter "
-                    + highlighter + " of trace " + trace + " judged not as same.");
+                System.err.println(
+                    "Additional painter "
+                        + additionalPainter
+                        + " and highlighter "
+                        + highlighter
+                        + " of trace "
+                        + trace
+                        + " judged not as same.");
               }
             }
           }
@@ -966,13 +987,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     }
 
     /**
-     * Attaches highlighters of the trace of the point next to the cursor and
-     * removes highlighters from the previous highlighted point.
-     * <p>
-     * 
-     * TODO: Peek at getToolTipText invocations: Save operations in case the
-     * mouse has not moved much?
-     * 
+     * Attaches highlighters of the trace of the point next to the cursor and removes highlighters
+     * from the previous highlighted point.
+     *
+     * <p>TODO: Peek at getToolTipText invocations: Save operations in case the mouse has not moved
+     * much?
+     *
      * @see java.awt.event.MouseMotionAdapter#mouseMoved(java.awt.event.MouseEvent)
      */
     @Override
@@ -980,8 +1000,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       ITracePoint2D point = Chart2D.this.getPointFinder().getNearestPoint(e, Chart2D.this);
       // don't work on empty charts:
       if (point != null) {
-        ITracePoint2D previousHighlightedPoint = this.m_previousHighlighted
-            .get(point.getListener());
+        ITracePoint2D previousHighlightedPoint =
+            this.m_previousHighlighted.get(point.getListener());
         if (!point.equals(previousHighlightedPoint)) {
           ITrace2D trace = point.getListener();
           // avoid duplicate or no highlighting in concurrent paint situation.
@@ -998,20 +1018,19 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     }
 
     /**
-     * This is needed in case the point Highlighters of a trace (
-     * <code>{@link ITrace2D#setPointHighlighter(IPointPainter)}</code>,
-     * <code>{@link ITrace2D#addPointHighlighter(IPointPainter)}</code> or
-     * <code>{@link ITrace2D#removePointHighlighter(IPointPainter)}</code> or
-     * <code>{@link ITrace2D#removeAllPointHighlighters()}</code>) are changed
-     * in order to re-attach the proper point highlighters to the highlighted
-     * points.
+     * This is needed in case the point Highlighters of a trace ( <code>
+     * {@link ITrace2D#setPointHighlighter(IPointPainter)}</code>, <code>
+     * {@link ITrace2D#addPointHighlighter(IPointPainter)}</code> or <code>
+     * {@link ITrace2D#removePointHighlighter(IPointPainter)}</code> or <code>
+     * {@link ITrace2D#removeAllPointHighlighters()}</code>) are changed in order to re-attach the
+     * proper point highlighters to the highlighted points.
+     *
+     * <p>Also a hook is installed for <code>{@link Chart2D#PROPERTY_ADD_REMOVE_TRACE}</code> to
+     * clear out a reference to a highlighted trace to make it garbage-collectable in case the trace
+     * is removed.
+     *
      * <p>
-     * Also a hook is installed for
-     * <code>{@link Chart2D#PROPERTY_ADD_REMOVE_TRACE}</code> to clear out a
-     * reference to a highlighted trace to make it garbage-collectable in case
-     * the trace is removed.
-     * <p>
-     * 
+     *
      * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
      * @see ITrace2D#addPointHighlighter(IPointPainter)
      * @see ITrace2D#setPointHighlighter(IPointPainter)
@@ -1029,7 +1048,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
             if (this.m_previousHighlighted != null) {
               synchronized (Chart2D.this) {
                 synchronized (trace) {
-                  point.addAdditionalPointPainter((IPointPainter< ? >) evt.getNewValue());
+                  point.addAdditionalPointPainter((IPointPainter<?>) evt.getNewValue());
                   Chart2D.this.setRequestedRepaint(true);
                 }
               }
@@ -1038,7 +1057,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
             if (this.m_previousHighlighted != null) {
               synchronized (Chart2D.this) {
                 synchronized (trace) {
-                  point.removeAdditionalPointPainter((IPointPainter< ? >) evt.getOldValue());
+                  point.removeAdditionalPointPainter((IPointPainter<?>) evt.getOldValue());
                   Chart2D.this.setRequestedRepaint(true);
                 }
               }
@@ -1048,7 +1067,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
             throw new RuntimeException(
                 "Programming error. Unneccessary event caught: "
                     + evt
-                    + ". You only have to fire this event, if a point highlighter was addded or removed.");
+                    + ". You only have to fire this event, if a point highlighter was addded or"
+                    + " removed.");
           }
         }
       } else if (Chart2D.PROPERTY_ADD_REMOVE_TRACE.equals(property)) {
@@ -1058,34 +1078,38 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
           this.m_previousHighlighted.remove(oldTrace2d);
         }
       } else {
-        throw new RuntimeException("Programming error: " + this.getClass().getName()
-            + " only has to be registered to the event "
-            + ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED + " on instances of type (or subtype) "
-            + ITrace2D.class.getName());
+        throw new RuntimeException(
+            "Programming error: "
+                + this.getClass().getName()
+                + " only has to be registered to the event "
+                + ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED
+                + " on instances of type (or subtype) "
+                + ITrace2D.class.getName());
       }
     }
   }
 
   /**
-   * Internal timer for repaint control with guarantee that the interval between
-   * two frames will not be lower than <code>{@link Chart2D#m_minPaintLatency}
+   * Internal timer for repaint control with guarantee that the interval between two frames will not
+   * be lower than <code>{@link Chart2D#m_minPaintLatency}
    * </code> ms.
+   *
    * <p>
    */
   private Timer m_repainter;
 
   /**
-   * Internal flag that stores a request for a repaint that guarantees that two
-   * invocations of <code></code> will always have at least have an interval of
-   * <code>{@link Chart2D#m_minPaintLatency}</code> ms.
-   * <p>
-   * Access to it has to be synchronized!
+   * Internal flag that stores a request for a repaint that guarantees that two invocations of
+   * <code></code> will always have at least have an interval of <code>
+   * {@link Chart2D#m_minPaintLatency}</code> ms.
+   *
+   * <p>Access to it has to be synchronized!
    */
   private boolean m_requestedRepaint;
 
   /**
-   * Flag to remember whether this chart has synchronized it's x start
-   * coordinates with another chart.
+   * Flag to remember whether this chart has synchronized it's x start coordinates with another
+   * chart.
    */
   private boolean m_synchronizedXStart = false;
 
@@ -1096,45 +1120,38 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   private IToolTipType m_toolTip = ToolTipType.NONE;
 
   /**
-   * Internal counter for all point highlighters of all traces to allow
-   * automatic enablement/disablement of highlighting (performance).
+   * Internal counter for all point highlighters of all traces to allow automatic
+   * enablement/disablement of highlighting (performance).
    */
   private int m_traceHighlighterCount = 0;
 
   /** Used to create trace point instances. */
   private ITracePointProvider m_tracePointProvider;
 
-  /**
-   * Boolean flag to turn on antialiasing.
-   */
+  /** Boolean flag to turn on antialiasing. */
   private boolean m_useAntialiasing = false;
 
-  /**
-   * The end x pixel coordinate of the chart.
-   */
+  /** The end x pixel coordinate of the chart. */
   private int m_xChartEnd;
 
-  /**
-   * The start x coordinate of the chart.
-   */
+  /** The start x coordinate of the chart. */
   private int m_xChartStart;
 
   /**
    * The y coordinate of the upper edge of the chart's display area in px.
-   * <p>
-   * The px coordinates in awt / swing start from top and increase towards the
-   * bottom.
+   *
+   * <p>The px coordinates in awt / swing start from top and increase towards the bottom.
+   *
    * <p>
    */
   private int m_yChartEnd;
 
-  /**
-   * The start y coordinate of the chart.
-   */
+  /** The start y coordinate of the chart. */
   private int m_yChartStart;
 
   /**
    * Creates a new chart.
+   *
    * <p>
    */
   public Chart2D() {
@@ -1173,29 +1190,32 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     // set a custom cursor:
     this.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
 
-    this.m_repainter = new Timer(this.m_minPaintLatency, new ActionListener() {
+    this.m_repainter =
+        new Timer(
+            this.m_minPaintLatency,
+            new ActionListener() {
 
-      /**
-       * Repaints the Chart if dirty.
-       * <p>
-       * 
-       * @param e
-       *          invoked by the timer to trigger the action.
-       */
-      public void actionPerformed(final ActionEvent e) {
-        synchronized (Chart2D.this) {
-          if (Chart2D.this.isRequestedRepaint()) {
-            if (Chart2D.DEBUG_THREADING) {
-              System.out.println(Thread.currentThread().getName() + " triggering repaint()");
-            }
-            // Only here this deprecated call may be done:
-            Chart2D.this.repaint(Chart2D.this.m_minPaintLatency);
-            Chart2D.this.setRequestedRepaint(false);
-          }
-        }
-      }
-
-    });
+              /**
+               * Repaints the Chart if dirty.
+               *
+               * <p>
+               *
+               * @param e invoked by the timer to trigger the action.
+               */
+              public void actionPerformed(final ActionEvent e) {
+                synchronized (Chart2D.this) {
+                  if (Chart2D.this.isRequestedRepaint()) {
+                    if (Chart2D.DEBUG_THREADING) {
+                      System.out.println(
+                          Thread.currentThread().getName() + " triggering repaint()");
+                    }
+                    // Only here this deprecated call may be done:
+                    Chart2D.this.repaint(Chart2D.this.m_minPaintLatency);
+                    Chart2D.this.setRequestedRepaint(false);
+                  }
+                }
+              }
+            });
     Timer.setLogTimers(false);
     this.m_repainter.setRepeats(true);
     this.m_repainter.setCoalesce(true);
@@ -1204,13 +1224,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Adds the given x axis to the list of internal bottom x axes.
+   *
+   * <p>The given axis must not be contained before (e.g. as right y axis or bottom x axis...).
+   *
    * <p>
-   * The given axis must not be contained before (e.g. as right y axis or bottom
-   * x axis...).
-   * <p>
-   * 
-   * @param axisX
-   *          the additional bottom x axis.
+   *
+   * @param axisX the additional bottom x axis.
    */
   public void addAxisXBottom(final AAxis<?> axisX) {
     this.ensureUniqueAxis(axisX);
@@ -1225,13 +1244,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Adds the given x axis to the list of internal top x axes.
+   *
+   * <p>The given axis must not be contained before (e.g. as right y axis or bottom x axis...).
+   *
    * <p>
-   * The given axis must not be contained before (e.g. as right y axis or bottom
-   * x axis...).
-   * <p>
-   * 
-   * @param axisX
-   *          the additional top x axis.
+   *
+   * @param axisX the additional top x axis.
    */
   public void addAxisXTop(final AAxis<?> axisX) {
     this.ensureUniqueAxis(axisX);
@@ -1246,13 +1264,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Adds the given y axis to the list of internal left y axes.
+   *
+   * <p>The given axis must not be contained before (e.g. as right y axis or bottom x axis...).
+   *
    * <p>
-   * The given axis must not be contained before (e.g. as right y axis or bottom
-   * x axis...).
-   * <p>
-   * 
-   * @param axisY
-   *          the additional left y axis.
+   *
+   * @param axisY the additional left y axis.
    */
   public void addAxisYLeft(final AAxis<?> axisY) {
     this.ensureUniqueAxis(axisY);
@@ -1267,13 +1284,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Adds the given y axis to the list of internal right y axes.
+   *
+   * <p>The given axis must not be contained before (e.g. as right y axis or bottom x axis...).
+   *
    * <p>
-   * The given axis must not be contained before (e.g. as right y axis or bottom
-   * x axis...).
-   * <p>
-   * 
-   * @param axisY
-   *          the additional right y axis.
+   *
+   * @param axisY the additional right y axis.
    */
   public void addAxisYRight(final AAxis<?> axisY) {
     this.ensureUniqueAxis(axisY);
@@ -1287,20 +1303,19 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Convenience method that adds the trace to this chart with relation to the
-   * first bottom x axis and the first left y axis. It will be painted (if it's
-   * {@link ITrace2D#isVisible()} returns true) in this chart.
+   * Convenience method that adds the trace to this chart with relation to the first bottom x axis
+   * and the first left y axis. It will be painted (if it's {@link ITrace2D#isVisible()} returns
+   * true) in this chart.
+   *
+   * <p>This method will trigger a {@link java.beans.PropertyChangeEvent} being fired on all
+   * instances registered by {@link
+   * javax.swing.JComponent#addPropertyChangeListener(java.lang.String,
+   * java.beans.PropertyChangeListener)} (registered with <code>String</code> argument {@link
+   * IAxis#PROPERTY_ADD_REMOVE_TRACE}) on the internal bottom x axis and left y axis.
+   *
    * <p>
-   * This method will trigger a {@link java.beans.PropertyChangeEvent} being
-   * fired on all instances registered by
-   * {@link javax.swing.JComponent#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-   * (registered with <code>String</code> argument
-   * {@link IAxis#PROPERTY_ADD_REMOVE_TRACE}) on the internal bottom x axis and
-   * left y axis.
-   * <p>
-   * 
-   * @param points
-   *          the trace to add.
+   *
+   * @param points the trace to add.
    * @see IAxis#PROPERTY_ADD_REMOVE_TRACE
    * @see Chart2D#addTrace(ITrace2D, IAxis, IAxis)
    */
@@ -1311,29 +1326,24 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Adds the trace to this chart with relation to the given x axis and y axis.
-   * It will be painted (if it's {@link ITrace2D#isVisible()} returns true) in
-   * this chart.
+   * Adds the trace to this chart with relation to the given x axis and y axis. It will be painted
+   * (if it's {@link ITrace2D#isVisible()} returns true) in this chart.
+   *
+   * <p>This method will trigger a {@link java.beans.PropertyChangeEvent} being fired on all
+   * instances registered by {@link
+   * javax.swing.JComponent#addPropertyChangeListener(java.lang.String,
+   * java.beans.PropertyChangeListener)} (registered with <code>String</code> argument {@link
+   * IAxis#PROPERTY_ADD_REMOVE_TRACE}) on the axis of this chart.
+   *
+   * <p>The given x and y axis will be responsible for computation of the scale of this trace.
+   *
    * <p>
-   * This method will trigger a {@link java.beans.PropertyChangeEvent} being
-   * fired on all instances registered by
-   * {@link javax.swing.JComponent#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-   * (registered with <code>String</code> argument
-   * {@link IAxis#PROPERTY_ADD_REMOVE_TRACE}) on the axis of this chart.
-   * <p>
-   * The given x and y axis will be responsible for computation of the scale of
-   * this trace.
-   * <p>
-   * 
-   * @param points
-   *          the trace to add.
-   * @param xAxis
-   *          the x axis responsible for the scale of this trace - it has to be
-   *          contained in this chart or an exception will be thrown.
-   * @param yAxis
-   *          the y axis responsible for the scale of this trace - it has to be
-   *          contained in this chart or an exception will be thrown.
-   * 
+   *
+   * @param points the trace to add.
+   * @param xAxis the x axis responsible for the scale of this trace - it has to be contained in
+   *     this chart or an exception will be thrown.
+   * @param yAxis the y axis responsible for the scale of this trace - it has to be contained in
+   *     this chart or an exception will be thrown.
    * @see IAxis#PROPERTY_ADD_REMOVE_TRACE
    */
   public final void addTrace(final ITrace2D points, final IAxis<?> xAxis, final IAxis<?> yAxis) {
@@ -1342,7 +1352,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         throw new IllegalArgumentException(
             "Given x axis ("
                 + xAxis.getAxisTitle().getTitle()
-                + ") has to be added to this chart first (via setAxisX(AAxis) or addAxisXBottom(AAXis) or addAxisXTop(AAXis)).");
+                + ") has to be added to this chart first (via setAxisX(AAxis) or"
+                + " addAxisXBottom(AAXis) or addAxisXTop(AAXis)).");
       }
     }
     if (!this.m_axesYLeft.contains(yAxis)) {
@@ -1350,11 +1361,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         throw new IllegalArgumentException(
             "Given y axis ("
                 + yAxis.getAxisTitle().getTitle()
-                + ") has to be added to this chart first (via setAxisY(AAxis) or addAxisYLeft(AAXis) or addAxisYRight(AAXis)).");
+                + ") has to be added to this chart first (via setAxisY(AAxis) or"
+                + " addAxisYLeft(AAXis) or addAxisYRight(AAXis)).");
       }
     }
     /*
-     * 
+     *
      * This lock is needed to ensure a lock on the tree is acquired before a
      * lock to the chart. Method paint will also first acquire the treeLock and
      * then has to get the lock on the chart while this code path might descend
@@ -1364,8 +1376,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
      * thread.
      */
     if (Chart2D.DEBUG_THREADING) {
-      System.out.println(Thread.currentThread().getName()
-          + ", addTrace(ITrace2D, XAxis, YAxis): 0 locks.");
+      System.out.println(
+          Thread.currentThread().getName() + ", addTrace(ITrace2D, XAxis, YAxis): 0 locks.");
     }
     synchronized (this.getTreeLock()) {
       /*
@@ -1373,18 +1385,18 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
        * trace while counting them.
        */
       if (Chart2D.DEBUG_THREADING) {
-        System.out.println(Thread.currentThread().getName()
-            + ", addTrace(ITrace2D, XAxis, YAxis): 1 locks.");
+        System.out.println(
+            Thread.currentThread().getName() + ", addTrace(ITrace2D, XAxis, YAxis): 1 locks.");
       }
       synchronized (this) {
         if (Chart2D.DEBUG_THREADING) {
-          System.out.println(Thread.currentThread().getName()
-              + ", addTrace(ITrace2D, XAxis, YAxis): 2 locks.");
+          System.out.println(
+              Thread.currentThread().getName() + ", addTrace(ITrace2D, XAxis, YAxis): 2 locks.");
         }
         synchronized (points) {
           if (Chart2D.DEBUG_THREADING) {
-            System.out.println(Thread.currentThread().getName()
-                + ", addTrace(ITrace2D, XAxis, YAxis): 3 locks.");
+            System.out.println(
+                Thread.currentThread().getName() + ", addTrace(ITrace2D, XAxis, YAxis): 3 locks.");
           }
           boolean success = false;
           success |= xAxis.addTrace(points);
@@ -1397,38 +1409,37 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
           }
         }
         if (Chart2D.DEBUG_THREADING) {
-          System.out.println(Thread.currentThread().getName()
-              + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 2 locks remaining.");
+          System.out.println(
+              Thread.currentThread().getName()
+                  + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 2 locks remaining.");
         }
-
       }
       if (Chart2D.DEBUG_THREADING) {
-        System.out.println(Thread.currentThread().getName()
-            + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 1 locks remaining.");
+        System.out.println(
+            Thread.currentThread().getName()
+                + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 1 locks remaining.");
       }
     }
     if (Chart2D.DEBUG_THREADING) {
-      System.out.println(Thread.currentThread().getName()
-          + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 0 locks remaining.");
+      System.out.println(
+          Thread.currentThread().getName()
+              + ", addTrace(ITrace2D, XAxis, YAxis): dropped 1 lock, 0 locks remaining.");
     }
   }
 
   /**
-   * Calculates the end x coordinate (right bound) in pixel of the chart to
-   * draw.
+   * Calculates the end x coordinate (right bound) in pixel of the chart to draw.
+   *
+   * <p>As a side effect the {@link IAxis#setPixelXLeft(int)} is set here.
+   *
+   * <p>This value depends on the current <code>{@link FontMetrics}</code> used to paint the x
+   * labels and the maximum amount of characters that are used for the x labels (<code>
+   * {@link IAxisLabelFormatter#getMaxAmountChars()}</code>) because an x label may occur on the
+   * right edge of the chart and should not be clipped.
+   *
    * <p>
-   * As a side effect the {@link IAxis#setPixelXLeft(int)} is set here.
-   * <p>
-   * 
-   * This value depends on the current <code>{@link FontMetrics}</code> used to
-   * paint the x labels and the maximum amount of characters that are used for
-   * the x labels (<code>{@link IAxisLabelFormatter#getMaxAmountChars()}</code>)
-   * because an x label may occur on the right edge of the chart and should not
-   * be clipped.
-   * <p>
-   * 
-   * @param g2d
-   *          needed for size informations.
+   *
+   * @param g2d needed for size informations.
    * @return the end x coordinate (right bound) in pixel of the chart to draw.
    */
   private int calculateXChartEnd(final Graphics g2d) {
@@ -1480,20 +1491,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Calculates the start x coordinate (left bound) in pixel of the chart to
-   * draw.
+   * Calculates the start x coordinate (left bound) in pixel of the chart to draw.
+   *
+   * <p>As a side effect the {@link IAxis#setPixelXRight(int)} is set here.
+   *
+   * <p>This value depends on the current <code>{@link FontMetrics}</code> used to paint the y
+   * labels and the maximum amount of characters that are used for the y labels (<code>
+   * {@link IAxisLabelFormatter#getMaxAmountChars()}</code> ).
+   *
    * <p>
-   * As a side effect the {@link IAxis#setPixelXRight(int)} is set here.
-   * <p>
-   * This value depends on the current <code>{@link FontMetrics}</code> used to
-   * paint the y labels and the maximum amount of characters that are used for
-   * the y labels (<code>{@link IAxisLabelFormatter#getMaxAmountChars()}</code>
-   * ).
-   * <p>
-   * 
-   * @param g2d
-   *          needed for size information.
-   *          
+   *
+   * @param g2d needed for size information.
    * @return the start x coordinate (left bound) in pixel of the chart to draw.
    */
   private int calculateXChartStart(final Graphics g2d) {
@@ -1513,18 +1521,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     // ensure a minimum offset for e.g. when no Y axes are visible
     return result > 0 ? result : 20;
   }
-  
+
   /**
-   * Installs the offset the the left y-axes in case this chart 
-   * is stacked / synchronized vertically via {@link #setSynchronizedXStartChart(Chart2D)}.<p>
-   * 
-   * This is only necessary for the charts whose left y axes should start more to the right than if they were 
-   * all on their own and didn't have to care for other charts.
+   * Installs the offset the the left y-axes in case this chart is stacked / synchronized vertically
+   * via {@link #setSynchronizedXStartChart(Chart2D)}.
+   *
+   * <p>This is only necessary for the charts whose left y axes should start more to the right than
+   * if they were all on their own and didn't have to care for other charts.
+   *
    * <p>
-   * 
-   * @param g2d
-   *          needed for size information.
-   *          
+   *
+   * @param g2d needed for size information.
    * @return the start x coordinate (left bound) in pixel of the chart to draw.
    */
   private int installXAxisLeftOffset(final Graphics g2d, final int offset) {
@@ -1546,21 +1553,19 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Calculates the end y coordinate (upper bound) in pixel of the chart to
-   * draw.
+   * Calculates the end y coordinate (upper bound) in pixel of the chart to draw.
+   *
+   * <p>Note that y coordinates are related to the top of a frame, so a higher y value marks a
+   * visual lower chart value.
+   *
+   * <p>As a side effect the {@link IAxis#setPixelYBottom(int)} is set here.
+   *
+   * <p>The value computed here is the maximum overhang of all y axes caused by their font height of
+   * their labels or the summation of all top x axis heights (if this is greater) .
+   *
    * <p>
-   * Note that y coordinates are related to the top of a frame, so a higher y
-   * value marks a visual lower chart value.
-   * <p>
-   * As a side effect the {@link IAxis#setPixelYBottom(int)} is set here.
-   * <p>
-   * The value computed here is the maximum overhang of all y axes caused by
-   * their font height of their labels or the summation of all top x axis
-   * heights (if this is greater) .
-   * <p>
-   * 
-   * @param g2d
-   *          needed for size informations.
+   *
+   * @param g2d needed for size informations.
    * @return the end y coordinate (upper bound) in pixel of the chart to draw.
    */
   private int calculateYChartEnd(final Graphics g2d) {
@@ -1571,7 +1576,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     int axesXTopHeight = 0;
     /*
      * 1) Find the max y axis height (this is just the overhang cause by label.
-     * 
+     *
      * TODO: maybe this is too much work in case all fonts of all axes are the
      * same and every axis will give the same result for the height (debug).
      */
@@ -1613,19 +1618,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Calculates the start y coordinate (lower bound) in pixel of the chart to
-   * draw.
+   * Calculates the start y coordinate (lower bound) in pixel of the chart to draw.
+   *
+   * <p>As a side effect the {@link IAxis#setPixelYBottom(int)} is set here.
+   *
+   * <p>Note that y coordinates are related to the top of a frame, so a higher y value marks a
+   * visual lower chart value.
+   *
    * <p>
-   * As a side effect the {@link IAxis#setPixelYBottom(int)} is set here.
-   * <p>
-   * Note that y coordinates are related to the top of a frame, so a higher y
-   * value marks a visual lower chart value.
-   * <p>
-   * 
-   * @param g2d
-   *          needed for size informations.
-   * @param labelHeight
-   *          the height of the labels below the chart.
+   *
+   * @param g2d needed for size informations.
+   * @param labelHeight the height of the labels below the chart.
    * @return the start y coordinate (lower bound) in pixel of the chart to draw.
    */
   private int calculateYChartStart(final Graphics g2d, final int labelHeight) {
@@ -1650,7 +1653,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       result -= 20;
     }
     return result;
-
   }
 
   /**
@@ -1669,10 +1671,11 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Destroys the chart.
-   * <p>
-   * This method is only of interest if you have an application that dynamically
-   * adds and removes charts. So if you use the same Chart2D object(s) during
-   * the applications lifetime there is no need to use this method.
+   *
+   * <p>This method is only of interest if you have an application that dynamically adds and removes
+   * charts. So if you use the same Chart2D object(s) during the applications lifetime there is no
+   * need to use this method.
+   *
    * <p>
    */
   public void destroy() {
@@ -1695,43 +1698,34 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
       // terminate the timer
       this.m_repainter.stop();
-
     }
   }
 
   /**
    * Switches point highlighting on or off depending on the given argument.
+   *
+   * <p>Turning off this removes a <code>{@link MouseMotionListener}</code> and therefore avoids
+   * receiving a lot of mouse events which will result in potentially very expensive (many traces
+   * with many points) computations to find the nearest point corresponding to the mouse pointer. So
+   * dropping the point highlighting feature may result in much better real time performance.
+   *
+   * <p>Keep in mind that the view part of point highlighting is configured by configuring the point
+   * highlighters for your traces: <code>{@link ITrace2D#addPointHighlighter(IPointPainter)}</code>.
+   *
+   * <p>This method might trigger a {@link java.beans.PropertyChangeEvent} being fired on all
+   * instances registered by {@link
+   * javax.swing.JComponent#addPropertyChangeListener(java.lang.String,
+   * java.beans.PropertyChangeListener)} (registered with <code>String</code> argument {@link
+   * Chart2D#PROPERTY_POINT_HIGHLIGHTING_ENABLED}).
+   *
    * <p>
-   * Turning off this removes a <code>{@link MouseMotionListener}</code> and
-   * therefore avoids receiving a lot of mouse events which will result in
-   * potentially very expensive (many traces with many points) computations to
-   * find the nearest point corresponding to the mouse pointer. So dropping the
-   * point highlighting feature may result in much better real time performance.
-   * <p>
-   * 
-   * Keep in mind that the view part of point highlighting is configured by
-   * configuring the point highlighters for your traces:
-   * <code>{@link ITrace2D#addPointHighlighter(IPointPainter)}</code>.
-   * <p>
-   * 
-   * This method might trigger a {@link java.beans.PropertyChangeEvent} being
-   * fired on all instances registered by
-   * {@link javax.swing.JComponent#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-   * (registered with <code>String</code> argument
-   * {@link Chart2D#PROPERTY_POINT_HIGHLIGHTING_ENABLED}).
-   * <p>
-   * 
+   *
    * @see ITrace2D#addPointHighlighter(IPointPainter)
-   * 
    * @see Chart2D#isEnabledPointHighlighting()
-   * 
-   * @param onoff
-   *          if true the closest point to the cursor will be highlighted, if
-   *          false you might gain performance by having this feature turned
-   *          off!
-   * 
-   * @return true if a change of this state did take place (you did not call
-   *         this at least twice with the same argument).
+   * @param onoff if true the closest point to the cursor will be highlighted, if false you might
+   *     gain performance by having this feature turned off!
+   * @return true if a change of this state did take place (you did not call this at least twice
+   *     with the same argument).
    */
   public boolean enablePointHighlighting(final boolean onoff) {
     boolean result;
@@ -1740,41 +1734,46 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Ensures that the axis to add is not in duty in any axis function for this
-   * chart.
+   * Ensures that the axis to add is not in duty in any axis function for this chart.
+   *
    * <p>
-   * 
-   * @param axisToAdd
-   *          the axis to test.
+   *
+   * @param axisToAdd the axis to test.
    */
   private void ensureUniqueAxis(final IAxis<?> axisToAdd) {
     if (this.m_axesXBottom.contains(axisToAdd)) {
-      throw new IllegalArgumentException("Given axis (" + axisToAdd.getAxisTitle().getTitle()
-          + " is already configured as bottom x axis!");
+      throw new IllegalArgumentException(
+          "Given axis ("
+              + axisToAdd.getAxisTitle().getTitle()
+              + " is already configured as bottom x axis!");
     }
     if (this.m_axesXTop.contains(axisToAdd)) {
-      throw new IllegalArgumentException("Given axis (" + axisToAdd.getAxisTitle().getTitle()
-          + " is already configured as top x axis!");
+      throw new IllegalArgumentException(
+          "Given axis ("
+              + axisToAdd.getAxisTitle().getTitle()
+              + " is already configured as top x axis!");
     }
     if (this.m_axesYLeft.contains(axisToAdd)) {
-      throw new IllegalArgumentException("Given axis (" + axisToAdd.getAxisTitle().getTitle()
-          + " is already configured as left y axis!");
+      throw new IllegalArgumentException(
+          "Given axis ("
+              + axisToAdd.getAxisTitle().getTitle()
+              + " is already configured as left y axis!");
     }
     if (this.m_axesYRight.contains(axisToAdd)) {
-      throw new IllegalArgumentException("Given axis (" + axisToAdd.getAxisTitle().getTitle()
-          + " is already configured as right y axis!");
+      throw new IllegalArgumentException(
+          "Given axis ("
+              + axisToAdd.getAxisTitle().getTitle()
+              + " is already configured as right y axis!");
     }
-
   }
 
   /**
    * Cleanup when this instance is dropped.
+   *
    * <p>
-   * 
+   *
    * @see java.lang.Object#finalize()
-   * 
-   * @throws Throwable
-   *           if a finalizer of a superclass fails.
+   * @throws Throwable if a finalizer of a superclass fails.
    */
   @Override
   protected void finalize() throws Throwable {
@@ -1783,16 +1782,15 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns an array with the x (position 0) and the y axis (position 1) of the
-   * given trace if it is correctly set up. If the given trace is not set up
-   * correctly with this chart a missing axis in one dimension will be reflected
-   * in <code>null</code> on the corresponding position
+   * Returns an array with the x (position 0) and the y axis (position 1) of the given trace if it
+   * is correctly set up. If the given trace is not set up correctly with this chart a missing axis
+   * in one dimension will be reflected in <code>null</code> on the corresponding position
+   *
    * <p>
-   * 
-   * @param trace
-   *          the trace to find the axes of.
-   * @return an array with the x (position 0) and the y axis (position 1) of the
-   *         given trace if it is correctly set up.
+   *
+   * @param trace the trace to find the axes of.
+   * @return an array with the x (position 0) and the y axis (position 1) of the given trace if it
+   *     is correctly set up.
    */
   public IAxis<?>[] findAxesOfTrace(final ITrace2D trace) {
     IAxis<?>[] result = new IAxis[2];
@@ -1835,10 +1833,10 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with all axes of the chart.
+   *
    * <p>
-   * 
-   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with all axes of
-   *         the chart
+   *
+   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with all axes of the chart
    */
   public final List<IAxis<?>> getAxes() {
     List<IAxis<?>> result = new LinkedList<IAxis<?>>();
@@ -1850,60 +1848,64 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are
-   * painted in x dimension on the bottom of the chart.
+   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in x
+   * dimension on the bottom of the chart.
+   *
+   * <p><b>Caution!</b> The original list is returned so modifications of it will cause
+   * unpredictable side effects.
+   *
    * <p>
-   * <b>Caution!</b> The original list is returned so modifications of it will
-   * cause unpredictable side effects.
-   * <p>
-   * 
-   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances
-   *         that are painted in x dimension on the bottom of the chart.
+   *
+   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in x
+   *     dimension on the bottom of the chart.
    */
   public final List<IAxis<?>> getAxesXBottom() {
     return this.m_axesXBottom;
   }
 
   /**
-   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are
-   * painted in x dimension on top of the chart.
+   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in x
+   * dimension on top of the chart.
+   *
+   * <p><b>Caution!</b> The original list is returned so modifications of it will cause
+   * unpredictable side effects.
+   *
    * <p>
-   * <b>Caution!</b> The original list is returned so modifications of it will
-   * cause unpredictable side effects.
-   * <p>
-   * 
-   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances
-   *         that are painted in x dimension on top of the chart.
+   *
+   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in x
+   *     dimension on top of the chart.
    */
   public final List<IAxis<?>> getAxesXTop() {
     return this.m_axesXTop;
   }
 
   /**
-   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are
-   * painted in y dimension on the left side of the chart.
+   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in y
+   * dimension on the left side of the chart.
+   *
+   * <p><b>Caution!</b> The original list is returned so modifications of it will cause
+   * unpredictable side effects.
+   *
    * <p>
-   * <b>Caution!</b> The original list is returned so modifications of it will
-   * cause unpredictable side effects.
-   * <p>
-   * 
-   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances
-   *         that are painted in y dimension on the left side of the chart.
+   *
+   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in y
+   *     dimension on the left side of the chart.
    */
   public final List<IAxis<?>> getAxesYLeft() {
     return this.m_axesYLeft;
   }
 
   /**
-   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are
-   * painted in y dimension on the right side of the chart.
+   * Returns the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in y
+   * dimension on the right side of the chart.
+   *
+   * <p><b>Caution!</b> The original list is returned so modifications of it will cause
+   * unpredictable side effects.
+   *
    * <p>
-   * <b>Caution!</b> The original list is returned so modifications of it will
-   * cause unpredictable side effects.
-   * <p>
-   * 
-   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances
-   *         that are painted in y dimension on the right side of the chart.
+   *
+   * @return the <code>{@link List}&lt;{@link IAxis}&gt;</code> with instances that are painted in y
+   *     dimension on the right side of the chart.
    */
   public final List<IAxis<?>> getAxesYRight() {
     return this.m_axesYRight;
@@ -1911,8 +1913,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the painter for the ticks of the axis.
+   *
    * <p>
-   * 
+   *
    * @return Returns the painter for the ticks of the axis.
    */
   public IAxisTickPainter getAxisTickPainter() {
@@ -1921,8 +1924,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the first bottom axis for the x dimension.
+   *
    * <p>
-   * 
+   *
    * @return the first bottom axis for the x dimension.
    */
   public final IAxis<?> getAxisX() {
@@ -1930,18 +1934,18 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the x axis that the given trace belongs to or null if this trace
-   * does not belong to any x axis of this chart.
+   * Returns the x axis that the given trace belongs to or null if this trace does not belong to any
+   * x axis of this chart.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the trace to find the corresponding x axis of this chart for.
-   * @return the x axis that the given trace belongs to or null if this trace
-   *         does not belong to any x axis of this chart.
+   *
+   * @param trace the trace to find the corresponding x axis of this chart for.
+   * @return the x axis that the given trace belongs to or null if this trace does not belong to any
+   *     x axis of this chart.
    */
   public IAxis<?> getAxisX(final ITrace2D trace) {
-    IAxis<? > result = null;
-    IAxis<? > current = null;
+    IAxis<?> result = null;
+    IAxis<?> current = null;
     Iterator<IAxis<?>> it = this.m_axesXBottom.iterator();
     while (it.hasNext()) {
       current = it.next();
@@ -1965,8 +1969,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the first left axis for the y dimension.
+   *
    * <p>
-   * 
+   *
    * @return the first left axis for the y dimension.
    */
   public final IAxis<?> getAxisY() {
@@ -1974,14 +1979,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the y axis that the given trace belongs to or null if this trace
-   * does not belong to any y axis of this chart.
+   * Returns the y axis that the given trace belongs to or null if this trace does not belong to any
+   * y axis of this chart.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the trace to find the corresponding y axis of this chart for.
-   * @return the y axis that the given trace belongs to or null if this trace
-   *         does not belong to any y axis of this chart.
+   *
+   * @param trace the trace to find the corresponding y axis of this chart for.
+   * @return the y axis that the given trace belongs to or null if this trace does not belong to any
+   *     y axis of this chart.
    */
   public IAxis<?> getAxisY(final ITrace2D trace) {
     IAxis<?> result = null;
@@ -2009,8 +2014,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the color of the grid.
+   *
    * <p>
-   * 
+   *
    * @return the color of the grid.
    */
   public final Color getGridColor() {
@@ -2040,47 +2046,40 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the chart - wide setting for the ms to give a repaint operation
-   * time for collecting several repaint requests into one (performance vs.
-   * update speed).
+   * Returns the chart - wide setting for the ms to give a repaint operation time for collecting
+   * several repaint requests into one (performance vs. update speed).
+   *
    * <p>
-   * 
-   * @return the setting for the ms to give a repaint operation time for
-   *         collecting several repaint requests into one (performance vs.
-   *         update speed).
+   *
+   * @return the setting for the ms to give a repaint operation time for collecting several repaint
+   *     requests into one (performance vs. update speed).
    */
   public synchronized int getMinPaintLatency() {
     return this.m_minPaintLatency;
   }
 
   /**
-   * Returns the nearest <code>{@link ITracePoint2D}</code> to the given mouse
-   * event's screen coordinates in Euclid distance.
+   * Returns the nearest <code>{@link ITracePoint2D}</code> to the given mouse event's screen
+   * coordinates in Euclid distance.
+   *
+   * <p>This method is expensive and should not be used when rendering fast changing charts with
+   * many points.
+   *
+   * <p>Using the Manhattan distance is much faster than Euclid distance as it only includes basic
+   * addition an absolute value for computation per point (vs. square root, addition and quadrature
+   * for Euclid distance). However the euclid distance spans a circle for the nearest points which
+   * is visually more normal for end users than the Manhattan distance which forms a rhombus and
+   * reaches far distances in only one dimension.
+   *
    * <p>
-   * This method is expensive and should not be used when rendering fast
-   * changing charts with many points.
-   * <p>
-   * Using the Manhattan distance is much faster than Euclid distance as it only
-   * includes basic addition an absolute value for computation per point (vs.
-   * square root, addition and quadrature for Euclid distance). However the
-   * euclid distance spans a circle for the nearest points which is visually
-   * more normal for end users than the Manhattan distance which forms a rhombus
-   * and reaches far distances in only one dimension.
-   * <p>
-   * 
-   * @param mouseEventX
-   *          the x pixel value relative to the chart (e.g.: <code>
+   *
+   * @param mouseEventX the x pixel value relative to the chart (e.g.: <code>
    *          {@link MouseEvent#getY()}</code>).
-   * 
-   * @param mouseEventY
-   *          the y pixel value relative to the chart (e.g.: <code>
+   * @param mouseEventY the y pixel value relative to the chart (e.g.: <code>
    *          {@link MouseEvent#getY()}</code>).
-   * 
-   * @return the nearest <code>{@link ITracePoint2D}</code> to the given mouse
-   *         event's screen coordinates.
-   * 
-   * @TODO: This is called twice per mouse move (tool tip and highlighter):
-   *        Cache value throughout a paint iteration (delete at end)
+   * @return the nearest <code>{@link ITracePoint2D}</code> to the given mouse event's screen
+   *     coordinates. @TODO: This is called twice per mouse move (tool tip and highlighter): Cache
+   *     value throughout a paint iteration (delete at end)
    */
   public ITracePoint2D getNearestPointEuclid(final int mouseEventX, final int mouseEventY) {
     ITracePoint2D result = null;
@@ -2122,61 +2121,54 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the nearest <code>{@link MouseEvent}</code> to the given mouse
-   * event's screen coordinates in Euclid distance.
+   * Returns the nearest <code>{@link MouseEvent}</code> to the given mouse event's screen
+   * coordinates in Euclid distance.
+   *
+   * <p>This method is expensive and should not be used when rendering fast changing charts with
+   * many points.
+   *
+   * <p>Note that the given mouse event should be an event fired on this chart component. Else
+   * results will point to the nearest point of the chart in the direction of the mouse event's
+   * position.
+   *
+   * <p>Using the Manhattan distance is much faster than Euclid distance as it only includes basic
+   * addition an absolute value for computation per point (vs. square root, addition and quadrature
+   * for Euclid distance). However the euclid distance spans a circle for the nearest points which
+   * is visually more normal for end users than the Manhattan distance which forms a rhombus and
+   * reaches far distances in only one dimension.
+   *
    * <p>
-   * This method is expensive and should not be used when rendering fast
-   * changing charts with many points.
-   * <p>
-   * Note that the given mouse event should be an event fired on this chart
-   * component. Else results will point to the nearest point of the chart in the
-   * direction of the mouse event's position.
-   * <p>
-   * Using the Manhattan distance is much faster than Euclid distance as it only
-   * includes basic addition an absolute value for computation per point (vs.
-   * square root, addition and quadrature for Euclid distance). However the
-   * euclid distance spans a circle for the nearest points which is visually
-   * more normal for end users than the Manhattan distance which forms a rhombus
-   * and reaches far distances in only one dimension.
-   * <p>
-   * 
-   * @param me
-   *          a mouse event fired on this component.
-   * @return nearest <code>{@link MouseEvent}</code> to the given mouse event's
-   *         screen coordinates or <code>null</code> if the chart is empty.
+   *
+   * @param me a mouse event fired on this component.
+   * @return nearest <code>{@link MouseEvent}</code> to the given mouse event's screen coordinates
+   *     or <code>null</code> if the chart is empty.
    */
   public ITracePoint2D getNearestPointEuclid(final MouseEvent me) {
     return this.getNearestPointEuclid(me.getX(), me.getY());
   }
 
   /**
-   * Returns the nearest <code>{@link ITracePoint2D}</code> to the given mouse
-   * event's screen coordinates in Manhattan distance.
+   * Returns the nearest <code>{@link ITracePoint2D}</code> to the given mouse event's screen
+   * coordinates in Manhattan distance.
+   *
+   * <p>This method is expensive and should not be used when rendering fast changing charts with
+   * many points.
+   *
+   * <p>Using the Manhattan distance is much faster than Euclid distance as it only includes basic
+   * addition an absolute value for computation per point (vs. square root, addition and quadrature
+   * for Euclid distance). However the euclid distance spans a circle for the nearest points which
+   * is visually more normal for end users than the Manhattan distance which forms a rhombus and
+   * reaches far distances in only one dimension.
+   *
    * <p>
-   * This method is expensive and should not be used when rendering fast
-   * changing charts with many points.
-   * <p>
-   * 
-   * Using the Manhattan distance is much faster than Euclid distance as it only
-   * includes basic addition an absolute value for computation per point (vs.
-   * square root, addition and quadrature for Euclid distance). However the
-   * euclid distance spans a circle for the nearest points which is visually
-   * more normal for end users than the Manhattan distance which forms a rhombus
-   * and reaches far distances in only one dimension.
-   * <p>
-   * 
-   * @param mouseEventX
-   *          the x pixel value relative to the chart (e.g.: <code>
+   *
+   * @param mouseEventX the x pixel value relative to the chart (e.g.: <code>
    *          {@link MouseEvent#getY()}</code>).
-   * @param mouseEventY
-   *          the y pixel value relative to the chart (e.g.: <code>
+   * @param mouseEventY the y pixel value relative to the chart (e.g.: <code>
    *          {@link MouseEvent#getY()}</code>).
-   * 
-   * @return the nearest <code>{@link ITracePoint2D}</code> to the given mouse
-   *         event's screen coordinates.
-   * 
-   * @TODO: This is called twice per mouse move (tool tip and highlighter):
-   *        Cache value throughout a paint iteration (delete at end)
+   * @return the nearest <code>{@link ITracePoint2D}</code> to the given mouse event's screen
+   *     coordinates. @TODO: This is called twice per mouse move (tool tip and highlighter): Cache
+   *     value throughout a paint iteration (delete at end)
    */
   public ITracePoint2D getNearestPointManhattan(final int mouseEventX, final int mouseEventY) {
     ITracePoint2D result = null;
@@ -2218,40 +2210,38 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the nearest <code>{@link MouseEvent}</code> to the given mouse
-   * event's screen coordinates in Manhattan distance.
+   * Returns the nearest <code>{@link MouseEvent}</code> to the given mouse event's screen
+   * coordinates in Manhattan distance.
+   *
+   * <p>This method is expensive and should not be used when rendering fast changing charts with
+   * many points.
+   *
+   * <p>Note that the given mouse event should be an event fired on this chart component. Else
+   * results will point to the nearest point of the chart in the direction of the mouse event's
+   * position.
+   *
+   * <p>Using the Manhattan distance is much faster than Euclid distance as it only includes basic
+   * addition an absolute value for computation per point (vs. square root, addition and quadrature
+   * for Euclid distance). However the euclid distance spans a circle for the nearest points which
+   * is visually more normal for end users than the Manhattan distance which forms a rhombus and
+   * reaches far distances in only one dimension.
+   *
    * <p>
-   * This method is expensive and should not be used when rendering fast
-   * changing charts with many points.
-   * <p>
-   * Note that the given mouse event should be an event fired on this chart
-   * component. Else results will point to the nearest point of the chart in the
-   * direction of the mouse event's position.
-   * <p>
-   * Using the Manhattan distance is much faster than Euclid distance as it only
-   * includes basic addition an absolute value for computation per point (vs.
-   * square root, addition and quadrature for Euclid distance). However the
-   * euclid distance spans a circle for the nearest points which is visually
-   * more normal for end users than the Manhattan distance which forms a rhombus
-   * and reaches far distances in only one dimension.
-   * <p>
-   * 
-   * @param me
-   *          a mouse event fired on this component.
-   * @return nearest <code>{@link MouseEvent}</code> to the given mouse event's
-   *         screen coordinates or <code>null</code> if the chart is empty.
+   *
+   * @param me a mouse event fired on this component.
+   * @return nearest <code>{@link MouseEvent}</code> to the given mouse event's screen coordinates
+   *     or <code>null</code> if the chart is empty.
    */
   public ITracePoint2D getNearestPointManhattan(final MouseEvent me) {
     return this.getNearestPointManhattan(me.getX(), me.getY());
   }
 
   /**
-   * Returns the point finder used to find the nearest point corresponding to a
-   * mouse event.
+   * Returns the point finder used to find the nearest point corresponding to a mouse event.
+   *
    * <p>
-   * 
-   * @return the point finder used to find the nearest point corresponding to a
-   *         mouse event.
+   *
+   * @return the point finder used to find the nearest point corresponding to a mouse event.
    */
   public IPointFinder getPointFinder() {
     return this.m_pointFinder;
@@ -2268,8 +2258,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Overridden to allow full - page printing.
+   *
    * <p>
-   * 
+   *
    * @see java.awt.Component#getSize()
    */
   @Override
@@ -2278,22 +2269,22 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the chart that will be synchronized for finding the start
-   * coordinate of this chart to draw in x dimension (<code>
-   * {@link #getXChartStart()}</code>
-   * ).
+   * Returns the chart that will be synchronized for finding the start coordinate of this chart to
+   * draw in x dimension (<code>
+   * {@link #getXChartStart()}</code> ).
+   *
+   * <p>This feature is used to allow two separate charts to be painted stacked in y dimension (one
+   * below the other) that have different x start coordinates (because of different y labels that
+   * shift that value) with an equal starting x value (thus be comparable visually if their x values
+   * match).
+   *
    * <p>
-   * This feature is used to allow two separate charts to be painted stacked in
-   * y dimension (one below the other) that have different x start coordinates
-   * (because of different y labels that shift that value) with an equal
-   * starting x value (thus be comparable visually if their x values match).
-   * <p>
-   * 
-   * @return the chart that will be synchronized for finding the start
-   *         coordinate of this chart to draw in x dimension (<code>
+   *
+   * @return the chart that will be synchronized for finding the start coordinate of this chart to
+   *     draw in x dimension (<code>
    *         {@link #getXChartStart()}</code>).
    */
-  public synchronized final Chart2D getSynchronizedXStartChart() {
+  public final synchronized Chart2D getSynchronizedXStartChart() {
     return this.m_synchronizedXStartChart;
   }
 
@@ -2319,13 +2310,13 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the type of tool tip shown.
+   *
    * <p>
-   * 
+   *
    * @see Chart2D.ToolTipType#DATAVALUES
    * @see Chart2D.ToolTipType#NONE
    * @see Chart2D.ToolTipType#PIXEL
    * @see Chart2D.ToolTipType#VALUE_SNAP_TO_TRACEPOINTS
-   * 
    * @return the type of tool tip shown.
    */
   public IToolTipType getToolTipType() {
@@ -2334,8 +2325,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the trace point creator of this chart.
+   *
    * <p>
-   * 
+   *
    * @return the trace point creator of this chart.
    */
   public ITracePointProvider getTracePointProvider() {
@@ -2344,14 +2336,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the set of traces that are currently rendered by this instance.
+   *
+   * <p>The instances are collected from all underlying axes. The resulting <code>
+   * {@link Set}</code> is not an original set. Therefore modification methods like <code>
+   * {@link Set#add(Object)}</code> or <code>{@link Set#clear()}</code> will not have any effect on
+   * the setup of this chart.
+   *
    * <p>
-   * The instances are collected from all underlying axes. The resulting <code> 
-   * {@link Set}</code>
-   * is not an original set. Therefore modification methods like
-   * <code>{@link Set#add(Object)}</code> or <code>{@link Set#clear()}</code>
-   * will not have any effect on the setup of this chart.
-   * <p>
-   * 
+   *
    * @return the set of traces that are currently rendered by this instance.
    */
   public final SortedSet<ITrace2D> getTraces() {
@@ -2415,10 +2407,10 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the width of the X axis in px.
+   *
    * <p>
-   * 
+   *
    * @return Returns the width of the X axis in px.
-   * 
    */
   public final synchronized int getXAxisWidth() {
     return this.m_xChartEnd - this.m_xChartStart;
@@ -2426,8 +2418,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the x coordinate of the chart's right edge in px.
+   *
    * <p>
-   * 
+   *
    * @return the x coordinate of the chart's right edge in px.
    */
   public final synchronized int getXChartEnd() {
@@ -2436,8 +2429,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the x coordinate of the chart's left edge in px.
+   *
    * <p>
-   * 
+   *
    * @return Returns the x coordinate of the chart's left edge in px.
    */
   public final synchronized int getXChartStart() {
@@ -2445,15 +2439,13 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns the y coordinate of the upper edge of the chart's display area in
-   * px.
+   * Returns the y coordinate of the upper edge of the chart's display area in px.
+   *
+   * <p>Pixel coordinates in awt / swing start from top and increase towards the bottom.
+   *
    * <p>
-   * Pixel coordinates in awt / swing start from top and increase towards the
-   * bottom.
-   * <p>
-   * 
-   * @return The y coordinate of the upper edge of the chart's display area in
-   *         px.
+   *
+   * @return The y coordinate of the upper edge of the chart's display area in px.
    */
   public final synchronized int getYChartEnd() {
     return this.m_yChartEnd;
@@ -2461,11 +2453,11 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the y coordinate of the chart's lower edge in px.
+   *
+   * <p>Pixel coordinates in awt / swing start from top and increase towards the bottom.
+   *
    * <p>
-   * Pixel coordinates in awt / swing start from top and increase towards the
-   * bottom.
-   * <p>
-   * 
+   *
    * @return Returns the y coordinate of the chart's lower edge in px.
    */
   public synchronized int getYChartStart() {
@@ -2473,30 +2465,23 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns true if the connection of both interpolated points would cross the
-   * visible area.
-   * <p>
-   * 
-   * Caution this method is only intended for two points that were invisible and
-   * have been interpolated to a bound of the chart to avoid drawing horizontal
-   * or vertical lines at the bound. In case two points that were not
-   * interpolated really have a vertical or horizontal connection the result
-   * would not be quite correct in terms of painting: Their line would not be
+   * Returns true if the connection of both interpolated points would cross the visible area.
+   *
+   * <p>Caution this method is only intended for two points that were invisible and have been
+   * interpolated to a bound of the chart to avoid drawing horizontal or vertical lines at the
+   * bound. In case two points that were not interpolated really have a vertical or horizontal
+   * connection the result would not be quite correct in terms of painting: Their line would not be
    * drawn even if it would be correct.
+   *
+   * <p>Also this method assumes that both points were interpolated towards a bound of the chart via
+   * a connection to a previous or following point (line) which means that two points interpolated
+   * to the maximum and the minimum (x or y) do not have to be tested for intersections with the
+   * viewport rectangle.
+   *
    * <p>
-   * 
-   * Also this method assumes that both points were interpolated towards a bound
-   * of the chart via a connection to a previous or following point (line) which
-   * means that two points interpolated to the maximum and the minimum (x or y)
-   * do not have to be tested for intersections with the viewport rectangle.
-   * <p>
-   * 
-   * @param oldpoint
-   *          interpolated point.
-   * 
-   * @param newpoint
-   *          interpolated point following on oldpoint
-   * 
+   *
+   * @param oldpoint interpolated point.
+   * @param newpoint interpolated point following on oldpoint
    * @return true if the connection of both points
    */
   private boolean hasChartIntersection(ITracePoint2D oldpoint, ITracePoint2D newpoint) {
@@ -2505,33 +2490,32 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     // if x1 >= xmax && x2 >= xmax
     // Caution: getX() and getY() will always return 0.0 by now as we don't
     // backtrace values from interpolated points!
-    result = (oldpoint.getScaledX() != newpoint.getScaledX() || oldpoint.getScaledY() != newpoint
-        .getScaledY());
+    result =
+        (oldpoint.getScaledX() != newpoint.getScaledX()
+            || oldpoint.getScaledY() != newpoint.getScaledY());
     return result;
   }
 
   /**
    * Internally transfers the state of the old axis to the new one.
+   *
+   * <p>This includes things as traces, paint grid state, title, etc..
+   *
    * <p>
-   * 
-   * This includes things as traces, paint grid state, title, etc..
+   *
+   * <h4>Contract</h4>
+   *
+   * The new axis already has to be added to a chart to avoid a NPE when adding the traces of the
+   * old one!
+   *
+   * <p>Note that listening / unlistening to the axes is handled from above as this is triggered for
+   * example by {@link #setAxisXBottom(AAxis, int)} which also delegates to {@link
+   * #removeAxisXBottom(IAxis)} and {@link #addAxisXBottom(AAxis)}.
+   *
    * <p>
-   * 
-   * <h4>Contract</h4> The new axis already has to be added to a chart to avoid
-   * a NPE when adding the traces of the old one!
-   * <p>
-   * 
-   * Note that listening / unlistening to the axes is handled from above as this
-   * is triggered for example by {@link #setAxisXBottom(AAxis, int)} which also
-   * delegates to {@link #removeAxisXBottom(IAxis)} and
-   * {@link #addAxisXBottom(AAxis)}.
-   * <p>
-   * 
-   * @param old
-   *          the old axis (being removed).
-   * 
-   * @param axisNew
-   *          the replacing new axis.
+   *
+   * @param old the old axis (being removed).
+   * @param axisNew the replacing new axis.
    */
   private void internalTransferAxisState(IAxis<?> old, AAxis<?> axisNew) {
 
@@ -2581,23 +2565,21 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Interpolates (linear) the two neighboring points.
+   *
+   * <p>Calling this method only makes sense if argument invisible is not null or if argument
+   * visible is not null (if then invisible is null, the visible point will be returned).
+   *
+   * <p>Visibility is determined only by their internally normalized coordinates that are within
+   * [0.0,1.0] for visible points.
+   *
    * <p>
-   * Calling this method only makes sense if argument invisible is not null or
-   * if argument visible is not null (if then invisible is null, the visible
-   * point will be returned).
-   * <p>
-   * Visibility is determined only by their internally normalized coordinates
-   * that are within [0.0,1.0] for visible points.
-   * <p>
-   * 
-   * @param visible
-   *          the visible point.
-   * @param invisible
-   *          the invisible point.
+   *
+   * @param visible the visible point.
+   * @param invisible the invisible point.
    * @return the interpolation towards the exceeded bound.
    */
-  private ITracePoint2D interpolateVisible(final ITracePoint2D invisible,
-      final ITracePoint2D visible) {
+  private ITracePoint2D interpolateVisible(
+      final ITracePoint2D invisible, final ITracePoint2D visible) {
 
     ITracePoint2D result;
     /*
@@ -2622,36 +2604,44 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       if (invisible.getScaledX() > 1.0) {
         // right x bound
         xInterpolate = 1.0;
-        yInterpolate = (visible.getScaledY() - invisible.getScaledY())
-            / (visible.getScaledX() - invisible.getScaledX()) * (1.0 - invisible.getScaledX())
-            + invisible.getScaledY();
+        yInterpolate =
+            (visible.getScaledY() - invisible.getScaledY())
+                    / (visible.getScaledX() - invisible.getScaledX())
+                    * (1.0 - invisible.getScaledX())
+                + invisible.getScaledY();
         interpolated = true;
         interpolatedWrong = Double.isNaN(yInterpolate) || yInterpolate < 0.0 || yInterpolate > 1.0;
       }
       if ((invisible.getScaledX() < 0.0) && (!interpolated || interpolatedWrong)) {
         // left x bound
         xInterpolate = 0.0;
-        yInterpolate = (visible.getScaledY() - invisible.getScaledY())
-            / (visible.getScaledX() - invisible.getScaledX()) * -invisible.getScaledX()
-            + invisible.getScaledY();
+        yInterpolate =
+            (visible.getScaledY() - invisible.getScaledY())
+                    / (visible.getScaledX() - invisible.getScaledX())
+                    * -invisible.getScaledX()
+                + invisible.getScaledY();
         interpolated = true;
         interpolatedWrong = Double.isNaN(yInterpolate) || yInterpolate < 0.0 || yInterpolate > 1.0;
       }
       if ((invisible.getScaledY() > 1.0) && (!interpolated || interpolatedWrong)) {
         // upper y bound, checked
         yInterpolate = 1.0;
-        xInterpolate = (1.0 - invisible.getScaledY())
-            * (visible.getScaledX() - invisible.getScaledX())
-            / (visible.getScaledY() - invisible.getScaledY()) + invisible.getScaledX();
+        xInterpolate =
+            (1.0 - invisible.getScaledY())
+                    * (visible.getScaledX() - invisible.getScaledX())
+                    / (visible.getScaledY() - invisible.getScaledY())
+                + invisible.getScaledX();
         interpolated = true;
         interpolatedWrong = Double.isNaN(xInterpolate) || xInterpolate < 0.0 || xInterpolate > 1.0;
-
       }
       if ((invisible.getScaledY() < 0.0) && (!interpolated || interpolatedWrong)) {
         // lower y bound
         yInterpolate = 0.0;
-        xInterpolate = -invisible.getScaledY() * (visible.getScaledX() - invisible.getScaledX())
-            / (visible.getScaledY() - invisible.getScaledY()) + invisible.getScaledX();
+        xInterpolate =
+            -invisible.getScaledY()
+                    * (visible.getScaledX() - invisible.getScaledX())
+                    / (visible.getScaledY() - invisible.getScaledY())
+                + invisible.getScaledX();
         interpolated = true;
         interpolatedWrong = Double.isNaN(xInterpolate) || xInterpolate < 0.0 || xInterpolate > 1.0;
       }
@@ -2660,7 +2650,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       } else {
         result = this.m_tracePointProvider.createTracePoint(0, 0);
         // transfer potential point highlighters to the synthetic point:
-        for (IPointPainter< ? > highlighter : invisible.getAdditionalPointPainters()) {
+        for (IPointPainter<?> highlighter : invisible.getAdditionalPointPainters()) {
           result.addAdditionalPointPainter(highlighter);
         }
         result.setScaledX(xInterpolate);
@@ -2674,8 +2664,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns true if highlighting of the nearest point to the cursor is enabled.
+   *
    * <p>
-   * 
+   *
    * @return true if highlighting of the nearest point to the cursor is enabled.
    */
   public boolean isEnabledPointHighlighting() {
@@ -2691,8 +2682,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns true if labels for each chart are painted below it, false else.
+   *
    * <p>
-   * 
+   *
    * @return Returns if labels are painted.
    */
   public final boolean isPaintLabels() {
@@ -2701,8 +2693,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns the requestedRepaint.
+   *
    * <p>
-   * 
+   *
    * @return the requestedRepaint
    */
   protected synchronized boolean isRequestedRepaint() {
@@ -2711,8 +2704,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns true if chart coordinates are drawn as tool tips.
+   *
    * <p>
-   * 
+   *
    * @return true if chart coordinates are drawn as tool tips.
    */
   public final boolean isToolTipCoords() {
@@ -2721,8 +2715,9 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Returns whether antialiasing is used.
+   *
    * <p>
-   * 
+   *
    * @return whether antialiasing is used.
    */
   public final boolean isUseAntialiasing() {
@@ -2730,49 +2725,47 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns true if the given point is in the visible drawing area of the
-   * Chart2D.
+   * Returns true if the given point is in the visible drawing area of the Chart2D.
+   *
+   * <p>If the point is null false will be returned.
+   *
+   * <p>This only works if the point argument has been scaled already.
+   *
    * <p>
-   * If the point is null false will be returned.
-   * <p>
-   * This only works if the point argument has been scaled already.
-   * <p>
-   * 
-   * @param point
-   *          the point to test.
-   * @return true if the given point is in the visible drawing area of the
-   *         Chart2D.
+   *
+   * @param point the point to test.
+   * @return true if the given point is in the visible drawing area of the Chart2D.
    */
   public boolean isVisible(final ITracePoint2D point) {
     boolean result;
     if (point == null) {
       result = false;
     } else {
-      result = !(Double.isNaN(point.getScaledX()) || Double.isNaN(point.getScaledY()))
-          && !(point.getScaledX() > 1.0 || point.getScaledX() < 0.0 || point.getScaledY() > 1.0 || point
-              .getScaledY() < 0.0);
+      result =
+          !(Double.isNaN(point.getScaledX()) || Double.isNaN(point.getScaledY()))
+              && !(point.getScaledX() > 1.0
+                  || point.getScaledX() < 0.0
+                  || point.getScaledY() > 1.0
+                  || point.getScaledY() < 0.0);
     }
     return result;
   }
 
   /**
-   * Returns an <code>Iterator</code> over the contained {@link ITrace2D}
-   * instances.
-   * 
-   * @return an <code>Iterator</code> over the contained {@link ITrace2D}
-   *         instances.
+   * Returns an <code>Iterator</code> over the contained {@link ITrace2D} instances.
+   *
+   * @return an <code>Iterator</code> over the contained {@link ITrace2D} instances.
    */
   public final Iterator<ITrace2D> iterator() {
     return this.getTraces().iterator();
   }
 
   /**
-   * Helper that adds this chart as a listener to the required property change
-   * events.
+   * Helper that adds this chart as a listener to the required property change events.
+   *
    * <p>
-   * 
-   * @param axis
-   *          the axis to listen to.
+   *
+   * @param axis the axis to listen to.
    */
   private void listenToAxis(final IAxis<?> axis) {
     axis.addPropertyChangeListener(IAxis.PROPERTY_ADD_REMOVE_TRACE, this);
@@ -2783,49 +2776,49 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Helper that adds this chart as a listener to the required property change
-   * events.
+   * Helper that adds this chart as a listener to the required property change events.
+   *
    * <p>
-   * 
-   * @param trace
-   *          the trace to listen to.
+   *
+   * @param trace the trace to listen to.
    */
   private void listenToTrace(final ITrace2D trace) {
     // for tracking removal/addition of point highlighters visually:
-    trace.addPropertyChangeListener(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED,
-        this.m_pointHighlightListener);
+    trace.addPropertyChangeListener(
+        ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED, this.m_pointHighlightListener);
     // for tracking enablement/disablement of point highlighting feature
     // (expensive mouse listener)
     trace.addPropertyChangeListener(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED, this);
   }
 
   /**
-   * Internally sets the value of <code>{@link #getXChartStart()}</code> and
-   * <code>{@link #getXChartEnd()}</code> with respect to another chart
-   * synchronized to the same value.
+   * Internally sets the value of <code>{@link #getXChartStart()}</code> and <code>
+   * {@link #getXChartEnd()}</code> with respect to another chart synchronized to the same value.
+   *
    * <p>
-   * 
-   * @param g2d
-   *          needed for size information.
+   *
+   * @param g2d needed for size information.
    * @see #calculateXChartStart(Graphics)
    * @see #calculateXChartEnd(Graphics)
    */
   private void negociateXChart(final Graphics g2d) {
     if (this.m_synchronizedXStartChart != null) {
       int myXChartStart = this.calculateXChartStart(g2d);
-      int otherXChartStart = this.m_synchronizedXStartChart
-      .calculateXChartStart(g2d); 
+      int otherXChartStart = this.m_synchronizedXStartChart.calculateXChartStart(g2d);
       int correctionShift = Math.abs(myXChartStart - otherXChartStart);
-      
-      this.m_xChartStart = Math.max(this.calculateXChartStart(g2d), this.m_synchronizedXStartChart
-          .calculateXChartStart(g2d));
-      this.m_xChartEnd = Math.max(this.calculateXChartEnd(g2d), this.m_synchronizedXStartChart
-          .calculateXChartEnd(g2d));
+
+      this.m_xChartStart =
+          Math.max(
+              this.calculateXChartStart(g2d),
+              this.m_synchronizedXStartChart.calculateXChartStart(g2d));
+      this.m_xChartEnd =
+          Math.max(
+              this.calculateXChartEnd(g2d), this.m_synchronizedXStartChart.calculateXChartEnd(g2d));
       synchronized (this.m_synchronizedXStartChart) {
         this.m_synchronizedXStartChart.m_xChartStart = this.m_xChartStart;
         this.m_synchronizedXStartChart.m_xChartEnd = this.m_xChartEnd;
         /*
-         * Install correction shift to the one that would be naturally more to the left: 
+         * Install correction shift to the one that would be naturally more to the left:
          */
         if (myXChartStart > otherXChartStart) {
           this.m_synchronizedXStartChart.installXAxisLeftOffset(g2d, correctionShift);
@@ -2842,20 +2835,18 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * 
-   * This method is just overridden to ensure a lock on this instance and then a lock on 
-   * <code>{@link Container#getTreeLock()}</code> just as it has to be done in that order in
-   * <code>{@link #addTrace(ITrace2D, IAxis, IAxis)}</code>.
+   * This method is just overridden to ensure a lock on this instance and then a lock on <code>
+   * {@link Container#getTreeLock()}</code> just as it has to be done in that order in <code>
+   * {@link #addTrace(ITrace2D, IAxis, IAxis)}</code>.
+   *
+   * <p>More info: This lock is needed to ensure a lock on the tree is acquired before a lock to the
+   * chart. Method addTrace has a code path that might descend into ChartPanel where
+   * Container.getComponents() (in method containsTraceLabel()) will require the tree lock after
+   * having already acquired the chart lock -> deadlock between paint thread and addTrace thread
+   * when using ChartPanel.
+   *
    * <p>
-   * 
-   * More info: This lock is needed to ensure a lock on the tree is acquired
-   * before a lock to the chart. Method addTrace has a code path that might
-   * descend into ChartPanel where Container.getComponents() (in method
-   * containsTraceLabel()) will require the tree lock after having already
-   * acquired the chart lock -> deadlock between paint thread and addTrace
-   * thread when using ChartPanel.
-   * <p>
-   * 
+   *
    * @see javax.swing.JComponent#paint(java.awt.Graphics)
    */
   @Override
@@ -2869,15 +2860,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
    * A basic rule of a JComponent is: <br>
    * <b>Never invoke this method directly. </b> <br>
    * See the description of <code>
-   * {@link javax.swing.JComponent#paintComponent(java.awt.Graphics)}</code>
-   * for details.
+   * {@link javax.swing.JComponent#paintComponent(java.awt.Graphics)}</code> for details.
+   *
+   * <p>If you do invoke this method you may encounter performance issues, flickering UI and even
+   * deadlocks.
+   *
    * <p>
-   * If you do invoke this method you may encounter performance issues,
-   * flickering UI and even deadlocks.
-   * <p>
-   * 
-   * @param g
-   *          the graphics context to use.
+   *
+   * @param g the graphics context to use.
    */
   @Override
   protected synchronized void paintComponent(final Graphics g) {
@@ -2926,17 +2916,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       g2d = (Graphics2D) g;
       backupStroke = g2d.getStroke();
       if (this.isUseAntialiasing()) {
-        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-            RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2d.setRenderingHint(
+            RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       }
     }
 
     int count = 0;
-    Iterator<ITracePainter< ? >> itTracePainters;
-    Iterator<IErrorBarPolicy< ? >> itTraceErrorBarPolicies;
-    ITracePainter< ? > tracePainter;
-    IErrorBarPolicy< ? > errorBarPolicy;
+    Iterator<ITracePainter<?>> itTracePainters;
+    Iterator<IErrorBarPolicy<?>> itTraceErrorBarPolicies;
+    ITracePainter<?> tracePainter;
+    IErrorBarPolicy<?> errorBarPolicy;
     while (traceIt.hasNext()) {
       oldpoint = null;
       newpoint = null;
@@ -2945,15 +2935,19 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       if (trace.isVisible()) {
         synchronized (trace) {
           if (Chart2D.DEBUG_THREADING) {
-            System.out.println("Chart2D.paintComponent(" + Thread.currentThread().getName()
-                + "), 2 locks (lock on trace " + trace.getName() + ")");
+            System.out.println(
+                "Chart2D.paintComponent("
+                    + Thread.currentThread().getName()
+                    + "), 2 locks (lock on trace "
+                    + trace.getName()
+                    + ")");
           }
           boolean hasErrorBars = trace.getHasErrorBars();
           if (g2d != null) {
             g2d.setStroke(trace.getStroke());
           }
           g.setColor(trace.getColor());
-          Set<ITracePainter< ? >> tracePainters = trace.getTracePainters();
+          Set<ITracePainter<?>> tracePainters = trace.getTracePainters();
           itTracePainters = tracePainters.iterator();
           tracePainter = null;
           while (itTracePainters.hasNext()) {
@@ -2962,7 +2956,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
           }
           if (hasErrorBars) {
             errorBarPolicy = null;
-            Set<IErrorBarPolicy< ? >> errorBarPolicies = trace.getErrorBarPolicies();
+            Set<IErrorBarPolicy<?>> errorBarPolicies = trace.getErrorBarPolicies();
             itTraceErrorBarPolicies = errorBarPolicies.iterator();
             while (itTraceErrorBarPolicies.hasNext()) {
               errorBarPolicy = itTraceErrorBarPolicies.next();
@@ -3001,14 +2995,13 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
                * the last valid point in TracePainterPolyline (senseless).
                */
               if (!(isNanOldpoint) && (isNaNNewpoint)) {
-                for (ITracePainter< ? > painter : trace.getTracePainters()) {
+                for (ITracePainter<?> painter : trace.getTracePainters()) {
                   painter.discontinue(g2d);
                 }
               }
               if (!isNaNNewpoint) {
                 tmpx = this.m_xChartStart + (int) Math.round(newpoint.getScaledX() * rangex);
                 tmpy = this.m_yChartStart - (int) Math.round(newpoint.getScaledY() * rangey);
-
               }
             } else if (!newpointVisible && !oldpointVisible) {
               // save for next loop:
@@ -3060,8 +3053,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
               // staying in the visible bounds: just paint
               tmpx = this.m_xChartStart + (int) Math.round(newpoint.getScaledX() * rangex);
               tmpy = this.m_yChartStart - (int) Math.round(newpoint.getScaledY() * rangey);
-              this
-                  .paintPoint(oldtmpx, oldtmpy, tmpx, tmpy, false, trace, g, newpoint, hasErrorBars);
+              this.paintPoint(
+                  oldtmpx, oldtmpy, tmpx, tmpy, false, trace, g, newpoint, hasErrorBars);
             }
           }
           itTracePainters = trace.getTracePainters().iterator();
@@ -3079,26 +3072,28 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         }
       }
       if (Chart2D.DEBUG_THREADING) {
-        System.out.println("paint(" + Thread.currentThread().getName() + "), left lock on trace "
-            + trace.getName());
+        System.out.println(
+            "paint("
+                + Thread.currentThread().getName()
+                + "), left lock on trace "
+                + trace.getName());
       }
     }
     if (g2d != null) {
       g2d.setStroke(backupStroke);
     }
-
   }
 
   /**
    * Paints the axis, the scales and the labels for the chart.
+   *
+   * <p><b>Caution</b> This is highly coupled code and only factored out for better overview. This
+   * method may only be called by {@link #paint(Graphics)} and the order of this invocation there
+   * must not be changed.
+   *
    * <p>
-   * <b>Caution</b> This is highly coupled code and only factored out for better
-   * overview. This method may only be called by {@link #paint(Graphics)} and
-   * the order of this invocation there must not be changed.
-   * <p>
-   * 
-   * @param g2d
-   *          the graphics context to use.
+   *
+   * @param g2d the graphics context to use.
    */
   private void paintCoordinateSystem(final Graphics g2d) {
     // drawing the axes:
@@ -3136,39 +3131,35 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Internally renders the error bars for the given point for the given trace.
+   *
+   * <p>The current point to render in px is defined by the first two arguments, the next point to
+   * render in px is defined by the 2nd two arguments.
+   *
    * <p>
-   * The current point to render in px is defined by the first two arguments,
-   * the next point to render in px is defined by the 2nd two arguments.
-   * <p>
-   * 
-   * @param trace
-   *          needed to get the {@link IErrorBarPolicy} instances to use.
-   * @param oldtmpx
-   *          the x coordinate of the original point to render an error bar for.
-   * @param oldtmpy
-   *          the y coordinate of the original point to render an error bar for.
-   * @param tmpx
-   *          the x coordinate of the original next point to render an error bar
-   *          for.
-   * @param tmpy
-   *          the y coordinate of the original next point to render an error bar
-   *          for.
-   * @param g2d
-   *          the graphics context to use.
-   * @param discontinue
-   *          if a discontinuity has been taken place and all potential cached
-   *          points by an <code>{@link ITracePainter}</code> (done for polyline
-   *          performance boost) have to be drawn immediately before starting a
-   *          new point caching.
-   * @param original
-   *          intended for information only, should nor be needed to paint the
-   *          point neither be changed in any way!
+   *
+   * @param trace needed to get the {@link IErrorBarPolicy} instances to use.
+   * @param oldtmpx the x coordinate of the original point to render an error bar for.
+   * @param oldtmpy the y coordinate of the original point to render an error bar for.
+   * @param tmpx the x coordinate of the original next point to render an error bar for.
+   * @param tmpy the y coordinate of the original next point to render an error bar for.
+   * @param g2d the graphics context to use.
+   * @param discontinue if a discontinuity has been taken place and all potential cached points by
+   *     an <code>{@link ITracePainter}</code> (done for polyline performance boost) have to be
+   *     drawn immediately before starting a new point caching.
+   * @param original intended for information only, should nor be needed to paint the point neither
+   *     be changed in any way!
    */
-  private void paintErrorBars(final ITrace2D trace, final int oldtmpx, final int oldtmpy,
-      final int tmpx, final int tmpy, final Graphics g2d, final boolean discontinue,
+  private void paintErrorBars(
+      final ITrace2D trace,
+      final int oldtmpx,
+      final int oldtmpy,
+      final int tmpx,
+      final int tmpy,
+      final Graphics g2d,
+      final boolean discontinue,
       final ITracePoint2D original) {
-    IErrorBarPolicy< ? > errorBarPolicy;
-    Iterator<IErrorBarPolicy< ? >> itTraceErrorBarPolicies = trace.getErrorBarPolicies().iterator();
+    IErrorBarPolicy<?> errorBarPolicy;
+    Iterator<IErrorBarPolicy<?>> itTraceErrorBarPolicies = trace.getErrorBarPolicies().iterator();
     while (itTraceErrorBarPolicies.hasNext()) {
       errorBarPolicy = itTraceErrorBarPolicies.next();
       errorBarPolicy.paintPoint(oldtmpx, oldtmpy, tmpx, tmpy, g2d, original);
@@ -3179,57 +3170,50 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Internally paints the point with respect to trace painters (
-   * {@link ITracePainter}) and error bar painter ({@link IErrorBarPolicy}) of
-   * the trace.
+   * Internally paints the point with respect to trace painters ( {@link ITracePainter}) and error
+   * bar painter ({@link IErrorBarPolicy}) of the trace.
+   *
+   * <p>This method must not be called directly as it does not support interpolation of visibility
+   * bounds (discontinuations).
+   *
    * <p>
-   * This method must not be called directly as it does not support
-   * interpolation of visibility bounds (discontinuations).
-   * <p>
-   * 
-   * @param xPxOld
-   *          the x coordinate of the previous point to render in px
-   *          (potentially an interpolation of it if the old point was not
-   *          visible and the new point is).
-   * @param yPxOld
-   *          the y coordinate of the previous point to render in px
-   *          (potentially an interpolation of it if the old point was not
-   *          visible and the new point is).
-   * @param xPxNew
-   *          the x coordinate of the point to render in px (potentially an
-   *          interpolation of it if the old point was visible and the new point
-   *          is not).
-   * @param yPxNew
-   *          the y coordinate of the point to render in px (potentially an
-   *          interpolation of it if the old point was visible and the new point
-   *          is not).
-   * @param trace
-   *          needed for obtaining trace painters and error bar painters.
-   * @param g2d
-   *          the graphics context to use.
-   * @param discontinue
-   *          if a discontinuation has been taken place and all potential cached
-   *          points by an <code>{@link ITracePainter}</code> (done for polyline
-   *          performance boost) have to be drawn immediately before starting a
-   *          new point caching.
-   * @param original
-   *          intended for information only, should nor be needed to paint the
-   *          point neither be changed in any way!
-   * @param errorBarSupport
-   *          optimization that allows to skip error bar code.
+   *
+   * @param xPxOld the x coordinate of the previous point to render in px (potentially an
+   *     interpolation of it if the old point was not visible and the new point is).
+   * @param yPxOld the y coordinate of the previous point to render in px (potentially an
+   *     interpolation of it if the old point was not visible and the new point is).
+   * @param xPxNew the x coordinate of the point to render in px (potentially an interpolation of it
+   *     if the old point was visible and the new point is not).
+   * @param yPxNew the y coordinate of the point to render in px (potentially an interpolation of it
+   *     if the old point was visible and the new point is not).
+   * @param trace needed for obtaining trace painters and error bar painters.
+   * @param g2d the graphics context to use.
+   * @param discontinue if a discontinuation has been taken place and all potential cached points by
+   *     an <code>{@link ITracePainter}</code> (done for polyline performance boost) have to be
+   *     drawn immediately before starting a new point caching.
+   * @param original intended for information only, should nor be needed to paint the point neither
+   *     be changed in any way!
+   * @param errorBarSupport optimization that allows to skip error bar code.
    */
-  private final void paintPoint(final int xPxOld, final int yPxOld, final int xPxNew,
-      final int yPxNew, final boolean discontinue, final ITrace2D trace, final Graphics g2d,
-      final ITracePoint2D original, final boolean errorBarSupport) {
-    Iterator<ITracePainter< ? >> itTracePainters;
-    ITracePainter< ? > tracePainter;
+  private final void paintPoint(
+      final int xPxOld,
+      final int yPxOld,
+      final int xPxNew,
+      final int yPxNew,
+      final boolean discontinue,
+      final ITrace2D trace,
+      final Graphics g2d,
+      final ITracePoint2D original,
+      final boolean errorBarSupport) {
+    Iterator<ITracePainter<?>> itTracePainters;
+    ITracePainter<?> tracePainter;
     itTracePainters = trace.getTracePainters().iterator();
     while (itTracePainters.hasNext()) {
       tracePainter = itTracePainters.next();
       tracePainter.paintPoint(xPxOld, yPxOld, xPxNew, yPxNew, g2d, original);
-      Set<IPointPainter< ? >> additionalHighlighters = original.getAdditionalPointPainters();
-      Iterator<IPointPainter< ? >> itPointHighlighters = additionalHighlighters.iterator();
-      IPointPainter< ? > highlighter;
+      Set<IPointPainter<?>> additionalHighlighters = original.getAdditionalPointPainters();
+      Iterator<IPointPainter<?>> itPointHighlighters = additionalHighlighters.iterator();
+      IPointPainter<?> highlighter;
       while (itPointHighlighters.hasNext()) {
         highlighter = itPointHighlighters.next();
         highlighter.paintPoint(xPxNew, yPxNew, xPxNew, yPxNew, g2d, original);
@@ -3245,10 +3229,10 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Internally paints the labels for the traces below the chart.
+   *
    * <p>
-   * 
-   * @param g2d
-   *          the graphic context to use.
+   *
+   * @param g2d the graphic context to use.
    * @return the amount of vertical (y) px used for the labels.
    */
   private int paintTraceLabels(final Graphics g2d) {
@@ -3304,8 +3288,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * @see java.awt.print.Printable#print(java.awt.Graphics,
-   *      java.awt.print.PageFormat, int)
+   * @see java.awt.print.Printable#print(java.awt.Graphics, java.awt.print.PageFormat, int)
    */
   public int print(final Graphics graphics, final PageFormat pageFormat, final int pageIndex)
       throws PrinterException {
@@ -3329,24 +3312,27 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Receives all <code>{@link PropertyChangeEvent}</code> from all instances
-   * the chart registers itself as a <code>{@link PropertyChangeListener}</code>
-   * .
+   * Receives all <code>{@link PropertyChangeEvent}</code> from all instances the chart registers
+   * itself as a <code>{@link PropertyChangeListener}</code> .
+   *
    * <p>
-   * 
-   * @param evt
-   *          the property change event that was fired.
+   *
+   * @param evt the property change event that was fired.
    * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
    */
   public void propertyChange(final PropertyChangeEvent evt) {
     if (Chart2D.DEBUG_THREADING) {
-      System.out
-          .println("chart.propertyChange (" + Thread.currentThread().getName() + "), 0 locks");
+      System.out.println(
+          "chart.propertyChange (" + Thread.currentThread().getName() + "), 0 locks");
     }
     synchronized (this) {
       if (Chart2D.DEBUG_THREADING) {
-        System.out.println("Chart2D.propertyChange, " + evt.getPropertyName() + " ("
-            + Thread.currentThread().getName() + "), 1 lock");
+        System.out.println(
+            "Chart2D.propertyChange, "
+                + evt.getPropertyName()
+                + " ("
+                + Thread.currentThread().getName()
+                + "), 1 lock");
       }
       // TODO: use the property change reactor idiom also used in AAxis for
       // performance.
@@ -3377,8 +3363,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
          * (listen to axes to be informed whenever a trace was added). Also:
          * repaint definetely!
          */
-        this.firePropertyChange(IAxis.PROPERTY_ADD_REMOVE_TRACE, evt.getOldValue(), evt
-            .getNewValue());
+        this.firePropertyChange(
+            IAxis.PROPERTY_ADD_REMOVE_TRACE, evt.getOldValue(), evt.getNewValue());
       } else if (property.equals(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED)) {
         int highlightersAddedOrRemoved = 0;
         if (evt.getOldValue() != null) {
@@ -3395,30 +3381,30 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       } else if (property.equals(IAxis.PROPERTY_RANGEPOLICY)) {
         // repaint
       } else {
-        throw new IllegalStateException("Received a property change event \"" + property
-            + "\" the code is not expecting (programming error).");
+        throw new IllegalStateException(
+            "Received a property change event \""
+                + property
+                + "\" the code is not expecting (programming error).");
       }
       this.setRequestedRepaint(true);
     }
     if (Chart2D.DEBUG_THREADING) {
-      System.out.println("Chart2D.propertyChange, leaving (" + Thread.currentThread().getName()
-          + "), 0 locks");
+      System.out.println(
+          "Chart2D.propertyChange, leaving (" + Thread.currentThread().getName() + "), 0 locks");
     }
   }
 
   /**
    * Convenience method to remove all traces from this chart.
+   *
+   * <p>This method is broken down to every axis contained in the trace and will fire a <code>
+   * {@link PropertyChangeEvent}</code> for the <code>{@link PropertyChangeEvent#getPropertyName()}
+   * </code> <code>{@link IAxis#PROPERTY_ADD_REMOVE_TRACE}</code> for every single trace removed to
+   * <code>{@link PropertyChangeListener}</code> of the corresponding axes.
+   *
    * <p>
-   * This method is broken down to every axis contained in the trace and will
-   * fire a <code>{@link PropertyChangeEvent}</code> for the
-   * <code>{@link PropertyChangeEvent#getPropertyName()}</code>
-   * <code>{@link IAxis#PROPERTY_ADD_REMOVE_TRACE}</code> for every single trace
-   * removed to <code>{@link PropertyChangeListener}</code> of the corresponding
-   * axes.
-   * <p>
-   * 
-   * @return a non-original-backed set of distinct traces that was contained in
-   *         this chart before.
+   *
+   * @return a non-original-backed set of distinct traces that was contained in this chart before.
    */
   public Set<ITrace2D> removeAllTraces() {
 
@@ -3432,7 +3418,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       currentAxis = it.next();
       axisTraces = currentAxis.removeAllTraces();
       result.addAll(axisTraces);
-
     }
     // 1.2) axes x top:
     it = this.m_axesXTop.iterator();
@@ -3461,20 +3446,18 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       axisTraces.clear();
     }
     return result;
-
   }
 
   /**
    * Removes the given x axis from the list of internal bottom x axes.
+   *
+   * <p>The given axis should be contained before or false will be returned.
+   *
    * <p>
-   * The given axis should be contained before or false will be returned.
-   * <p>
-   * 
-   * @param axisX
-   *          the bottom x axis to remove.
-   * @return true if the given axis was successfully removed or false if it was
-   *         not configured as a bottom x axis before or could not be removed
-   *         for another reason.
+   *
+   * @param axisX the bottom x axis to remove.
+   * @return true if the given axis was successfully removed or false if it was not configured as a
+   *     bottom x axis before or could not be removed for another reason.
    */
   public boolean removeAxisXBottom(final IAxis<?> axisX) {
     boolean result = this.m_axesXBottom.remove(axisX);
@@ -3488,15 +3471,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Removes the given x axis from the list of internal top x axes.
+   *
+   * <p>The given axis should be contained before or false will be returned.
+   *
    * <p>
-   * The given axis should be contained before or false will be returned.
-   * <p>
-   * 
-   * @param axisX
-   *          the top x axis to remove.
-   * @return true if the given axis was successfully removed or false if it was
-   *         not configured as a top x axis before or could not be removed for
-   *         another reason.
+   *
+   * @param axisX the top x axis to remove.
+   * @return true if the given axis was successfully removed or false if it was not configured as a
+   *     top x axis before or could not be removed for another reason.
    */
   public boolean removeAxisXTop(final IAxis<?> axisX) {
     boolean result = this.m_axesXTop.remove(axisX);
@@ -3510,15 +3492,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Removes the given y axis from the list of internal left y axes.
+   *
+   * <p>The given axis should be contained before or false will be returned.
+   *
    * <p>
-   * The given axis should be contained before or false will be returned.
-   * <p>
-   * 
-   * @param axisY
-   *          the left y axis to remove.
-   * @return true if the given axis was successfully removed or false if it was
-   *         not configured as a left y axis before or could not be removed for
-   *         another reason.
+   *
+   * @param axisY the left y axis to remove.
+   * @return true if the given axis was successfully removed or false if it was not configured as a
+   *     left y axis before or could not be removed for another reason.
    */
   public boolean removeAxisYLeft(final IAxis<?> axisY) {
 
@@ -3532,15 +3513,14 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Removes the given y axis from the list of internal right y axes.
+   *
+   * <p>The given axis should be contained before or false will be returned.
+   *
    * <p>
-   * The given axis should be contained before or false will be returned.
-   * <p>
-   * 
-   * @param axisY
-   *          the right y axis to remove.
-   * @return true if the given axis was successfully removed or false if it was
-   *         not configured as a right y axis before or could not be removed for
-   *         another reason.
+   *
+   * @param axisY the right y axis to remove.
+   * @return true if the given axis was successfully removed or false if it was not configured as a
+   *     right y axis before or could not be removed for another reason.
    */
   public boolean removeAxisYRight(final IAxis<?> axisY) {
     boolean result = this.m_axesYRight.remove(axisY);
@@ -3554,20 +3534,18 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Removes the given instance from this <code>Chart2D</code> if it is
-   * contained.
+   * Removes the given instance from this <code>Chart2D</code> if it is contained.
+   *
+   * <p>This method will trigger a {@link java.beans.PropertyChangeEvent} being fired on all
+   * instances registered by {@link
+   * javax.swing.JComponent#addPropertyChangeListener(java.lang.String,
+   * java.beans.PropertyChangeListener)} (registered with <code>String</code> argument {@link
+   * IAxis#PROPERTY_ADD_REMOVE_TRACE} on the internal axes).
+   *
    * <p>
-   * This method will trigger a {@link java.beans.PropertyChangeEvent} being
-   * fired on all instances registered by
-   * {@link javax.swing.JComponent#addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
-   * (registered with <code>String</code> argument
-   * {@link IAxis#PROPERTY_ADD_REMOVE_TRACE} on the internal axes).
-   * <p>
-   * 
-   * @return true if the given trace was removed successfully, false else. 
-   * 
-   * @param points
-   *          the trace to remove.
+   *
+   * @return true if the given trace was removed successfully, false else.
+   * @param points the trace to remove.
    * @see IAxis#PROPERTY_ADD_REMOVE_TRACE
    */
   public final boolean removeTrace(final ITrace2D points) {
@@ -3622,7 +3600,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
           }
         }
         boolean success = successRemoveY && successRemoveX;
-        if (success ) {
+        if (success) {
           int amountofremovedhighlighters = points.getPointHighlighters().size();
           this.trackHighlightingEnablement(amountofremovedhighlighters);
           this.unlistenToTrace(points);
@@ -3686,6 +3664,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Only intended for <code>{@link Chart2DActionPrintSingleton}</code>.
+   *
    * <p>
    */
   public void resetPrintMode() {
@@ -3695,10 +3674,10 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the axis tick painter.
+   *
    * <p>
-   * 
-   * @param tickPainter
-   *          The axis tick painter to set.
+   *
+   * @param tickPainter The axis tick painter to set.
    */
   public synchronized void setAxisTickPainter(final IAxisTickPainter tickPainter) {
     this.m_axisTickPainter = tickPainter;
@@ -3706,39 +3685,36 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the first bottom x axis to use.
+   *
+   * <p>This is compatibility support for the API of jchart2d prior to 3.0.0 where only one x axis
+   * was supported.
+   *
    * <p>
-   * This is compatibility support for the API of jchart2d prior to 3.0.0 where
-   * only one x axis was supported.
-   * <p>
-   * 
+   *
    * @deprecated use <code>{@link #setAxisXBottom(AAxis, int)}</code> instead.
-   * 
    * @see #setAxisXBottom(AAxis, int)
-   * 
-   * @param axisX
-   *          the first bottom x axis to use.
-   * 
-   * @return a copied List with the previous bottom x <code>{@link IAxis}</code>
-   *         instance that was used at position 0.
+   * @param axisX the first bottom x axis to use.
+   * @return a copied List with the previous bottom x <code>{@link IAxis}</code> instance that was
+   *     used at position 0.
    */
   @Deprecated
   public List<IAxis<?>> setAxisX(final AAxis<?> axisX) {
     List<IAxis<?>> axesBottom = new LinkedList<IAxis<?>>();
-    for(IAxis<?> axis:this.m_axesXBottom) {
+    for (IAxis<?> axis : this.m_axesXBottom) {
       // don't call remove here (concurrent modification exception), just collect:
       axesBottom.add(axis);
     }
     List<IAxis<?>> axesTop = new LinkedList<IAxis<?>>();
-    
-    for(IAxis<?> axis:this.m_axesXTop) {
+
+    for (IAxis<?> axis : this.m_axesXTop) {
       // don't call remove here (concurrent modification exception), just collect:
       axesTop.add(axis);
     }
     // now remove
-    for(IAxis<?>axis:axesBottom) {
+    for (IAxis<?> axis : axesBottom) {
       this.removeAxisXBottom(axis);
     }
-    for(IAxis<?>axis:axesTop) {
+    for (IAxis<?> axis : axesTop) {
       this.removeAxisXTop(axis);
     }
     axesBottom.addAll(axesTop);
@@ -3746,44 +3722,35 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Sets the bottom x axis on the given position to use and replaces the old
-   * one on that place.
+   * Sets the bottom x axis on the given position to use and replaces the old one on that place.
+   *
+   * <p>This method delegates to <code>{@link #addAxisXBottom(AAxis)}</code> and also uses <code>
+   * {@link #removeAxisXBottom(IAxis)}</code> in case a bottom x axis was configured at the
+   * position. So the events <code>{@link Chart2D#PROPERTY_AXIS_X}</code> will be fired for remove
+   * and add.
+   *
+   * <p>Furthermore this method uses "replace - semantics". The <code>{@link ITrace2D}</code>
+   * instances contained in the previous x bottom axis will be implanted to this new axis. Also the
+   * title and stuff like grid settings will be transferred. For this an event with property <code>
+   * {@link Chart2D#PROPERTY_AXIS_X_BOTTOM_REPLACE} </code> is fired.
+   *
+   * <p><b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
+   * transferred silently to the new axis but have to handle their unregistering from the old axis /
+   * registering to the new axis from outside to give them the chance to manage their state
+   * transitions by themselves.<br>
+   * Before the state of the old axis is transferred they will receive <code>
+   * {@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code> with <code>
+   * {@link Chart2D#PROPERTY_AXIS_X_BOTTOM_REPLACE}</code> as code and the old and new axis as
+   * values and have the change to change their peer to listen on thus receiving the change events
+   * generated on the new axis. At the moment the replace event is sent they will already have
+   * received the event <code>{@link Chart2D#PROPERTY_AXIS_X}</code> event for the removal: So be
+   * careful not to react on that first event by removing your listener from the axis as you then
+   * will not receive the replace event!
+   *
    * <p>
-   * This method delegates to <code>{@link #addAxisXBottom(AAxis)}</code> and
-   * also uses <code>{@link #removeAxisXBottom(IAxis)}</code> in case a bottom x
-   * axis was configured at the position. So the events
-   * <code>{@link Chart2D#PROPERTY_AXIS_X}</code> will be fired for remove and
-   * add.
-   * <p>
-   * 
-   * Furthermore this method uses "replace - semantics". The
-   * <code>{@link ITrace2D}</code> instances contained in the previous x bottom
-   * axis will be implanted to this new axis. Also the title and stuff like grid
-   * settings will be transferred. For this an event with property
-   * <code>{@link Chart2D#PROPERTY_AXIS_X_BOTTOM_REPLACE} </code> is fired.
-   * <p>
-   * 
-   * <b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
-   * transferred silently to the new axis but have to handle their unregistering
-   * from the old axis / registering to the new axis from outside to give them
-   * the chance to manage their state transitions by themselves.<br/>
-   * Before the state of the old axis is transferred they will receive
-   * <code>{@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code>
-   * with <code>{@link Chart2D#PROPERTY_AXIS_X_BOTTOM_REPLACE}</code> as code
-   * and the old and new axis as values and have the change to change their peer
-   * to listen on thus receiving the change events generated on the new axis. At
-   * the moment the replace event is sent they will already have received the
-   * event <code>{@link Chart2D#PROPERTY_AXIS_X}</code> event for the removal:
-   * So be careful not to react on that first event by removing your listener
-   * from the axis as you then will not receive the replace event!
-   * <p>
-   * 
-   * @param axisX
-   *          the first bottom x axis to use.
-   * 
-   * @param position
-   *          the index of the axis on bottom x dimension (starting from 0).
-   * 
+   *
+   * @param axisX the first bottom x axis to use.
+   * @param position the index of the axis on bottom x dimension (starting from 0).
    * @return the previous axis on that bottom x position or null.
    */
   public IAxis<?> setAxisXBottom(final AAxis<?> axisX, final int position) {
@@ -3808,44 +3775,34 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Sets the top x axis on the given position to use and replaces the old one
-   * on that place.
+   * Sets the top x axis on the given position to use and replaces the old one on that place.
+   *
+   * <p>This method delegates to <code>{@link #addAxisXBottom(AAxis)}</code> and also uses <code>
+   * {@link #removeAxisXBottom(IAxis)}</code> in case a top x axis was configured on the position.
+   * So the events <code>{@link Chart2D#PROPERTY_AXIS_X}</code> will be fired for remove and add.
+   *
+   * <p>Furthermore this method uses "replace - semantics". The <code>{@link ITrace2D}</code>
+   * instances contained in the previous x top axis will be implanted to this new axis. Also the
+   * title and stuff like grid settings will be transferred. For this an event with property <code>
+   * {@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE} </code> is fired.
+   *
+   * <p><b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
+   * transferred silently to the new axis but have to handle their unregistering from the old axis /
+   * registering to the new axis from outside to give them the chance to manage their state
+   * transitions by themselves.<br>
+   * Before the state of the old axis is transferred they will receive <code>
+   * {@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code> with <code>
+   * {@link Chart2D#PROPERTY_AXIS_X_TOP_REPLACE}</code> as code and the old and new axis as values
+   * and have the change to change their peer to listen on thus receiving the change events
+   * generated on the new axis. At the moment the replace event is sent they will already have
+   * received the event <code>{@link Chart2D#PROPERTY_AXIS_X}</code> event for the removal: So be
+   * careful not to react on that first event by removing your listener from the axis as you then
+   * will not receive the replace event!
+   *
    * <p>
-   * This method delegates to <code>{@link #addAxisXBottom(AAxis)}</code> and
-   * also uses <code>{@link #removeAxisXBottom(IAxis)}</code> in case a top x
-   * axis was configured on the position. So the events
-   * <code>{@link Chart2D#PROPERTY_AXIS_X}</code> will be fired for remove and
-   * add.
-   * <p>
-   * 
-   * Furthermore this method uses "replace - semantics". The
-   * <code>{@link ITrace2D}</code> instances contained in the previous x top
-   * axis will be implanted to this new axis. Also the title and stuff like grid
-   * settings will be transferred. For this an event with property
-   * <code>{@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE} </code> is fired.
-   * <p>
-   * 
-   * <b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
-   * transferred silently to the new axis but have to handle their unregistering
-   * from the old axis / registering to the new axis from outside to give them
-   * the chance to manage their state transitions by themselves.<br/>
-   * Before the state of the old axis is transferred they will receive
-   * <code>{@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code>
-   * with <code>{@link Chart2D#PROPERTY_AXIS_X_TOP_REPLACE}</code> as code and
-   * the old and new axis as values and have the change to change their peer to
-   * listen on thus receiving the change events generated on the new axis. At
-   * the moment the replace event is sent they will already have received the
-   * event <code>{@link Chart2D#PROPERTY_AXIS_X}</code> event for the removal:
-   * So be careful not to react on that first event by removing your listener
-   * from the axis as you then will not receive the replace event!
-   * <p>
-   * 
-   * @param axisX
-   *          the top x axis to use.
-   * 
-   * @param position
-   *          the index of the axis on top x dimension (starting from 0).
-   * 
+   *
+   * @param axisX the top x axis to use.
+   * @param position the index of the axis on top x dimension (starting from 0).
    * @return the previous axis on that bottom x position.
    */
   public IAxis<?> setAxisXTop(final AAxis<?> axisX, final int position) {
@@ -3856,7 +3813,6 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       old = this.m_axesXTop.get(position);
       this.removeAxisXTop(old);
       this.firePropertyChange(PROPERTY_AXIS_X_TOP_REPLACE, old, axisX);
-
     }
     // we can only transfer state (which includes adding traces after the new
     // axis is assigned to a chart!
@@ -3872,20 +3828,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the first and only left y axis to use.
+   *
+   * <p>This is compatibility support for the API of jchart2d prior to 3.0.0 where only one y axis
+   * was supported.
+   *
    * <p>
-   * This is compatibility support for the API of jchart2d prior to 3.0.0 where
-   * only one y axis was supported.
-   * <p>
-   * 
+   *
    * @deprecated use <code>{@link #setAxisYLeft(AAxis, int)}</code> instead.
-   * 
    * @see #setAxisYLeft(AAxis, int)
-   * 
-   * @param axisY
-   *          the first left y axis to use.
-   * 
-   * @return a copied List with the previous left y <code>{@link AAxis}</code>
-   *         instance that was used at position 0.
+   * @param axisY the first left y axis to use.
+   * @return a copied List with the previous left y <code>{@link AAxis}</code> instance that was
+   *     used at position 0.
    */
   @Deprecated
   public List<IAxis<?>> setAxisY(final AAxis<?> axisY) {
@@ -3914,44 +3867,34 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Sets the left y axis on the given position to use and replaces the old one
-   * on that place.
+   * Sets the left y axis on the given position to use and replaces the old one on that place.
+   *
+   * <p>This method delegates to <code>{@link #addAxisYLeft(AAxis)}</code> and also uses <code>
+   * {@link #removeAxisYLeft(IAxis)}</code> in case an axis was configured on the position. So the
+   * events <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> will be fired for remove and add.
+   *
+   * <p>Furthermore this method uses "replace - semantics". The <code>{@link ITrace2D}</code>
+   * instances contained in the previous left y axis will be implanted to this new axis. Also the
+   * title and stuff like grid settings will be transferred. For this an event with property <code>
+   * {@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE} </code> is fired.
+   *
+   * <p><b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
+   * transferred silently to the new axis but have to handle their unregistering from the old axis /
+   * registering to the new axis from outside to give them the chance to manage their state
+   * transitions by themselves.<br>
+   * Before the state of the old axis is transferred they will receive <code>
+   * {@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code> with <code>
+   * {@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE}</code> as code and the old and new axis as values
+   * and have the change to change their peer to listen on thus receiving the change events
+   * generated on the new axis. At the moment the replace event is sent they will already have
+   * received the event <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> event for the removal: So be
+   * careful not to react on that first event by removing your listener from the axis as you then
+   * will not receive the replace event!
+   *
    * <p>
-   * This method delegates to <code>{@link #addAxisYLeft(AAxis)}</code> and also
-   * uses <code>{@link #removeAxisYLeft(IAxis)}</code> in case an axis was
-   * configured on the position. So the events
-   * <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> will be fired for remove and
-   * add.
-   * <p>
-   * 
-   * Furthermore this method uses "replace - semantics". The
-   * <code>{@link ITrace2D}</code> instances contained in the previous left y
-   * axis will be implanted to this new axis. Also the title and stuff like grid
-   * settings will be transferred. For this an event with property
-   * <code>{@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE} </code> is fired.
-   * <p>
-   * 
-   * <b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
-   * transferred silently to the new axis but have to handle their unregistering
-   * from the old axis / registering to the new axis from outside to give them
-   * the chance to manage their state transitions by themselves.<br/>
-   * Before the state of the old axis is transferred they will receive
-   * <code>{@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code>
-   * with <code>{@link Chart2D#PROPERTY_AXIS_Y_LEFT_REPLACE}</code> as code and
-   * the old and new axis as values and have the change to change their peer to
-   * listen on thus receiving the change events generated on the new axis. At
-   * the moment the replace event is sent they will already have received the
-   * event <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> event for the removal:
-   * So be careful not to react on that first event by removing your listener
-   * from the axis as you then will not receive the replace event!
-   * <p>
-   * 
-   * @param axisY
-   *          the left y axis to use.
-   * 
-   * @param position
-   *          the index of the axis on left y dimension (starting from 0).
-   * 
+   *
+   * @param axisY the left y axis to use.
+   * @param position the index of the axis on left y dimension (starting from 0).
    * @return the previous axis on that bottom x position.
    */
   public IAxis<?> setAxisYLeft(final AAxis<?> axisY, final int position) {
@@ -3967,7 +3910,7 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
      * confused. Add anyways in case no axis has been set before (see
      * constructor)
      */
-    
+
     this.addAxisYLeft(axisY);
     /*
      * We can only transfer state (which includes adding traces after the new
@@ -3982,47 +3925,36 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Sets the right y axis on the given position to use and replaces the old one
-   * on that place.
+   * Sets the right y axis on the given position to use and replaces the old one on that place.
+   *
+   * <p>This method delegates to <code>{@link #addAxisYRight(AAxis)}</code> and also uses <code>
+   * {@link #removeAxisYRight(IAxis)}</code> in case an axis was configured on the position. So the
+   * events <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> will be fired for remove and add.
+   *
+   * <p>Furthermore this method uses "replace - semantics". The <code>{@link ITrace2D}</code>
+   * instances contained in the previous right y axis will be implanted to this new axis. Also the
+   * title and stuff like grid settings will be transferred. For this an event with property <code>
+   * {@link Chart2D#PROPERTY_AXIS_Y_RIGHT_REPLACE} </code> is fired.
+   *
+   * <p><b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
+   * transferred silently to the new axis but have to handle their unregistering from the old axis /
+   * registering to the new axis from outside to give them the chance to manage their state
+   * transitions by themselves.<br>
+   * Before the state of the old axis is transferred they will receive <code>
+   * {@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code> with <code>
+   * {@link Chart2D#PROPERTY_AXIS_Y_RIGHT_REPLACE}</code> as code and the old and new axis as values
+   * and have the change to change their peer to listen on thus receiving the change events
+   * generated on the new axis. At the moment the replace event is sent they will already have
+   * received the event <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> event for the removal: So be
+   * careful not to react on that first event by removing your listener from the axis as you then
+   * will not receive the replace event!
+   *
    * <p>
-   * This method delegates to <code>{@link #addAxisYRight(AAxis)}</code> and
-   * also uses <code>{@link #removeAxisYRight(IAxis)}</code> in case an axis was
-   * configured on the position. So the events
-   * <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> will be fired for remove and
-   * add.
-   * <p>
-   * 
-   * Furthermore this method uses "replace - semantics". The
-   * <code>{@link ITrace2D}</code> instances contained in the previous right y
-   * axis will be implanted to this new axis. Also the title and stuff like grid
-   * settings will be transferred. For this an event with property
-   * <code>{@link Chart2D#PROPERTY_AXIS_Y_RIGHT_REPLACE} </code> is fired.
-   * <p>
-   * 
-   * <b>Note</b> that <code>{@link PropertyChangeListener}s</code> of the axis will not be
-   * transferred silently to the new axis but have to handle their unregistering
-   * from the old axis / registering to the new axis from outside to give them
-   * the chance to manage their state transitions by themselves.<br/>
-   * Before the state of the old axis is transferred they will receive
-   * <code>{@link PropertyChangeListener#propertyChange(PropertyChangeEvent)}</code>
-   * with <code>{@link Chart2D#PROPERTY_AXIS_Y_RIGHT_REPLACE}</code> as code and
-   * the old and new axis as values and have the change to change their peer to
-   * listen on thus receiving the change events generated on the new axis. At
-   * the moment the replace event is sent they will already have received the
-   * event <code>{@link Chart2D#PROPERTY_AXIS_Y}</code> event for the removal:
-   * So be careful not to react on that first event by removing your listener
-   * from the axis as you then will not receive the replace event!
-   * <p>
-   * 
-   * @param axisY
-   *          the right y axis to use.
-   * 
-   * @param position
-   *          the index of the axis on right y dimension (starting from 0).
-   * 
+   *
+   * @param axisY the right y axis to use.
+   * @param position the index of the axis on right y dimension (starting from 0).
    * @return the previous axis on that bottom x position.
    */
-
   public IAxis<?> setAxisYRight(final AAxis<?> axisY, final int position) {
     IAxis<?> old = null;
     if (this.m_axesYRight.size() > position) {
@@ -4045,10 +3977,10 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Set the grid color to use.
+   *
    * <p>
-   * 
-   * @param gridclr
-   *          the grid color to use.
+   *
+   * @param gridclr the grid color to use.
    */
   public final void setGridColor(final Color gridclr) {
     if (gridclr != null) {
@@ -4062,14 +3994,13 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Sets the ms to give a repaint operation time for collecting several repaint
-   * requests into one (performance vs. update speed).
+   * Sets the ms to give a repaint operation time for collecting several repaint requests into one
+   * (performance vs. update speed).
+   *
    * <p>
-   * 
-   * @param minPaintLatency
-   *          the setting for the ms to give a repaint operation time for
-   *          collecting several repaint requests into one (performance vs.
-   *          update speed).
+   *
+   * @param minPaintLatency the setting for the ms to give a repaint operation time for collecting
+   *     several repaint requests into one (performance vs. update speed).
    */
   public synchronized void setMinPaintLatency(final int minPaintLatency) {
     this.m_minPaintLatency = minPaintLatency;
@@ -4077,34 +4008,34 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Decide whether labels for each chart are painted below it. If set to true
-   * this will be done, else labels will be omitted.
+   * Decide whether labels for each chart are painted below it. If set to true this will be done,
+   * else labels will be omitted.
+   *
    * <p>
-   * 
-   * @param paintLabels
-   *          the value for paintLabels to set.
+   *
+   * @param paintLabels the value for paintLabels to set.
    */
   public void setPaintLabels(final boolean paintLabels) {
     final boolean change = this.m_paintLabels != paintLabels;
     this.m_paintLabels = paintLabels;
     if (change) {
-      this.firePropertyChange(Chart2D.PROPERTY_PAINTLABELS, Boolean.valueOf(!paintLabels), Boolean.valueOf(
-          paintLabels));
+      this.firePropertyChange(
+          Chart2D.PROPERTY_PAINTLABELS,
+          Boolean.valueOf(!paintLabels),
+          Boolean.valueOf(paintLabels));
       this.setRequestedRepaint(true);
     }
   }
 
   /**
-   * Sets the point finder used to find the nearest point corresponding to a
-   * mouse event.
+   * Sets the point finder used to find the nearest point corresponding to a mouse event.
+   *
    * <p>
-   * 
+   *
    * @see PointFinder#MANHATTAN
    * @see PointFinder#EUCLID
-   * 
-   * @param pointFinder
-   *          the point finder used to find the nearest point corresponding to a
-   *          mouse event.
+   * @param pointFinder the point finder used to find the nearest point corresponding to a mouse
+   *     event.
    */
   public void setPointFinder(final IPointFinder pointFinder) {
     IPointFinder old = this.m_pointFinder;
@@ -4116,45 +4047,43 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the requestedRepaint.
+   *
+   * <p>Internal method to request a repaint that guarantees that two invocations of <code></code>
+   * will always have at least have an interval of <code>{@link Chart2D#getMinPaintLatency()}</code>
+   * ms.
+   *
+   * <p>Methods <code>{@link Chart2D#repaint()}, {@link Chart2D#repaint(long)},
+   * {@link Chart2D#repaint(Rectangle)}, {@link Chart2D#repaint(int, int, int, int)}
+   * and {@link Chart2D#repaint(long, int, int, int, int)}</code> must not be called from
+   * application code that has to inform the UI to update the chart directly or a performance
+   * problem may arise as java awt / swing implementation does not guarantee to collapse several
+   * repaint requests into a single one but prefers to issue many paint invocations causing a high
+   * CPU load in realtime scenarios (adding several 100 points per second to a chart).
+   *
+   * <p>Only the internal timer may invoke the methods mentioned above.
+   *
    * <p>
-   * Internal method to request a repaint that guarantees that two invocations
-   * of <code></code> will always have at least have an interval of
-   * <code>{@link Chart2D#getMinPaintLatency()}</code> ms.
-   * <p>
-   * Methods <code>{@link Chart2D#repaint()}, {@link Chart2D#repaint(long)}, 
-   * {@link Chart2D#repaint(Rectangle)}, {@link Chart2D#repaint(int, int, int, int)} 
-   * and {@link Chart2D#repaint(long, int, int, int, int)}</code> must not be
-   * called from application code that has to inform the UI to update the chart
-   * directly or a performance problem may arise as java awt / swing
-   * implementation does not guarantee to collapse several repaint requests into
-   * a single one but prefers to issue many paint invocations causing a high CPU
-   * load in realtime scenarios (adding several 100 points per second to a
-   * chart).
-   * <p>
-   * Only the internal timer may invoke the methods mentioned above.
-   * <p>
-   * 
-   * @param requestedRepaint
-   *          the requestedRepaint to set.
+   *
+   * @param requestedRepaint the requestedRepaint to set.
    */
   public final synchronized void setRequestedRepaint(final boolean requestedRepaint) {
     this.m_requestedRepaint = requestedRepaint;
   }
 
   /**
-   * Sets the chart that will be synchronized for finding the start coordinate
-   * of this chart to draw in x dimension ( <code>{@link #getXChartStart()}
+   * Sets the chart that will be synchronized for finding the start coordinate of this chart to draw
+   * in x dimension ( <code>{@link #getXChartStart()}
    * </code>).
+   *
+   * <p>This feature is used to allow two separate charts to be painted stacked in y dimension (one
+   * below the other) that have different x start coordinates (because of different y labels that
+   * shift that value) with an equal starting x value (thus be comparable visually if their x values
+   * match).
+   *
    * <p>
-   * This feature is used to allow two separate charts to be painted stacked in
-   * y dimension (one below the other) that have different x start coordinates
-   * (because of different y labels that shift that value) with an equal
-   * starting x value (thus be comparable visually if their x values match).
-   * <p>
-   * 
-   * @param synchronizedXStartChart
-   *          the chart that will be synchronized for finding the start
-   *          coordinate of this chart to draw in x dimension (<code>
+   *
+   * @param synchronizedXStartChart the chart that will be synchronized for finding the start
+   *     coordinate of this chart to draw in x dimension (<code>
    *          {@link #getXChartStart()}</code>).
    */
   public synchronized void setSynchronizedXStartChart(final Chart2D synchronizedXStartChart) {
@@ -4166,18 +4095,16 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Set whether this component should display the chart coordinates as a tool
-   * tip.
+   * Set whether this component should display the chart coordinates as a tool tip.
+   *
+   * <p>This turns on tool tip support (like {@link
+   * javax.swing.JComponent#setToolTipText(java.lang.String)}) if neccessary.
+   *
    * <p>
-   * This turns on tool tip support (like
-   * {@link javax.swing.JComponent#setToolTipText(java.lang.String)}) if
-   * neccessary.
-   * <p>
-   * 
-   * @deprecated use <code> {@link #setToolTipType(IToolTipType)} </code> with
-   *             <code>{@link ToolTipType#DATAVALUES}</code> instead.
-   * @param toolTipCoords
-   *          The toolTipCoords to set.
+   *
+   * @deprecated use <code> {@link #setToolTipType(IToolTipType)} </code> with <code>
+   *     {@link ToolTipType#DATAVALUES}</code> instead.
+   * @param toolTipCoords The toolTipCoords to set.
    */
   @Deprecated
   public final void setToolTipCoords(final boolean toolTipCoords) {
@@ -4190,13 +4117,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the type of tool tip to use.
+   *
+   * <p>Use <code>{@link ToolTipType#NONE}</code> to turn of tool tips.
+   *
    * <p>
-   * Use <code>{@link ToolTipType#NONE}</code> to turn of tool tips.
-   * <p>
-   * 
-   * @param toolTipType
-   *          one of the available <code>{@link ToolTipType}</code> constants.
-   * 
+   *
+   * @param toolTipType one of the available <code>{@link ToolTipType}</code> constants.
    * @see Chart2D.ToolTipType#DATAVALUES
    * @see Chart2D.ToolTipType#NONE
    * @see Chart2D.ToolTipType#PIXEL
@@ -4217,12 +4143,12 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets the trace point creator of this chart.
+   *
+   * <p>Null assignment attempts will raise an <code>{@link AssertionError}</code>.
+   *
    * <p>
-   * Null assignment attempts will raise an <code>{@link AssertionError}</code>.
-   * <p>
-   * 
-   * @param tracePointProvider
-   *          the trace point creator of this chart to set.
+   *
+   * @param tracePointProvider the trace point creator of this chart to set.
    */
   public void setTracePointProvider(final ITracePointProvider tracePointProvider) {
     assert (tracePointProvider != null);
@@ -4231,42 +4157,38 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
 
   /**
    * Sets whether antialiasing is used.
+   *
    * <p>
-   * 
-   * @param useAntialiasing
-   *          true if antialiasing should be used.
+   *
+   * @param useAntialiasing true if antialiasing should be used.
    */
   public final void setUseAntialiasing(final boolean useAntialiasing) {
     if (this.m_useAntialiasing != useAntialiasing) {
       boolean oldstate = this.m_useAntialiasing;
       this.m_useAntialiasing = useAntialiasing;
-      this.firePropertyChange(Chart2D.PROPERTY_ANTIALIASING_ENABLED, oldstate,
-          this.m_useAntialiasing);
-
+      this.firePropertyChange(
+          Chart2D.PROPERTY_ANTIALIASING_ENABLED, oldstate, this.m_useAntialiasing);
     }
   }
 
   /**
-   * Returns a BufferedImage with the current width and height of the chart
-   * filled with the Chart2D's graphics that may be written to a file or
-   * OutputStream by using:
-   * {@link javax.imageio.ImageIO#write(java.awt.image.RenderedImage, java.lang.String, java.io.File)}
-   * .
+   * Returns a BufferedImage with the current width and height of the chart filled with the
+   * Chart2D's graphics that may be written to a file or OutputStream by using: {@link
+   * javax.imageio.ImageIO#write(java.awt.image.RenderedImage, java.lang.String, java.io.File)} .
+   *
+   * <p>If the width and height of this chart is zero (this happens when the chart has not been
+   * {@link javax.swing.JComponent#setVisible(boolean)}, the chart was not integrated into layout
+   * correctly or the chart's dimenision was set to this value, a default of width 600 and height
+   * 400 will temporarily be set (syncrhonized), the image will be rendered, the old dimension will
+   * be reset and the image will be returned.<br>
+   * If you want to paint offscreen images (without displayed chart) prefer invoke {@link
+   * #snapShot(int, int)} instead.
+   *
    * <p>
-   * If the width and height of this chart is zero (this happens when the chart
-   * has not been {@link javax.swing.JComponent#setVisible(boolean)}, the chart
-   * was not integrated into layout correctly or the chart's dimenision was set
-   * to this value, a default of width 600 and height 400 will temporarily be
-   * set (syncrhonized), the image will be rendered, the old dimension will be
-   * reset and the image will be returned.<br/>
-   * If you want to paint offscreen images (without displayed chart) prefer
-   * invoke {@link #snapShot(int, int)} instead.
-   * <p>
-   * 
-   * @return a BufferedImage of the Chart2D's graphics that may be written to a
-   *         file or OutputStream.
-   * @since 1.03 - please download versions equal or greater than
-   *        jchart2d-1.03.jar.
+   *
+   * @return a BufferedImage of the Chart2D's graphics that may be written to a file or
+   *     OutputStream.
+   * @since 1.03 - please download versions equal or greater than jchart2d-1.03.jar.
    */
   public BufferedImage snapShot() {
     int width = this.getWidth();
@@ -4279,20 +4201,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Returns a BufferedImage with the given width and height that is filled with
-   * tChart2D's graphics that may be written to a file or OutputStream by using:
-   * {@link javax.imageio.ImageIO#write(java.awt.image.RenderedImage, java.lang.String, java.io.File)}
-   * .
+   * Returns a BufferedImage with the given width and height that is filled with tChart2D's graphics
+   * that may be written to a file or OutputStream by using: {@link
+   * javax.imageio.ImageIO#write(java.awt.image.RenderedImage, java.lang.String, java.io.File)} .
+   *
    * <p>
-   * 
-   * @param width
-   *          the width of the image to create.
-   * @param height
-   *          the height of the image to create.
-   * @return a BufferedImage of the Chart2D's graphics that may be written to a
-   *         file or OutputStream.
-   * @since 1.03 - please download versions equal or greater than
-   *        jchart2d-1.03.jar.
+   *
+   * @param width the width of the image to create.
+   * @param height the height of the image to create.
+   * @return a BufferedImage of the Chart2D's graphics that may be written to a file or
+   *     OutputStream.
+   * @since 1.03 - please download versions equal or greater than jchart2d-1.03.jar.
    */
   public BufferedImage snapShot(final int width, final int height) {
 
@@ -4302,8 +4221,8 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
       BufferedImage img;
       img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
       Graphics2D g2d = (Graphics2D) img.getGraphics();
-      g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-          RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+      g2d.setRenderingHint(
+          RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
       g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
       this.paint(g2d);
       this.setSize(dsave);
@@ -4321,16 +4240,16 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Internal helper to track the amount of highlighters of all traces to manage
-   * the enablement/disablement of the (expensive) highlighting feature.
+   * Internal helper to track the amount of highlighters of all traces to manage the
+   * enablement/disablement of the (expensive) highlighting feature.
+   *
+   * <p>Note that this method has to be called in synchronized state from addTrace/removeTrace
+   * methods.
+   *
    * <p>
-   * 
-   * Note that this method has to be called in synchronized state from
-   * addTrace/removeTrace methods.
-   * <p>
-   * 
-   * @param addedOrRemovedTraceHighlighters
-   *          the amount of added or removed (negative) trace highlighters.
+   *
+   * @param addedOrRemovedTraceHighlighters the amount of added or removed (negative) trace
+   *     highlighters.
    */
   private void trackHighlightingEnablement(final int addedOrRemovedTraceHighlighters) {
     if (this.m_traceHighlighterCount <= 0) {
@@ -4345,31 +4264,28 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
     }
     this.m_traceHighlighterCount += addedOrRemovedTraceHighlighters;
     if (this.m_traceHighlighterCount < 0) {
-      System.err.println("Internal amount of point highlighters below zero: "
-          + this.m_traceHighlighterCount);
+      System.err.println(
+          "Internal amount of point highlighters below zero: " + this.m_traceHighlighterCount);
     }
   }
 
   /**
-   * Returns the translation of the mouse event coordinates of the given mouse
-   * event to the value within the chart.
+   * Returns the translation of the mouse event coordinates of the given mouse event to the value
+   * within the chart.
+   *
+   * <p>Note that the mouse event has to be an event fired on this component!
+   *
+   * <p>Note that the returned tracepoint is not a real trace point of a trace but just used as a
+   * container here.
+   *
    * <p>
-   * Note that the mouse event has to be an event fired on this component!
-   * <p>
-   * Note that the returned tracepoint is not a real trace point of a trace but
-   * just used as a container here.
-   * <p>
-   * 
-   * @deprecated this method is a candidate for wrong behavior when using
-   *             multiple axes.
-   * 
-   * @param mouseEvent
-   *          a mouse event that has been fired on this component.
-   * @return the translation of the mouse event coordinates of the given mouse
-   *         event to the value within the chart or null if no calculations
-   *         could be performed as the chart was not painted before.
-   * @throws IllegalArgumentException
-   *           if the given mouse event does not belong to this component.
+   *
+   * @deprecated this method is a candidate for wrong behavior when using multiple axes.
+   * @param mouseEvent a mouse event that has been fired on this component.
+   * @return the translation of the mouse event coordinates of the given mouse event to the value
+   *     within the chart or null if no calculations could be performed as the chart was not painted
+   *     before.
+   * @throws IllegalArgumentException if the given mouse event does not belong to this component.
    */
   @Deprecated
   public ITracePoint2D translateMousePosition(final MouseEvent mouseEvent)
@@ -4387,12 +4303,11 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Helper that removes this chart as a listener from the required property
-   * change events.
+   * Helper that removes this chart as a listener from the required property change events.
+   *
    * <p>
-   * 
-   * @param removedAxis
-   *          the axis to not listen to any more.
+   *
+   * @param removedAxis the axis to not listen to any more.
    */
   private void unlistenToAxis(final IAxis<?> removedAxis) {
     removedAxis.removePropertyChangeListener(IAxis.PROPERTY_ADD_REMOVE_TRACE, this);
@@ -4403,39 +4318,35 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
   }
 
   /**
-   * Helper that removes this chart as a listener from the required property
-   * change events.
+   * Helper that removes this chart as a listener from the required property change events.
+   *
    * <p>
-   * 
-   * @param removedTrace
-   *          the trace to not listen to any more.
+   *
+   * @param removedTrace the trace to not listen to any more.
    */
   private void unlistenToTrace(final ITrace2D removedTrace) {
-    removedTrace.removePropertyChangeListener(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED,
-        this.m_pointHighlightListener);
+    removedTrace.removePropertyChangeListener(
+        ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED, this.m_pointHighlightListener);
     removedTrace.removePropertyChangeListener(ITrace2D.PROPERTY_POINT_HIGHLIGHTERS_CHANGED, this);
   }
 
   /**
-   * Compares wether the bounds since last invocation have changed and
-   * conditionally rescales the internal <code>{@link TracePoint2D}</code>
-   * instances.
+   * Compares wether the bounds since last invocation have changed and conditionally rescales the
+   * internal <code>{@link TracePoint2D}</code> instances.
+   *
+   * <p>Must only be called from <code>{@link #paint(Graphics)}</code>.
+   *
+   * <p>The old recorded values for the bounds are set to the actual values afterwards to allow
+   * detection of future changes again.
+   *
+   * <p>The force argument allows to enforce rescaling even if no change of data bounds took place
+   * since the last scaling. This is useful if e.g. the view upon the data is changed by a
+   * constraint (e.g. {@link info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport} ).
+   *
    * <p>
-   * Must only be called from <code>{@link #paint(Graphics)}</code>.
-   * <p>
-   * The old recorded values for the bounds are set to the actual values
-   * afterwards to allow detection of future changes again.
-   * <p>
-   * The force argument allows to enforce rescaling even if no change of data
-   * bounds took place since the last scaling. This is useful if e.g. the view
-   * upon the data is changed by a constraint (e.g.
-   * {@link info.monitorenter.gui.chart.rangepolicies.RangePolicyFixedViewport}
-   * ).
-   * <p>
-   * 
-   * @param force
-   *          if true no detection of changes of the data bounds as described
-   *          above are performed: Rescaling is done unconditional.
+   *
+   * @param force if true no detection of changes of the data bounds as described above are
+   *     performed: Rescaling is done unconditional.
    */
   private synchronized void updateScaling(final boolean force) {
 
@@ -4450,13 +4361,15 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         currentAxis.initPaintIteration();
         currentAxis.scale();
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: Scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: Scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       } else {
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: No scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: No scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       }
     }
@@ -4470,13 +4383,15 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         currentAxis.initPaintIteration();
         currentAxis.scale();
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: Scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: Scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       } else {
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: No scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: No scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       }
     }
@@ -4490,13 +4405,15 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         currentAxis.initPaintIteration();
         currentAxis.scale();
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: Scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: Scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       } else {
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: No scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: No scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       }
     }
@@ -4510,16 +4427,17 @@ public class Chart2D extends JPanel implements PropertyChangeListener, Iterable<
         currentAxis.initPaintIteration();
         currentAxis.scale();
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: Scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: Scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       } else {
         if (Chart2D.DEBUG_SCALING) {
-          System.out.println("updateScaling: No scaling was performend for axis: "
-              + currentAxis.getAxisTitle().getTitle());
+          System.out.println(
+              "updateScaling: No scaling was performend for axis: "
+                  + currentAxis.getAxisTitle().getTitle());
         }
       }
     }
   }
-
 }

@@ -12,7 +12,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -30,14 +30,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 /**
- * A simple adapter that allows displaying of timestamped values from an
- * inspection of the
- * <code>{@link info.monitorenter.reflection.ObjectRecorder}</code> on a
- * Chart2D.
+ * A simple adapter that allows displaying of timestamped values from an inspection of the <code>
+ * {@link info.monitorenter.reflection.ObjectRecorder}</code> on a Chart2D.
+ *
  * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.7 $
  */
 public class ObjRecorder2Trace2DAdapter implements ChangeListener {
@@ -49,8 +47,8 @@ public class ObjRecorder2Trace2DAdapter implements ChangeListener {
   private final ObjectRecorder m_inspector;
 
   /**
-   * The starting timestamp of this inspection that is used to put the timestamp
-   * into relation to the first inspection.
+   * The starting timestamp of this inspection that is used to put the timestamp into relation to
+   * the first inspection.
    */
   private final long m_start = System.currentTimeMillis();
 
@@ -58,24 +56,17 @@ public class ObjRecorder2Trace2DAdapter implements ChangeListener {
   private final ITrace2D m_view;
 
   /**
-   * Creates a bridge from the given field of the given instance to inspect to
-   * the trace.
+   * Creates a bridge from the given field of the given instance to inspect to the trace.
+   *
    * <p>
-   * 
-   * @param view
-   *          the target trace that will show the inspected value.
-   * 
-   * @param toinspect
-   *          the instance to inpsect.
-   * 
-   * @param fieldname
-   *          the field on the instance to inspect.
-   * 
-   * @param interval
-   *          the interval of inspections in ms.
+   *
+   * @param view the target trace that will show the inspected value.
+   * @param toinspect the instance to inpsect.
+   * @param fieldname the field on the instance to inspect.
+   * @param interval the interval of inspections in ms.
    */
-  public ObjRecorder2Trace2DAdapter(final ITrace2D view, final Object toinspect,
-      final String fieldname, final long interval) {
+  public ObjRecorder2Trace2DAdapter(
+      final ITrace2D view, final Object toinspect, final String fieldname, final long interval) {
     this.m_view = view;
     this.m_fieldname = fieldname;
     this.m_inspector = new ObjectRecorder(toinspect, interval);
@@ -140,10 +131,10 @@ public class ObjRecorder2Trace2DAdapter implements ChangeListener {
 
   /**
    * Sets the interval for inspections in ms.
+   *
    * <p>
-   * 
-   * @param interval
-   *          the interval for inspections in ms.
+   *
+   * @param interval the interval for inspections in ms.
    */
   public void setInterval(final long interval) {
     this.m_inspector.setInterval(interval);

@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -41,29 +41,25 @@ import javax.swing.JPopupMenu;
 
 /**
  * Action that adds an annotation to a <code>{@link ChartPanel}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.9 $
- * 
  */
 public class ChartPanelActionAddAnnotation extends AChartPanelAction {
 
-  /** Generated <code>serialVersionUID</code>. **/
+  /** Generated <code>serialVersionUID</code>. * */
   private static final long serialVersionUID = 8338223879880089342L;
 
   /**
-   * Create an <code>Action</code> that accesses the chart and identifies itself
-   * with the given action String.
-   * 
-   * @param chartpanel
-   *          the target the action will work on
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * Create an <code>Action</code> that accesses the chart and identifies itself with the given
+   * action String.
+   *
+   * @param chartpanel the target the action will work on
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
   public ChartPanelActionAddAnnotation(final ChartPanel chartpanel, final String description) {
     super(chartpanel, description);
@@ -82,14 +78,14 @@ public class ChartPanelActionAddAnnotation extends AChartPanelAction {
     // plistener.getLastPopupMouseEvent().getLocationOnScreen();
     Point location = plistener.getLastPopupMouseEvent().getPoint();
     Chart2D chart = this.m_chartpanel.getChart();
-    ITracePoint2D point = chart.getPointFinder().getNearestPoint((int) location.getX(),
-        (int) location.getY(), chart);
+    ITracePoint2D point =
+        chart.getPointFinder().getNearestPoint((int) location.getX(), (int) location.getY(), chart);
 
     IAnnotationCreator factory = this.m_chartpanel.getAnnotationCreator();
 
     AAnnotationContentComponent annotation = new AnnotationContentComponentDataValues(point);
-    JComponent annotationPanel = factory.createAnnotationView(this.m_chartpanel, point, annotation,
-        true, true);
+    JComponent annotationPanel =
+        factory.createAnnotationView(this.m_chartpanel, point, annotation, true, true);
     this.m_chartpanel.setLayer(annotationPanel, JLayeredPane.DRAG_LAYER.intValue());
     annotationPanel.setLocation(location);
     this.m_chartpanel.add(annotationPanel);
@@ -106,5 +102,4 @@ public class ChartPanelActionAddAnnotation extends AChartPanelAction {
   public void propertyChange(final PropertyChangeEvent evt) {
     // nop
   }
-
 }

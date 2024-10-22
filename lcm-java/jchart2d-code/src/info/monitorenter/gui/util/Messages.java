@@ -1,5 +1,5 @@
 /*
- *  Messages.java of project jchart2d, Localization bundle. 
+ *  Messages.java of project jchart2d, Localization bundle.
  *  Copyright (C) 2004 - 2011, Achim Westermann
  *
  *  This library is free software; you can redistribute it and/or
@@ -10,7 +10,7 @@
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -31,24 +31,25 @@ import java.util.ResourceBundle;
 
 /**
  * Message bundle for externalization.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
 public class Messages {
-  
+
   /** Constant for the bundle name. */
-  private static final String BUNDLE_NAME = "info.monitorenter.gui.util.messages"; 
+  private static final String BUNDLE_NAME = "info.monitorenter.gui.util.messages";
 
   /** Bundle constant. */
   private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
   /**
-   * Returns the external message for the given key. <p>
-   * 
-   * @param key key of the message. 
-   * 
+   * Returns the external message for the given key.
+   *
+   * <p>
+   *
+   * @param key key of the message.
    * @return the external message for the given key.
    */
   public static String getString(String key) {
@@ -59,9 +60,7 @@ public class Messages {
     }
   }
 
-  /**
-   * Utility class constructor.
-   */
+  /** Utility class constructor. */
   private Messages() {
     // nop
   }

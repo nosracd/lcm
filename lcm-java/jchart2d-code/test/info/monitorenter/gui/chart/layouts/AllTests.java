@@ -25,32 +25,37 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Main test suite for the package <code>{@link info.monitorenter.gui.chart.layouts}</code>.<p>
- * 
+ * Main test suite for the package <code>{@link info.monitorenter.gui.chart.layouts}</code>.
+ *
+ * <p>
+ *
  * @author Achim westermann
  * @version $Revision: 1.3 $
- * 
  * @since 2.1.0
  */
 public final class AllTests {
   /**
-   * Returns the JUnit test suite for this package.<p>
-   * 
+   * Returns the JUnit test suite for this package.
+   *
+   * <p>
+   *
    * @return the JUnit test suite for this package
    */
   public static Test suite() {
     TestSuite suite = new TestSuite("Test for info.monitorenter.gui.chart.layout");
-    //$JUnit-BEGIN$
+    // $JUnit-BEGIN$
     suite.addTest(TestChartPanel.suite());
-    //$JUnit-END$
+    // $JUnit-END$
     return suite;
   }
+
   /**
-   * Hide constructor to prevent generation of class instances.<p>
+   * Hide constructor to prevent generation of class instances.
+   *
+   * <p>
    */
   private AllTests() {
 
     // empty
   }
-
 }

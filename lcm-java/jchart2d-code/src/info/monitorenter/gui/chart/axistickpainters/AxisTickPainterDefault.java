@@ -1,6 +1,6 @@
 /*
- * AxisTickPainterDefault.java,  default IAxisTickPainter 
- * implementation for a tick painter that uses all given arguments 
+ * AxisTickPainterDefault.java,  default IAxisTickPainter
+ * implementation for a tick painter that uses all given arguments
  * (no proprietary behavior)
  * Copyright (C) 2007 - 2011 Achim Westermann, Achim.Westermann@gmx.de
  *
@@ -28,14 +28,13 @@ import info.monitorenter.gui.chart.IAxisTickPainter;
 import java.awt.Graphics;
 
 /**
- * Default implementation for a tick painter that uses all given arguments (no
- * proprietary behaviour).
+ * Default implementation for a tick painter that uses all given arguments (no proprietary
+ * behaviour).
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  * @version $Revision: 1.7 $
- * 
  */
 public class AxisTickPainterDefault implements IAxisTickPainter {
 
@@ -50,6 +49,7 @@ public class AxisTickPainterDefault implements IAxisTickPainter {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public AxisTickPainterDefault() {
@@ -72,19 +72,23 @@ public class AxisTickPainterDefault implements IAxisTickPainter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintXLabel(int, int,
-   *      java.lang.String, java.awt.Graphics)
+   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintXLabel(int, int, java.lang.String,
+   *     java.awt.Graphics)
    */
   public void paintXLabel(final int x, final int y, final String label, final Graphics g) {
     g.drawString(label, x, y);
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintXTick(int, int,
-   *      boolean, boolean, java.awt.Graphics)
+   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintXTick(int, int, boolean, boolean,
+   *     java.awt.Graphics)
    */
-  public void paintXTick(final int x, final int y, final boolean isMajorTick,
-      final boolean isBottomSide, final Graphics g) {
+  public void paintXTick(
+      final int x,
+      final int y,
+      final boolean isMajorTick,
+      final boolean isBottomSide,
+      final Graphics g) {
     if (isMajorTick) {
       if (isBottomSide) {
         g.drawLine(x, y, x, y + AxisTickPainterDefault.MAJOR_TICK_LENGTH);
@@ -101,19 +105,23 @@ public class AxisTickPainterDefault implements IAxisTickPainter {
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintYLabel(int, int,
-   *      java.lang.String, java.awt.Graphics)
+   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintYLabel(int, int, java.lang.String,
+   *     java.awt.Graphics)
    */
   public void paintYLabel(final int x, final int y, final String label, final Graphics g) {
     g.drawString(label, x, y);
   }
 
   /**
-   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintYTick(int, int,
-   *      boolean, boolean, java.awt.Graphics)
+   * @see info.monitorenter.gui.chart.IAxisTickPainter#paintYTick(int, int, boolean, boolean,
+   *     java.awt.Graphics)
    */
-  public void paintYTick(final int x, final int y, final boolean isMajorTick,
-      final boolean isLeftSide, final Graphics g) {
+  public void paintYTick(
+      final int x,
+      final int y,
+      final boolean isMajorTick,
+      final boolean isLeftSide,
+      final Graphics g) {
     if (isMajorTick) {
       if (isLeftSide) {
         g.drawLine(x, y, x - AxisTickPainterDefault.MAJOR_TICK_LENGTH, y);

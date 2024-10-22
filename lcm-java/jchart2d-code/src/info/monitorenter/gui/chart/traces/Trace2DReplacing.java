@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,26 +24,22 @@ package info.monitorenter.gui.chart.traces;
 
 import info.monitorenter.gui.chart.ITracePoint2D;
 
-
 /**
- * Has the behavior of <code>Trace2DBijective</code> and additional
- * features.<p>
- * 
- * <ul>
- * <li>All tracepoints that are added are stored unchanged in a LinkedList.
- * </li>
- * <li>All traceoints added whose x- values are not already contained are added
- * to the end.</li>
- * <li>If a tracepoint is inserted whose x - value already exists in the List,
- * the old tracepoint with that value will be replaced by the new tracepoint.
- * </li>
- * </ul>
+ * Has the behavior of <code>Trace2DBijective</code> and additional features.
+ *
  * <p>
- * 
+ *
+ * <ul>
+ *   <li>All tracepoints that are added are stored unchanged in a LinkedList.
+ *   <li>All traceoints added whose x- values are not already contained are added to the end.
+ *   <li>If a tracepoint is inserted whose x - value already exists in the List, the old tracepoint
+ *       with that value will be replaced by the new tracepoint.
+ * </ul>
+ *
+ * <p>
+ *
  * @see Trace2DBijective
- * 
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.12 $
  */
 public class Trace2DReplacing extends Trace2DSimple {
@@ -51,25 +47,21 @@ public class Trace2DReplacing extends Trace2DSimple {
   /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 858570477289251003L;
 
-  /**
-   * Defcon.
-   */
+  /** Defcon. */
   public Trace2DReplacing() {
     // nop
   }
 
   /**
-   * In case p has an x- value already contained, the old tracepoint with that
-   * value will be replaced by the new one. Else the new tracepoint will be
-   * added to the end, not caring wether tracepoints with a higher x- value are
-   * contained.
+   * In case p has an x- value already contained, the old tracepoint with that value will be
+   * replaced by the new one. Else the new tracepoint will be added to the end, not caring wether
+   * tracepoints with a higher x- value are contained.
+   *
    * <p>
-   * 
-   * @param p
-   *          the point to add.
-   * 
-   * @return true if the point wathe maximum amount of points that will be
-   *         showns successfully added.
+   *
+   * @param p the point to add.
+   * @return true if the point wathe maximum amount of points that will be showns successfully
+   *     added.
    */
   @Override
   public boolean addPointInternal(final ITracePoint2D p) {

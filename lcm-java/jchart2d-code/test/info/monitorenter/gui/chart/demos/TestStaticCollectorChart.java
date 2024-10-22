@@ -1,19 +1,19 @@
 /*
- *  TestStaticCollectorChart.java  of project jchart2d - 
- *  Junit test case that works on property file based 
- *  data files. 
+ *  TestStaticCollectorChart.java  of project jchart2d -
+ *  Junit test case that works on property file based
+ *  data files.
  *  Copyright (C) Achim Westermann, created on 23.04.2005, 08:21:12
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -44,35 +44,35 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Visual Junit test that uses a
- * <code>{@link PropertyFileStaticDataCollector}</code> with data files in the
- * same package that are named <tt>test&lt;x&gt;.properties</tt> where &gt;x&lt;
- * is a number starting from 0 and increasing by one.
+ * Visual Junit test that uses a <code>{@link PropertyFileStaticDataCollector}</code> with data
+ * files in the same package that are named <tt>test&lt;x&gt;.properties</tt> where &gt;x&lt; is a
+ * number starting from 0 and increasing by one.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
  */
 public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Main debug entry.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
-   * @throws IOException
-   *           if sth. goes wrong reading data.
+   *
+   * @param args ignored.
+   * @throws IOException if sth. goes wrong reading data.
    */
   public static void main(final String[] args) throws IOException {
-    TestStaticCollectorChart test = new TestStaticCollectorChart(TestStaticCollectorChart.class
-        .getName());
+    TestStaticCollectorChart test =
+        new TestStaticCollectorChart(TestStaticCollectorChart.class.getName());
     test.testStaticCollectorChart2();
   }
 
   /**
    * Test suite for this test class.
+   *
    * <p>
-   * 
+   *
    * @return the test suite.
    */
   public static Test suite() {
@@ -90,10 +90,10 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Creates a test case with the given name.
+   *
    * <p>
-   * 
-   * @param testName
-   *          the name of the test case.
+   *
+   * @param testName the name of the test case.
    */
   public TestStaticCollectorChart(final String testName) {
     super(testName);
@@ -101,25 +101,26 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Internal helper that shows the chart in a frame.
+   *
    * <p>
-   * 
-   * @param chart
-   *          the chart to display.
+   *
+   * @param chart the chart to display.
    */
   private void show(final StaticCollectorChart chart) {
     final JFrame frame = new JFrame("StaticCollectorChart");
     frame.getContentPane().add(chart);
-    frame.addWindowListener(new WindowAdapter() {
+    frame.addWindowListener(
+        new WindowAdapter() {
 
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        frame.setVisible(false);
-        frame.dispose();
-      }
-    });
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            frame.setVisible(false);
+            frame.dispose();
+          }
+        });
     frame.setSize(600, 600);
     frame.setVisible(true);
     while (frame.isVisible()) {
@@ -133,10 +134,10 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Tests {@link StaticCollectorChart} with data from test1.properties.
+   *
    * <p>
-   * 
-   * @throws IOException
-   *           if sth. goes wrong.
+   *
+   * @throws IOException if sth. goes wrong.
    */
   public final void testStaticCollectorChart1() throws IOException {
     InputStream stream = this.getClass().getResourceAsStream("test1.properties");
@@ -149,10 +150,10 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Tests {@link StaticCollectorChart} with data from test2.properties.
+   *
    * <p>
-   * 
-   * @throws IOException
-   *           if sth. goes wrong.
+   *
+   * @throws IOException if sth. goes wrong.
    */
   public final void testStaticCollectorChart2() throws IOException {
     InputStream stream = this.getClass().getResourceAsStream("test2.properties");
@@ -168,10 +169,10 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Tests {@link StaticCollectorChart} with data from test2.properties.
+   *
    * <p>
-   * 
-   * @throws IOException
-   *           if sth. goes wrong.
+   *
+   * @throws IOException if sth. goes wrong.
    */
   public final void testStaticCollectorChart3() throws IOException {
     InputStream stream = this.getClass().getResourceAsStream("test3.properties");
@@ -185,10 +186,10 @@ public class TestStaticCollectorChart extends TestCase {
 
   /**
    * Tests {@link StaticCollectorChart} with data from test2.properties.
+   *
    * <p>
-   * 
-   * @throws IOException
-   *           if sth. goes wrong.
+   *
+   * @throws IOException if sth. goes wrong.
    */
   public final void testStaticCollectorChart7() throws IOException {
     InputStream stream = this.getClass().getResourceAsStream("test7.properties");

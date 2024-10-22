@@ -1,6 +1,6 @@
 /*
- *  ErrorBarPolicyActionRemovePainter.java of project jchart2d, action 
- *  that removes the given IErrorBarPainter from the given IErrorBarPolicy. 
+ *  ErrorBarPolicyActionRemovePainter.java of project jchart2d, action
+ *  that removes the given IErrorBarPainter from the given IErrorBarPolicy.
  *  Copyright (c) 2006 - 2011 Achim Westermann, created on 09.12.2006 00:14:25.
  *
  *  This library is free software; you can redistribute it and/or
@@ -32,15 +32,13 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 
 /**
- * Action that removes the constructor given
- * <code>{@link info.monitorenter.gui.chart.IErrorBarPainter}</code> from he
- * constructor given
- * <code>{@link info.monitorenter.gui.chart.IErrorBarPolicy}</code>.
+ * Action that removes the constructor given <code>
+ * {@link info.monitorenter.gui.chart.IErrorBarPainter}</code> from he constructor given <code>
+ * {@link info.monitorenter.gui.chart.IErrorBarPolicy}</code>.
+ *
  * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann</a>
- * 
- * 
  * @version $Revision: 1.10 $
  */
 public class ErrorBarPolicyActionRemovePainter extends AErrorBarPolicyAction {
@@ -52,26 +50,21 @@ public class ErrorBarPolicyActionRemovePainter extends AErrorBarPolicyAction {
   private final IErrorBarPainter m_errorBarPainter;
 
   /**
-   * Create an instance that accesses the error bar policy to remove a painter
-   * from it with the given action String.
-   * 
-   * @param errorBarPolicy
-   *          the target the action will work on.
-   * 
-   * @param errorBarpainter
-   *          the error bar painter to remove from the given error bar policy.
-   * 
-   * @param description
-   *          the descriptive <code>String</code> that will be displayed by
-   *          {@link javax.swing.AbstractButton} subclasses that get this
-   *          <code>Action</code> assigned (
-   *          {@link javax.swing.AbstractButton#setAction(javax.swing.Action)}).
+   * Create an instance that accesses the error bar policy to remove a painter from it with the
+   * given action String.
+   *
+   * @param errorBarPolicy the target the action will work on.
+   * @param errorBarpainter the error bar painter to remove from the given error bar policy.
+   * @param description the descriptive <code>String</code> that will be displayed by {@link
+   *     javax.swing.AbstractButton} subclasses that get this <code>Action</code> assigned ( {@link
+   *     javax.swing.AbstractButton#setAction(javax.swing.Action)}).
    */
-  public ErrorBarPolicyActionRemovePainter(final IErrorBarPolicy< ? > errorBarPolicy,
-      final String description, final IErrorBarPainter errorBarpainter) {
+  public ErrorBarPolicyActionRemovePainter(
+      final IErrorBarPolicy<?> errorBarPolicy,
+      final String description,
+      final IErrorBarPainter errorBarpainter) {
     super(errorBarPolicy, description);
     this.m_errorBarPainter = errorBarpainter;
-
   }
 
   /**
@@ -96,5 +89,4 @@ public class ErrorBarPolicyActionRemovePainter extends AErrorBarPolicyAction {
   public void propertyChange(final PropertyChangeEvent evt) {
     // TODO Auto-generated method stub
   }
-
 }

@@ -1,6 +1,6 @@
 /*
- *  MultiAxisZoomTest.java of project jchart2d, demonstration of a zoom-enabled 
- *  chart with multiple axes. 
+ *  MultiAxisZoomTest.java of project jchart2d, demonstration of a zoom-enabled
+ *  chart with multiple axes.
  *  Copyright 2007 - 2011 (C) Achim Westermann, created on 23:59:21.
  *
  *  This library is free software; you can redistribute it and/or
@@ -44,20 +44,19 @@ import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
-
 /**
  * Demonstration of a zoom - enabled chart ({@link info.monitorenter.gui.chart.ZoomableChart}).
+ *
  * <p>
- * 
+ *
  * @author Alessio Sambarino (Contributor)
  * @version $Revision: 1.3 $
  */
-public class MultiAxisZoomTest
-    extends JFrame {
+public class MultiAxisZoomTest extends JFrame {
 
   /**
    * Action adapter for zoomAllButton.
+   *
    * <p>
    */
   class ZoomAllAdapter implements ActionListener {
@@ -67,10 +66,10 @@ public class MultiAxisZoomTest
     /**
      * Creates an instance that will reset zooming on the given zoomable chart upon the triggered
      * action.
+     *
      * <p>
-     * 
-     * @param chart
-     *            the target to reset zooming on.
+     *
+     * @param chart the target to reset zooming on.
      */
     public ZoomAllAdapter(final ZoomableChart chart) {
       this.m_zoomableChart = chart;
@@ -86,16 +85,17 @@ public class MultiAxisZoomTest
 
   /**
    * Generated <code>serial version UID</code>.
+   *
    * <p>
    */
   private static final long serialVersionUID = -2249660781499017221L;
 
   /**
    * Main startup method.
+   *
    * <p>
-   * 
-   * @param args
-   *            ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
 
@@ -103,11 +103,11 @@ public class MultiAxisZoomTest
     // Show the frame
     zoomTest.setSize(640, 480);
     zoomTest.setVisible(true);
-
   }
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public MultiAxisZoomTest() {
@@ -120,7 +120,7 @@ public class MultiAxisZoomTest
     // Create a chart
     ZoomableChart chart = new ZoomableChart();
 
-  //create a new axis - for test by anadi
+    // create a new axis - for test by anadi
     AAxis<?> yAxis = new AxisLinear<IAxisScalePolicy>();
     chart.addAxisYRight(yAxis);
     AAxis<?> xAxis = new AxisLinear<IAxisScalePolicy>();
@@ -130,7 +130,7 @@ public class MultiAxisZoomTest
     chart.addTrace(trace, xAxis, yAxis);
     trace.setColor(Color.RED);
     trace.setStroke(new BasicStroke(2));
-    
+
     // Add all points, as it is static
     trace.addPoint(0, 0);
     trace.addPoint(1, 1);
@@ -139,7 +139,6 @@ public class MultiAxisZoomTest
     trace.addPoint(4, 1);
     trace.addPoint(5, 0);
 
-    
     trace = new Trace2DSimple();
     chart.addTrace(trace, xAxis, yAxis);
     trace.addPoint(0, 3);
@@ -150,7 +149,7 @@ public class MultiAxisZoomTest
     trace.addPoint(5, 1);
     trace.setColor(Color.BLUE);
 
-    // Tool tips and highlighting: Both modes point out the neares trace point to the cursor: 
+    // Tool tips and highlighting: Both modes point out the neares trace point to the cursor:
     chart.setToolTipType(Chart2D.ToolTipType.VALUE_SNAP_TO_TRACEPOINTS);
     trace.setPointHighlighter(new PointPainterDisc(10));
     chart.enablePointHighlighting(true);
@@ -166,15 +165,15 @@ public class MultiAxisZoomTest
     c.add(zoomAllButton, BorderLayout.NORTH);
 
     // Enable the termination button:
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        System.exit(0);
-      }
-    });
-
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            System.exit(0);
+          }
+        });
   }
 }

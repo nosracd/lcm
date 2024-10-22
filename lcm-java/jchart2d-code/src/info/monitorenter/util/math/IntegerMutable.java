@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -24,43 +24,38 @@ package info.monitorenter.util.math;
 
 /**
  * Mutable {@link java.lang.Integer}.
+ *
+ * <p>I needed an wrapper of an primitive int to share the same value between different instances
+ * and to have the changes made to the primitive value take effect on all owners of the same
+ * instance.
+ *
+ * <p>What a pity that java.lang.Integer does not allow to change it's internal value at runtime.
+ * Every time a new Integer has to be constructed.
+ *
  * <p>
- * 
- * I needed an wrapper of an primitive int to share the same value between
- * different instances and to have the changes made to the primitive value take
- * effect on all owners of the same instance.
- * <p>
- * 
- * What a pity that java.lang.Integer does not allow to change it's internal
- * value at runtime. Every time a new Integer has to be constructed.
- * <p>
- * 
  */
 public class IntegerMutable {
 
   /**
-   * The largest value of type <code>int</code>. The constant value of this
-   * field is <tt>2147483647</tt>.
+   * The largest value of type <code>int</code>. The constant value of this field is
+   * <tt>2147483647</tt>.
    */
   public static final int MAX_VALUE = 0x7fffffff;
 
   /**
-   * The smallest value of type <code>int</code>. The constant value of this
-   * field is <tt>-2147483648</tt>.
+   * The smallest value of type <code>int</code>. The constant value of this field is
+   * <tt>-2147483648</tt>.
    */
   public static final int MIN_VALUE = 0x80000000;
 
-  /**
-   * The value of the Integer.
-   */
+  /** The value of the Integer. */
   private int m_value;
 
   /**
-   * Constructs a newly allocated <code>Integer</code> object that represents
-   * the primitive <code>int</code> argument.
-   * 
-   * @param value
-   *          the value to be represented by the <code>Integer</code>.
+   * Constructs a newly allocated <code>Integer</code> object that represents the primitive <code>
+   * int</code> argument.
+   *
+   * @param value the value to be represented by the <code>Integer</code>.
    */
   public IntegerMutable(final int value) {
     this.m_value = value;
@@ -68,13 +63,11 @@ public class IntegerMutable {
 
   /**
    * Adds the given value to the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to add.
-   * 
-   * @throws ArithmeticException
-   *           if an overflow ({@link Integer#MAX_VALUE}) occurs.
+   *
+   * @param i the value to add.
+   * @throws ArithmeticException if an overflow ({@link Integer#MAX_VALUE}) occurs.
    */
   public void add(final int i) throws ArithmeticException {
     final int oldval = this.m_value;
@@ -87,13 +80,11 @@ public class IntegerMutable {
 
   /**
    * Adds the given value to the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to add.
-   * 
-   * @throws ArithmeticException
-   *           if an overflow ({@link Integer#MAX_VALUE}) occurs.
+   *
+   * @param i the value to add.
+   * @throws ArithmeticException if an overflow ({@link Integer#MAX_VALUE}) occurs.
    */
   public void add(final Integer i) throws ArithmeticException {
     this.add(i.intValue());
@@ -101,13 +92,11 @@ public class IntegerMutable {
 
   /**
    * Adds the given value to the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to add.
-   * 
-   * @throws ArithmeticException
-   *           if an overflow ({@link Integer#MAX_VALUE}) occurs.
+   *
+   * @param i the value to add.
+   * @throws ArithmeticException if an overflow ({@link Integer#MAX_VALUE}) occurs.
    */
   public void add(final IntegerMutable i) throws ArithmeticException {
     this.add(i.getValue());
@@ -136,8 +125,9 @@ public class IntegerMutable {
 
   /**
    * Returns the value as an int.
+   *
    * <p>
-   * 
+   *
    * @return the value as an int.
    */
   public int getValue() {
@@ -157,8 +147,9 @@ public class IntegerMutable {
 
   /**
    * Returns the value as an int.
+   *
    * <p>
-   * 
+   *
    * @return the value as an int.
    */
   public int intValue() {
@@ -167,10 +158,10 @@ public class IntegerMutable {
 
   /**
    * Sets the value.
+   *
    * <p>
-   * 
-   * @param value
-   *          the value.
+   *
+   * @param value the value.
    */
   public void setValue(final int value) {
     this.m_value = value;
@@ -178,13 +169,11 @@ public class IntegerMutable {
 
   /**
    * Substracts the given value from the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to subtract.
-   * 
-   * @throws ArithmeticException
-   *           if a carry ({@link Integer#MIN_VALUE}) occurs.
+   *
+   * @param i the value to subtract.
+   * @throws ArithmeticException if a carry ({@link Integer#MIN_VALUE}) occurs.
    */
   public void sub(final int i) throws ArithmeticException {
     final int oldval = this.m_value;
@@ -197,13 +186,11 @@ public class IntegerMutable {
 
   /**
    * Substracts the given value from the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to subtract.
-   * 
-   * @throws ArithmeticException
-   *           if a carry ({@link Integer#MIN_VALUE}) occurs.
+   *
+   * @param i the value to subtract.
+   * @throws ArithmeticException if a carry ({@link Integer#MIN_VALUE}) occurs.
    */
   public void sub(final Integer i) throws ArithmeticException {
     this.sub(i.intValue());
@@ -211,13 +198,11 @@ public class IntegerMutable {
 
   /**
    * Substracts the given value from the internal value.
+   *
    * <p>
-   * 
-   * @param i
-   *          the value to subtract.
-   * 
-   * @throws ArithmeticException
-   *           if a carry ({@link Integer#MIN_VALUE}) occurs.
+   *
+   * @param i the value to subtract.
+   * @throws ArithmeticException if a carry ({@link Integer#MIN_VALUE}) occurs.
    */
   public void sub(final IntegerMutable i) throws ArithmeticException {
     this.sub(i.intValue());
@@ -225,16 +210,14 @@ public class IntegerMutable {
 
   /**
    * Returns a String object representing this Integer's value.
+   *
+   * <p>The value is converted to signed decimal representation and returned as a string, exactly as
+   * if the integer value were given as an argument to the {@link java.lang.Integer#toString(int)}
+   * method.
+   *
    * <p>
-   * 
-   * The value is converted to signed decimal representation and returned as a
-   * string, exactly as if the integer value were given as an argument to the
-   * {@link java.lang.Integer#toString(int)} method.
-   * <p>
-   * 
-   * 
-   * @return a string representation of the value of this object in
-   *         base&nbsp;10.
+   *
+   * @return a string representation of the value of this object in base&nbsp;10.
    */
   @Override
   public String toString() {

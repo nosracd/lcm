@@ -1,19 +1,19 @@
 /*
- *  StaticChartErrorBarLineDisc.java of project jchart2d, a demonstration 
- *  of the minimal code to set up a chart with static data and 
- *  an relative error bar policy that paints error bars by lines only. 
+ *  StaticChartErrorBarLineDisc.java of project jchart2d, a demonstration
+ *  of the minimal code to set up a chart with static data and
+ *  an relative error bar policy that paints error bars by lines only.
  *  Copyright (C) 2007 - 2011 Achim Westermann, created on 10.12.2004, 13:48:55
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -45,53 +45,48 @@ import javax.swing.JPanel;
 
 /**
  * Title: StaticChartErrorBarLineDisc
+ *
+ * <p>Description: A demonstration of the minimal code to set up a chart with static data and an
+ * relative error bar policy that paints relative error bars by line segments with a disc at the end
+ * in y dimension (positive and negative).
+ *
  * <p>
- * 
- * Description: A demonstration of the minimal code to set up a chart with
- * static data and an relative error bar policy that paints relative error bars
- * by line segments with a disc at the end in y dimension (positive and
- * negative).
- * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  * @version $Revision: 1.13 $
  */
 public final class StaticChartErrorBarLineDisc extends JPanel {
-  /**
-   * Generated for <code>serialVersionUID</code>.
-   */
+  /** Generated for <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 3257009847668192306L;
 
   /**
    * Main entry.
+   *
    * <p>
-   * 
-   * @param args
-   *          ignored.
+   *
+   * @param args ignored.
    */
   public static void main(final String[] args) {
     for (int i = 0; i < 1; i++) {
       JFrame frame = new JFrame(StaticChartErrorBarLineDisc.class.getName());
       frame.getContentPane().add(new StaticChartErrorBarLineDisc());
-      frame.addWindowListener(new WindowAdapter() {
-        /**
-         * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-         */
-        @Override
-        public void windowClosing(final WindowEvent e) {
-          System.exit(0);
-        }
-      });
+      frame.addWindowListener(
+          new WindowAdapter() {
+            /**
+             * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+             */
+            @Override
+            public void windowClosing(final WindowEvent e) {
+              System.exit(0);
+            }
+          });
       frame.setSize(600, 600);
       frame.setLocation(i % 3 * 200, i / 3 * 100);
       frame.setVisible(true);
     }
   }
 
-  /**
-   * Defcon.
-   */
+  /** Defcon. */
   private StaticChartErrorBarLineDisc() {
     this.setLayout(new BorderLayout());
     Chart2D chart = new Chart2D();
@@ -103,7 +98,7 @@ public final class StaticChartErrorBarLineDisc extends JPanel {
     chart.addTrace(trace);
     trace.setColor(Color.RED);
     // create an error bar policy and configure it
-    IErrorBarPolicy< ? > errorBarPolicy = new ErrorBarPolicyAbsoluteSummation(10, 10);
+    IErrorBarPolicy<?> errorBarPolicy = new ErrorBarPolicyAbsoluteSummation(10, 10);
     errorBarPolicy.setShowNegativeYErrors(true);
     errorBarPolicy.setShowPositiveYErrors(true);
     // errorBarPolicy.setShowNegativeXErrors(true);
@@ -129,7 +124,5 @@ public final class StaticChartErrorBarLineDisc extends JPanel {
 
     // Make it visible:
     this.add(new ChartPanel(chart), BorderLayout.CENTER);
-
   }
-
 }

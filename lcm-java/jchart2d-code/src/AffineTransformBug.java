@@ -1,5 +1,3 @@
-
-
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,19 +7,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * Tries to reproduce a bug related to a translate and rotate operation on a
- * GraphcisContext. If successful, you will see the String "Hello World" not
- * only painted on the left side but also on the right edge of the panel.
+ * Tries to reproduce a bug related to a translate and rotate operation on a GraphcisContext. If
+ * successful, you will see the String "Hello World" not only painted on the left side but also on
+ * the right edge of the panel.
+ *
  * <p>
- * 
+ *
  * @author Achim Westermann
- * 
  */
 public class AffineTransformBug extends JPanel {
 
-  /**
-   * Generated <code>serialVersionUID</code>.
-   */
+  /** Generated <code>serialVersionUID</code>. */
   private static final long serialVersionUID = 700262412146835398L;
 
   /**
@@ -68,5 +64,4 @@ public class AffineTransformBug extends JPanel {
     frame.setSize(new Dimension(450, 400));
     System.out.println("Resize done!");
   }
-
 }

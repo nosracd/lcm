@@ -1,5 +1,5 @@
 /*
- *  ICodeBlock,java of project jchart2d, interface to allow running certain code in a certain scope. 
+ *  ICodeBlock,java of project jchart2d, interface to allow running certain code in a certain scope.
  *  Copyright 2011 (C) Achim Westermann.
  *
  *  This library is free software; you can redistribute it and/or
@@ -22,20 +22,20 @@
 package info.monitorenter.gui.chart;
 
 /**
- * Helper to allow running certain code in a certain scope (e.g.: synchronization scope, pre- or postrequisites to meet,...).
+ * Helper to allow running certain code in a certain scope (e.g.: synchronization scope, pre- or
+ * postrequisites to meet,...).
+ *
  * <p>
- * 
- * @param <T>
- *          the type of result of the callback method.
- * 
+ *
+ * @param <T> the type of result of the callback method.
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
  */
 public interface ICodeBlock<T> {
   /**
    * Executes the code this instance stands for and gives back the result.
+   *
    * <p>
-   * 
+   *
    * @return the result.
    */
   public T execute();

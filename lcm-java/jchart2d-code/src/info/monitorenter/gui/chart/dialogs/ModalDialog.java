@@ -1,5 +1,5 @@
 /*
- *  ModalDialog.java, class for dialogs with ok and cancel buttons and 
+ *  ModalDialog.java, class for dialogs with ok and cancel buttons and
  *  support for modality within jchart2d.
  *  Copyright (c) 2007 - 2011 Achim Westermann, created on 09:31:15.
  *
@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -46,24 +46,21 @@ import javax.swing.JPanel;
 
 /**
  * Class for modal dialogs with ok and cancel buttons.
+ *
+ * <p>This is a try for a better design approach to modal dialogs than offered in the java
+ * development kit: <br>
+ * The service of a modal dialog that offers cancel and ok is separated from the retrieval of data
+ * of such a dialog. The component that queries the data from this service is freely choosable. It
+ * may be passed to the contstructor and will be returned from {@link #showDialog()}. The client
+ * code then is sure that the modal dialog has been confirmed by the human interactor and may query
+ * this component for input: it knows about the component that was used to query inputs.
+ *
+ * <p><b>However for easy String prompts you should prefer:</b> <code>
+ * {@link JOptionPane#showInputDialog(Object)}</code>.
+ *
  * <p>
- * This is a try for a better design approach to modal dialogs than offered in
- * the java development kit: <br>
- * The service of a modal dialog that offers cancel and ok is separated from the
- * retrieval of data of such a dialog. The component that queries the data from
- * this service is freely choosable. It may be passed to the contstructor and
- * will be returned from {@link #showDialog()}. The client code then is sure
- * that the modal dialog has been confirmed by the human interactor and may
- * query this component for input: it knows about the component that was used to
- * query inputs.
- * <p>
- * <b>However for easy String prompts you should prefer:</b>
- * <code>{@link JOptionPane#showInputDialog(Object)}</code>.
- * <p>
- * 
+ *
  * @author <a href="mailto:Achim.Westermann@gmx.de">Achim Westermann </a>
- * 
- * 
  * @version $Revision: 1.14 $
  */
 public class ModalDialog extends JDialog {
@@ -79,20 +76,16 @@ public class ModalDialog extends JDialog {
 
   /**
    * Creates a modal dialog.
+   *
    * <p>
-   * 
-   * @param dialogParent
-   *          the parent <code>Component</code> for the dialog.
-   * 
-   * @param title
-   *          the String containing the dialog's title.
-   * 
-   * @param controlComponent
-   *          the UI component that is additionally shown and returned from
-   *          {@link #showDialog()}.
+   *
+   * @param dialogParent the parent <code>Component</code> for the dialog.
+   * @param title the String containing the dialog's title.
+   * @param controlComponent the UI component that is additionally shown and returned from {@link
+   *     #showDialog()}.
    */
-  public ModalDialog(final Component dialogParent, final String title,
-      final JComponent controlComponent) {
+  public ModalDialog(
+      final Component dialogParent, final String title, final JComponent controlComponent) {
     super(UIUtil.findFrame(dialogParent), title, true);
     this.m_chooserPanel = controlComponent;
 
@@ -101,51 +94,55 @@ public class ModalDialog extends JDialog {
     contentPane.add(this.m_chooserPanel);
 
     // Window listeners:
-    this.addWindowListener(new WindowAdapter() {
-      /**
-       * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
-       */
-      @Override
-      public void windowClosing(final WindowEvent e) {
-        Window w = e.getWindow();
-        w.setVisible(false);
-      }
-    });
+    this.addWindowListener(
+        new WindowAdapter() {
+          /**
+           * @see java.awt.event.WindowAdapter#windowClosing(java.awt.event.WindowEvent)
+           */
+          @Override
+          public void windowClosing(final WindowEvent e) {
+            Window w = e.getWindow();
+            w.setVisible(false);
+          }
+        });
     // Close this Modal dialog:
-    this.addComponentListener(new ComponentAdapter() {
-      /**
-       * @see java.awt.event.ComponentAdapter#componentHidden(java.awt.event.ComponentEvent)
-       */
-      @Override
-      public void componentHidden(final ComponentEvent e) {
-        Window w = (Window) e.getComponent();
-        w.dispose();
-      }
-    });
+    this.addComponentListener(
+        new ComponentAdapter() {
+          /**
+           * @see java.awt.event.ComponentAdapter#componentHidden(java.awt.event.ComponentEvent)
+           */
+          @Override
+          public void componentHidden(final ComponentEvent e) {
+            Window w = (Window) e.getComponent();
+            w.dispose();
+          }
+        });
 
     // Cancel / OK Buttons.
     JPanel okCancelPanel = new JPanel();
     okCancelPanel.setLayout(new BoxLayout(okCancelPanel, BoxLayout.X_AXIS));
     okCancelPanel.add(Box.createHorizontalGlue());
     JButton ok = new JButton("OK");
-    ok.addActionListener(new ActionListener() {
-      /**
-       * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-       */
-      public void actionPerformed(final ActionEvent e) {
-        ModalDialog.this.m_ok = true;
-        ModalDialog.this.setVisible(false);
-      }
-    });
+    ok.addActionListener(
+        new ActionListener() {
+          /**
+           * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+           */
+          public void actionPerformed(final ActionEvent e) {
+            ModalDialog.this.m_ok = true;
+            ModalDialog.this.setVisible(false);
+          }
+        });
     okCancelPanel.add(ok);
     okCancelPanel.add(Box.createHorizontalGlue());
     JButton cancel = new JButton("Cancel");
-    cancel.addActionListener(new ActionListener() {
-      public void actionPerformed(final ActionEvent e) {
-        ModalDialog.this.m_ok = false;
-        ModalDialog.this.setVisible(false);
-      }
-    });
+    cancel.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(final ActionEvent e) {
+            ModalDialog.this.m_ok = false;
+            ModalDialog.this.setVisible(false);
+          }
+        });
     okCancelPanel.add(cancel);
     okCancelPanel.add(Box.createHorizontalGlue());
     // add ok / cancel to ui:
@@ -156,8 +153,9 @@ public class ModalDialog extends JDialog {
 
   /**
    * Returns whether OK was pressed or not.
+   *
    * <p>
-   * 
+   *
    * @return whether OK was pressed or not.
    */
   public final boolean isOk() {
@@ -166,21 +164,17 @@ public class ModalDialog extends JDialog {
 
   /**
    * Shows a modal dialog and blocks until the dialog is hidden.
-   * <p>
-   * If the user presses the "OK" button, then this method hides/disposes the
-   * dialog and returns the custom component that queries for user input. If the
-   * user presses the "Cancel" button or closes the dialog without pressing
-   * "OK", then this method hides/disposes the dialog and returns
+   *
+   * <p>If the user presses the "OK" button, then this method hides/disposes the dialog and returns
+   * the custom component that queries for user input. If the user presses the "Cancel" button or
+   * closes the dialog without pressing "OK", then this method hides/disposes the dialog and returns
    * <code>null</code>.
+   *
    * <p>
-   * 
-   * 
-   * @return the custom component given to the constructor with it's new
-   *         settings or <code>null</code> if the user opted out.
-   * 
-   * @exception HeadlessException
-   *              if GraphicsEnvironment.isHeadless() returns true.
-   * 
+   *
+   * @return the custom component given to the constructor with it's new settings or <code>null
+   *     </code> if the user opted out.
+   * @exception HeadlessException if GraphicsEnvironment.isHeadless() returns true.
    * @see java.awt.GraphicsEnvironment#isHeadless
    */
   public JComponent showDialog() throws HeadlessException {
@@ -190,5 +184,4 @@ public class ModalDialog extends JDialog {
     this.setVisible(true);
     return this.m_chooserPanel;
   }
-
 }

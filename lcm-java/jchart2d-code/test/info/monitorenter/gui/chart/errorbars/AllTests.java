@@ -25,38 +25,37 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Main test suite for the package
- * <code>{@link info.monitorenter.gui.chart.errorbars}</code>.
+ * Main test suite for the package <code>{@link info.monitorenter.gui.chart.errorbars}</code>.
+ *
  * <p>
- * 
+ *
  * @author Achim westermann
  * @version $Revision: 1.3 $
- * 
  * @since 2.1.0
  */
 public final class AllTests {
-	/**
-	 * Returns the JUnit test suite for this package.
-	 * <p>
-	 * 
-	 * @return the JUnit test suite for this package
-	 */
-	public static Test suite() {
-		TestSuite suite = new TestSuite(
-				"Test for info.monitorenter.gui.chart.errorbars");
-		// $JUnit-BEGIN$
-		suite.addTest(TestErrorBarsVisual.suite());
-		// $JUnit-END$
-		return suite;
-	}
+  /**
+   * Returns the JUnit test suite for this package.
+   *
+   * <p>
+   *
+   * @return the JUnit test suite for this package
+   */
+  public static Test suite() {
+    TestSuite suite = new TestSuite("Test for info.monitorenter.gui.chart.errorbars");
+    // $JUnit-BEGIN$
+    suite.addTest(TestErrorBarsVisual.suite());
+    // $JUnit-END$
+    return suite;
+  }
 
-	/**
-	 * Hide constructor to prevent generation of class instances.
-	 * <p>
-	 */
-	private AllTests() {
+  /**
+   * Hide constructor to prevent generation of class instances.
+   *
+   * <p>
+   */
+  private AllTests() {
 
-		// empty
-	}
-
+    // empty
+  }
 }

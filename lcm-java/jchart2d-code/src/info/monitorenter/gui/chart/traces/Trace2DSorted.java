@@ -7,12 +7,12 @@
  *  modify it under the terms of the GNU Lesser General Public
  *  License as published by the Free Software Foundation; either
  *  version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Lesser General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Lesser General Public
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
@@ -32,23 +32,22 @@ import java.util.TreeSet;
 
 /**
  * Has the behavior of <code>Trace2DReplacing</code> and additional features.
+ *
  * <p>
+ *
  * <ul>
- * <li>All traceoints added whose x- values are not already contained are added
- * to the internal Tree ordered by growing x-values. Therefore it is guaranteed
- * that the tracepoints will be sorted in ascending order of x- values at any
- * time.</li>
+ *   <li>All traceoints added whose x- values are not already contained are added to the internal
+ *       Tree ordered by growing x-values. Therefore it is guaranteed that the tracepoints will be
+ *       sorted in ascending order of x- values at any time.
  * </ul>
+ *
+ * <p>Because sorted insertion of a List causes n! index- operations ( <code>get(int i)</code>)
+ * additional to the comparisons this class does not extend <code>Trace2DSimple</code> which uses a
+ * List. Instead a <code>TreeSet </code> is used.
+ *
  * <p>
- * 
- * Because sorted insertion of a List causes n! index- operations (
- * <code>get(int i)</code>) additional to the comparisons this class does not
- * extend <code>Trace2DSimple</code> which uses a List. Instead a
- * <code>TreeSet </code> is used.
- * <p>
- * 
+ *
  * @author <a href='mailto:Achim.Westermann@gmx.de'>Achim Westermann </a>
- * 
  * @version $Revision: 1.15 $
  */
 public class Trace2DSorted extends ATrace2D implements ITrace2D {
@@ -61,6 +60,7 @@ public class Trace2DSorted extends ATrace2D implements ITrace2D {
 
   /**
    * Defcon.
+   *
    * <p>
    */
   public Trace2DSorted() {
@@ -68,15 +68,13 @@ public class Trace2DSorted extends ATrace2D implements ITrace2D {
   }
 
   /**
-   * In case p has an x- value already contained, the old tracepoint with that
-   * value will be replaced by the new one. Else the new tracepoint will be
-   * added at an index in order to keep the ascending order of tracepoints with
-   * a higher x- value are contained.
+   * In case p has an x- value already contained, the old tracepoint with that value will be
+   * replaced by the new one. Else the new tracepoint will be added at an index in order to keep the
+   * ascending order of tracepoints with a higher x- value are contained.
+   *
    * <p>
-   * 
-   * @param p
-   *          the point to add.
-   * 
+   *
+   * @param p the point to add.
    * @return true if the given point was successfully added.
    */
   @Override
@@ -85,7 +83,7 @@ public class Trace2DSorted extends ATrace2D implements ITrace2D {
     this.removePoint(p);
     return this.m_points.add(p);
   }
-  
+
   /**
    * @see info.monitorenter.gui.chart.ITrace2D#getMaxSize()
    */
