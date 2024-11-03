@@ -1,6 +1,7 @@
 import lcm
-from os import path, remove
+from os import path
 from tempfile import NamedTemporaryFile
+from platform import mac_ver
 
 CHANNEL = 'test/channel'
 DATA = bytes(3)
@@ -17,9 +18,20 @@ def my_handler(channel, data):
 def test_lcm():
     lc = lcm.LCM()
     subscription = lc.subscribe(CHANNEL, my_handler)
+
+    # Don't fail due to firewall blocking on macOS 15
+    macos_version = mac_ver()[0]
+    if macos_version != '':
+        if float(macos_version.split('.')[0]) >= 15:
+            if subscription is None:
+                return
+
+    assert subscription is not None
+
     lc.publish(CHANNEL, DATA)
     lc.handle()
     assert RECEIVED_MESSAGE
+
     lc.unsubscribe(subscription)
 
 

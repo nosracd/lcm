@@ -4,6 +4,7 @@ import array
 import random
 import select
 import unittest
+from platform import mac_ver
 
 import lcm
 
@@ -264,6 +265,16 @@ class StandardTester(object):
         pkg_name = self.test.get_message_package()
         pub_channel = "test_%s_%s" % (pkg_name, self.msg_name)
         subs = self.lc.subscribe("test_%s_%s_reply" % (pkg_name, self.msg_name), self.handler)
+
+        # Don't fail due to firewall blocking on macOS 15
+        macos_version = mac_ver()[0]
+        if macos_version != '':
+            if float(macos_version.split('.')[0]) >= 15:
+                if subs is None:
+                    return
+            
+        assert subs is not None
+
         for iteration in range(self.test.get_num_iters()):
             self.iteration = iteration
             msg = self.test.make_message(iteration)
@@ -287,6 +298,16 @@ class EchoTester(object):
         self.data = None
         self.response_count = 0
         self.subs = self.lc.subscribe("TEST_ECHO_REPLY", self.handler)
+
+        # Don't fail due to firewall blocking on macOS 15
+        macos_version = mac_ver()[0]
+        if macos_version != '':
+            if float(macos_version.split('.')[0]) >= 15:
+                if self.subs is None:
+                    return
+            
+        assert self.subs is not None
+
         self.num_iters = 100
 
     def handler(self, channel, data):
