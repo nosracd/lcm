@@ -24,6 +24,8 @@ jobs:
             python: cp37-*
           - os: macos-15
             arch: aarch64
+          - os: macos-15
+            python: cp37-*
 
     steps:
       - uses: actions/checkout@v4
