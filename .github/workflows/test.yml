@@ -168,7 +168,7 @@ jobs:
           gtest:p
 
     - name: Configure CMake
-      run: cmake -B build -DPython_FIND_REGISTRY=NEVER
+      run: cmake -B build ${{env.CMAKE_FLAGS}} -DPython_FIND_REGISTRY=NEVER
 
     - name: Build
       run: cmake --build build
