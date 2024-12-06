@@ -119,7 +119,7 @@ static inline int __int8_t_encode_array(void *_buf, int offset, int maxlen, cons
     return elements;
 }
 
-static inline int __int8_t_decode_array(const void *_buf, int offset, size_t maxlen, int8_t *p,
+static inline int __int8_t_decode_array(const void *_buf, size_t offset, size_t maxlen, int8_t *p,
                                         size_t elements)
 {
     if (maxlen < elements)
