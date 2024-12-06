@@ -74,5 +74,6 @@ if(CMAKE_HOST_WIN32)
   lcm_add_c_and_cxx_flags(
     -Wno-stringop-overflow
     -Wno-array-bounds
+    -Wno-restrict
   )
 endif()
