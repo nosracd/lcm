@@ -38,7 +38,7 @@ if (WIN32 AND NOT CYGWIN)
 endif ()
 
 if (WIN32)
-  find_package(Python COMPONENTS Interpreter Development.Module)
+  find_package(Python COMPONENTS Interpreter Development)
 
   target_include_directories(lcm-python PRIVATE
     ${Python_INCLUDE_DIRS}
@@ -57,6 +57,17 @@ target_link_libraries(lcm-python PRIVATE
 
 if(APPLE)
   set_target_properties(lcm-python PROPERTIES LINK_FLAGS "-undefined dynamic_lookup -Wl,-no_fixup_chains")
+elseif(WIN32)
+  target_link_libraries(lcm-python PRIVATE
+    ${Python_LIBRARIES}
+  )
+  message( WARNING "Python3_INCLUDE_DIRS " ${Python3_INCLUDE_DIRS} )
+  message( WARNING "Python_INCLUDE_DIRS " ${Python_INCLUDE_DIRS} )
+  message( WARNING "Python3_LIBRARIES " ${Python3_LIBRARIES} )
+  message( WARNING "Python_LIBRARIES " ${Python_LIBRARIES} )
+  message( WARNING "Python3_LIBRARY_RELEASE " ${Python3_LIBRARY_RELEASE} )
+  message( WARNING "Python_LIBRARY_RELEASE " ${Python_LIBRARY_RELEASE} )
+  # message( FATAL_ERROR ${Python3_INCLUDE_DIRS} )
 else()
   target_link_libraries(lcm-python PRIVATE
     ${Python_LIBRARIES}

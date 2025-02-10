@@ -11,6 +11,11 @@
 #include "eventlog.h"
 #include "ioutils.h"
 
+#ifdef _MSC_VER
+#define fseeko _fseeki64
+#define ftello _ftelli64
+#endif
+
 #define MAGIC ((int32_t) 0xEDA1DA01L)
 
 lcm_eventlog_t *lcm_eventlog_create(const char *path, const char *mode)

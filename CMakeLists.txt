@@ -38,6 +38,18 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   set(CMAKE_MACOSX_RPATH FALSE)
 endif()
 
+if (MSVC)
+  add_definitions(-DWIN32 -D_CRT_SECURE_NO_WARNINGS)
+  include_directories(${lcm_SOURCE_DIR}/WinSpecific/getopt)
+  include_directories(${lcm_SOURCE_DIR})
+  add_subdirectory(WinSpecific)
+  set(lcm-winport lcm-winport)
+  # get_filename_component(LCM_LCMGEN_PATH ${GLIB2_GLIB_RUNTIME} DIRECTORY)
+  # set(LCM_USE_GLIB_RUNTIME "set(LCM_LCMGEN_PATH \"${LCM_LCMGEN_PATH}\")")
+else()
+  set(lcm-winport)
+endif()
+
 # Core modules
 add_subdirectory(lcm)
 add_subdirectory(lcmgen)
