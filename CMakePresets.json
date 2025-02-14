@@ -8,11 +8,7 @@
         "CMAKE_BUILD_TYPE": "Release"
       },
      "generator": "Visual Studio 17 2022",
-      "binaryDir": "${sourceDir}/build",
-      "architecture": {
-       "value": "arm64",
-       "strategy": "set"
-      }
+      "binaryDir": "${sourceDir}/build"
     }
   ],
   "buildPresets": [
