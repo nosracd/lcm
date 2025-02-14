@@ -141,7 +141,7 @@ jobs:
         cmake --build build
         build/lcm_log_writer build/example.log
 
-  windows:
+  windows_msys2:
     strategy:
       matrix:
         os: [windows-2019, windows-2022]
@@ -170,6 +170,26 @@ jobs:
 
     - name: Configure CMake
       run: cmake -B build ${{env.CMAKE_FLAGS}}
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Test
+      run: ctest --output-on-failure
+
+
+  windows_msvc:
+    strategy:
+      matrix:
+        os: [windows-2019, windows-2022]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run vcpkg, configure build directory
+      run:  cmake --preset vcpkg-vs
 
     - name: Build
       run: cmake --build build
