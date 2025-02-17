@@ -187,6 +187,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - uses: actions/cache@v3
 
     - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
       uses: lukka/run-cmake@v10
