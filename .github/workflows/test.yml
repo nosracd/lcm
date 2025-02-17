@@ -194,7 +194,7 @@ jobs:
         configurePreset: 'vcpkg-vs'
 
     - name: Build
-      run: cmake --build build
+      run: cmake --build build --config Release
 
     - name: Test
       run: ctest --output-on-failure
