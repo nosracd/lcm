@@ -188,12 +188,16 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
+    - name: Setup anew (or from cache) vcpkg (and does not build any package)
       uses: lukka/run-vcpkg@v11
       with:
-        configurePreset: 'vcpkg-vs'
         vcpkgDirectory: '${{ runner.workspace }}/b/vcpkg'
         vcpkgGitCommitId: 'a42af01b72c28a8e1d7b48107b33e4f286a55ef6'
+
+    - name: Run CMake consuming CMakePreset.json and run vcpkg to build packages
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: 'vcpkg-vs'
 
     - name: Build
       run: cmake --build build --config Release
