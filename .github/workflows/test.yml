@@ -203,7 +203,7 @@ jobs:
       run: cmake --build build --config Release
 
     - name: Test
-      run: ctest --output-on-failure --test-dir build
+      run: ctest --output-on-failure --test-dir build -C Release
 
 
   docs:
