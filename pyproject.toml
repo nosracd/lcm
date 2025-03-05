@@ -32,7 +32,7 @@ test = ["pytest"]
 [tool.scikit-build]
 cmake.args = ["-DLCM_INSTALL_PKGCONFIG=OFF", "-DLCM_PIP_BUILD=ON"]
 wheel.expand-macos-universal-tags = true
-build.tool-args = ["-j4"]
+ninja.make-fallback = false
 
 [tool.pytest.ini_options]
 minversion = "6.0"
