@@ -107,8 +107,8 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{github.workspace}}\vcpkg-cache
-          key: ${{ hashFiles('vcpkg.json') }}-vcpkg
-          restore-keys: vcpkg
+          key: ${{ hashFiles('vcpkg.json') }}-vcpkg-wheel-cache
+          restore-keys: vcpkg-wheel-cache
 
       - name: Create cache directory
         run: mkdir ${{env.VCPKG_DEFAULT_BINARY_CACHE}} -Force
