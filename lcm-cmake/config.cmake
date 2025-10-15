@@ -63,7 +63,6 @@ if(NOT MSVC)
     -Wall
     -Wshadow
     -Wuninitialized
-    -Wunused-variable
     -Werror=return-type
     -Wno-unused-parameter
     -Wno-format-zero-length
