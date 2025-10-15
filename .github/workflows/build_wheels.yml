@@ -20,6 +20,10 @@ jobs:
         exclude:
           - os: ubuntu-24.04
             arch: armv7l
+          - os: macos-15
+            arch: armv7l
+          - os: macos-15-intel
+            arch: armv7l
 
     steps:
       - uses: actions/checkout@v4
