@@ -41,7 +41,7 @@ jobs:
           CIBW_ARCHS: ${{ matrix.arch }}
           CIBW_BUILD: ${{ matrix.python }}
           CIBW_TEST_REQUIRES: pytest
-          CIBW_TEST_COMMAND: "pytest {project}"
+          CIBW_TEST_COMMAND: "sudo pytest {project}"
 
       - uses: actions/upload-artifact@v4
         with:
