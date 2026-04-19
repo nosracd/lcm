@@ -21,6 +21,12 @@ jobs:
       run: |
         brew install lua
 
+    - name: Debug
+      run : |
+        set -xe
+        cmake --version
+        env
+
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build ${{env.CMAKE_FLAGS}}
 
