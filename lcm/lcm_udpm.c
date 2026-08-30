@@ -302,8 +302,8 @@ static int _recv_message_fragment(lcm_udpm_t *lcm, lcm_buf_t *lcmb, uint32_t sz)
     }
 #endif
 
-    // fragment_offset and frag_size are both attacker-controlled uint32_t
-    // values taken straight off the wire. The old check
+    // fragment_offset and frag_size are both uint32_t
+    // values taken straight off the wire. The most straightforward check
     // (fragment_offset + frag_size > fbuf->data_size) can wrap around when
     // fragment_offset is near UINT32_MAX, letting an invalid fragment slip
     // through and causing memcpy() below to write far outside fbuf->data.
