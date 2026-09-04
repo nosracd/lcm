@@ -179,17 +179,22 @@ jobs:
 
 
   windows_msvc:
-    runs-on: windows-2022
+    name: ${{ matrix.runner }}
+    runs-on: ${{ matrix.runner }}
     env:
       VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg-cache
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [windows-2022, windows-11-arm]
 
     steps:
     - uses: actions/checkout@v4
     - uses: actions/cache@v4
       with:
         path: ${{github.workspace}}\vcpkg-cache
-        key: ${{ hashFiles('vcpkg.json') }}-vcpkg-cache
-        restore-keys: vcpkg-cache
+        key: ${{ hashFiles('vcpkg.json') }}-${{ matrix.runner }}-vcpkg-cache
+        restore-keys: ${{ matrix.runner }}-vcpkg-cache
 
     - name: Create cache directory
       run: mkdir ${{env.VCPKG_DEFAULT_BINARY_CACHE}} -Force
