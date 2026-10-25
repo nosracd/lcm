@@ -84,6 +84,9 @@ jobs:
   windows-msvc:
     name: ${{ matrix.runner }} | ${{ matrix.python }}
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
     env:
       VCPKG_DEFAULT_BINARY_CACHE: ${{github.workspace}}\vcpkg-cache
     strategy:
@@ -94,6 +97,26 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: NuGet vcpkg binary cache
+        shell: pwsh
+        env:
+          NUGET_AUTH_TOKEN: ${{ github.token }}
+        run: |
+          $nuget = & "$env:VCPKG_INSTALLATION_ROOT\vcpkg.exe" fetch nuget | Select-Object -Last 1
+          & $nuget sources add `
+            -Name GitHubPackages `
+            -Source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" `
+            -UserName "${{ github.repository_owner }}" `
+            -Password "$env:NUGET_AUTH_TOKEN" `
+            -StorePasswordInClearText
+
+          $access = "readwrite"
+          if ("${{ github.event_name }}" -eq "pull_request" -and "${{ github.event.pull_request.head.repo.full_name }}" -ne "${{ github.repository }}") {
+            $access = "read"
+          }
+          "VCPKG_BINARY_SOURCES=clear;nuget,GitHubPackages,$access" | Add-Content -Path $env:GITHUB_ENV
+
       - uses: actions/cache@v4
         with:
           path: ${{github.workspace}}\vcpkg-cache
